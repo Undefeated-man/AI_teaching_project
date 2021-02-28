@@ -1,0 +1,27 @@
+body {
+	font-family:Comic Sans MS;
+}
+
+div {
+	background-color:rgba(100,149,237,0.6);
+	border-radius:50px;
+	padding:20px;
+	margin-right:2%;
+	margin-left:5%;
+	margin-top:1%;
+	margin-bottom:0.5%;
+	float:left;
+	min-height: 15%;
+}
+
+#box {
+	margin:15%;
+}
+
+.row {
+	width:80%;
+	margin: 5%;
+	margin-top:1%;
+	margin-bottom:0.5%;
+	text-align: center;
+}
