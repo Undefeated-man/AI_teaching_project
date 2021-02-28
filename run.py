@@ -30,7 +30,7 @@ def flask_file():
     return send_file(file)
 
 # redirect
-@app.route("/templates/wait.html")
+@app.route("/wait", methods = ['GET'])
 def redirect():
     filename = os.listdir(os.getcwd())[0]
     filetype = filename.split(".")[-1]
