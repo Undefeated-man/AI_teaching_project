@@ -16,7 +16,7 @@ def post_speech(pth, filetype, lang='zh'):
     bodys['format'] = filetype  # '''m4a'''
     bodys['src'] = pth  # '''D:\\github\\AI_teaching_project\\test.''' + bodys['format']
     bodys['type'] = lang
-    input(bodys)
+    # input(bodys)
     post_data = urllib.parse.urlencode(bodys).encode(encoding='UTF8')
     request = urllib.request.Request(url_trans, post_data)
     request.add_header('Authorization', 'APPCODE ' + appcode)
@@ -30,6 +30,7 @@ def post_speech(pth, filetype, lang='zh'):
     if (content):
         print(content)
     return content
+
 
 # 获取识别结果
 def get_result(taskId):
@@ -49,6 +50,7 @@ def get_result(taskId):
     ctx.verify_mode = ssl.CERT_NONE
     response = urllib.request.urlopen(request, context=ctx)
     result = response.read()
+    print(bytes(str(result), encoding="utf-8").decode())
     if (result):
         print(result)
     return result

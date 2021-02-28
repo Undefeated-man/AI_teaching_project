@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>上传文件</title>
+                <link href='./static/v.css' type='text/css' rel='stylesheet' />
+                <script>
+                        function fileSelected() {
+                          var file = document.getElementById('fileToUpload').files[0];
+                          if (file) {
+                                var fileSize = 0;
+                                if (file.size > 1024 * 1024)
+                                  fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+                                else
+                                  fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+                                document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+                                document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+                                document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+                          }
+                        }
+                </script>
+        </head>
+        <body>
+                <div id="box">
+                        <form id="form1" enctype="multipart/form-data" method="post" action="http://47.107.34.101:5000/uploader">
+                        <div class="row">
+                                  <label for="fileToUpload">Select a File to Upload(amr/m4a/pcm/wav)</label>
+                        <input type="file" accept=".amr,.m4a,.pcm,.wav" name="file" id="fileToUpload" onchange="fileSelected();"/>
+                                </div>
+                        <div id="fileName"></div>
+                        <div id="fileSize"></div>
+                        <div id="fileType"></div>
+                        <div class="row">
+                                <input type="submit" value="Upload" />
+                        </div>
+                        </form>
+                <div>
+        </body>
+</html>
