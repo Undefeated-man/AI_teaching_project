@@ -22,14 +22,14 @@ def uploader():
       f = request.files['file']
       # f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
       #print("test"+secure_filename(f.filename).split(".")[-1])
-      f.save(os.path.join(app.config['UPLOAD_FOLDER'],"test.m4a"))
+      f.save(os.path.join(app.config['UPLOAD_FOLDER'],"test."+secure_filename(f.filename).split(".")[-1]))
    return render_template('wait.html')
 
 # return file
 @app.route("/flask_file", methods=['GET'])
 def flask_file():
     filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"upload")
-    filename = [i for i in os.listdir(filepath) if "m4a" in i][0]
+    filename = os.listdir(filepath)[0]
     file = os.path.join(filepath, filename)
 
     return send_file(file)
@@ -38,7 +38,7 @@ def flask_file():
 @app.route("/wait", methods = ['GET'])
 def redirect_page():
     filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"upload")
-    filename = [i for i in os.listdir(filepath) if "m4a" in i][0]
+    filename = os.listdir(filepath)[0]
     filetype = filename.split(".")[-1]
     global taskId
     taskId = str(s2t.post_speech(pth = "http://47.107.34.101:5000/flask_file", filetype = filetype)).split('"')[-2]
