@@ -6,7 +6,7 @@ import ssl
 host = 'https://audio.market.alicloudapi.com'
 path = '/audiolong'
 method = 'POST'
-appcode = 'ba0a7128c35948579bee6571b59d68f3'
+appcode = ''
 querys = ''
 bodys = {}
 url_trans = host + path
