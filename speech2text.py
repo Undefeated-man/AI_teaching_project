@@ -40,7 +40,6 @@ def get_result(taskId):
     url_result = host + path
 
     bodys['src'] = taskId
-    # bodys['src'] = """603a3b304d610ba3a04d0dcc"""
     post_data = urllib.parse.urlencode(bodys).encode(encoding='UTF8')
     request = urllib.request.Request(url_result, post_data)
     request.add_header('Authorization', 'APPCODE ' + appcode)
