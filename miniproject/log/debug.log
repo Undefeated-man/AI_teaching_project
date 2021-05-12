@@ -1,0 +1,441 @@
+Mon, 03 May 2021 03:21:48 views.py[line:89] WARNING '播放器再见不应该在秋天'
+Mon, 03 May 2021 03:34:36 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Mon, 03 May 2021 03:34:36 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 03 May 2021 03:34:48 views.py[line:89] WARNING '123'
+Mon, 03 May 2021 03:35:11 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 04 May 2021 04:12:52 log.py[line:230] WARNING Not Found: /favicon.ico
+Tue, 04 May 2021 04:13:44 views.py[line:89] WARNING '123'
+Tue, 04 May 2021 04:14:17 log.py[line:230] ERROR Internal Server Error: /redirected_0/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1317, in do_open
+    encode_chunked=req.has_header('Transfer-encoding'))
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1229, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1275, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1224, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1016, in _send_output
+    self.send(msg)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 956, in send
+    self.connect()
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 928, in connect
+    (self.host,self.port), self.timeout, self.source_address)
+  File "/Users/uic/anaconda3/lib/python3.7/socket.py", line 727, in create_connection
+    raise err
+  File "/Users/uic/anaconda3/lib/python3.7/socket.py", line 716, in create_connection
+    sock.connect(sa)
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 840, in recognize_google
+    response = urlopen(request, timeout=self.operation_timeout)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 525, in open
+    response = self._open(req, data)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 543, in _open
+    '_open', req)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 503, in _call_chain
+    result = func(*args)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1345, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1319, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 60] Operation timed out>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 32, in recognize
+    result = r.recognize_google(audio, language="en-US", show_all=True)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 844, in recognize_google
+    raise RequestError("recognition connection failed: {}".format(e.reason))
+speech_recognition.RequestError: recognition connection failed: [Errno 60] Operation timed out
+Tue, 04 May 2021 04:16:32 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 04 May 2021 04:17:03 views.py[line:89] WARNING '123'
+Tue, 04 May 2021 06:07:21 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Thu, 06 May 2021 16:12:11 log.py[line:230] WARNING Not Found: /favicon.ico
+Thu, 06 May 2021 16:12:16 log.py[line:230] WARNING Not Found: /redirected_0/audio_name=1.wav
+Thu, 06 May 2021 16:12:29 log.py[line:230] WARNING Not Found: /redirected_0/audio_name=1.wav
+Thu, 06 May 2021 16:13:19 log.py[line:230] WARNING Not Found: /redirected_0/audio_name=1.wav
+Thu, 06 May 2021 16:13:34 log.py[line:230] WARNING Not Found: /redirected_0
+Thu, 06 May 2021 16:15:14 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/urls.py changed, reloading.
+Thu, 06 May 2021 16:15:14 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Thu, 06 May 2021 16:15:16 log.py[line:230] WARNING Not Found: /redirected_0
+Thu, 06 May 2021 16:17:21 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/urls.py changed, reloading.
+Thu, 06 May 2021 16:17:21 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Thu, 06 May 2021 16:17:24 log.py[line:230] WARNING Not Found: /redirected_0
+Thu, 06 May 2021 16:19:43 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: '1.wav'
+Thu, 06 May 2021 16:21:27 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Thu, 06 May 2021 16:21:27 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Thu, 06 May 2021 16:21:28 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 27, in recognize
+    os.remove(change)
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:23:21 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Thu, 06 May 2021 16:23:21 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Thu, 06 May 2021 16:23:23 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:12 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:12 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:13 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:13 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:13 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:13 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:24:13 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 24, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:26:56 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Thu, 06 May 2021 16:26:56 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Thu, 06 May 2021 16:27:02 log.py[line:230] ERROR Internal Server Error: /redirected_0#audio_name=1.wav
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 25, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Thu, 06 May 2021 16:29:05 views.py[line:88] WARNING '123'
+Thu, 06 May 2021 16:46:57 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 10 May 2021 03:16:38 log.py[line:230] ERROR Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 11, in upload
+    return render(request, "upload.html")
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/template/defaulttags.py", line 446, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/urls/base.py", line 87, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/urls/resolvers.py", line 685, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'recognize' with no arguments not found. 1 pattern(s) tried: ['redirected_0#audio_name=(?P<audio_name>.*)$']
+Mon, 10 May 2021 03:16:38 log.py[line:230] WARNING Not Found: /favicon.ico
+Mon, 10 May 2021 03:16:55 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/urls.py changed, reloading.
+Mon, 10 May 2021 03:16:55 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 10 May 2021 03:17:34 log.py[line:230] ERROR Internal Server Error: /redirected_0
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 52, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Mon, 10 May 2021 03:18:18 log.py[line:230] ERROR Internal Server Error: /redirected_0
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1317, in do_open
+    encode_chunked=req.has_header('Transfer-encoding'))
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1229, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1275, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1224, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1016, in _send_output
+    self.send(msg)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 956, in send
+    self.connect()
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 928, in connect
+    (self.host,self.port), self.timeout, self.source_address)
+  File "/Users/uic/anaconda3/lib/python3.7/socket.py", line 727, in create_connection
+    raise err
+  File "/Users/uic/anaconda3/lib/python3.7/socket.py", line 716, in create_connection
+    sock.connect(sa)
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 840, in recognize_google
+    response = urlopen(request, timeout=self.operation_timeout)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 525, in open
+    response = self._open(req, data)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 543, in _open
+    '_open', req)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 503, in _call_chain
+    result = func(*args)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1345, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1319, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 60] Operation timed out>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 58, in recognize
+    result = r.recognize_google(audio, language="en-US", show_all=True)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 844, in recognize_google
+    raise RequestError("recognition connection failed: {}".format(e.reason))
+speech_recognition.RequestError: recognition connection failed: [Errno 60] Operation timed out
+Mon, 10 May 2021 03:18:58 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Mon, 10 May 2021 03:18:58 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 10 May 2021 03:19:34 log.py[line:230] ERROR Internal Server Error: /redirected_0
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 52, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Mon, 10 May 2021 03:20:42 log.py[line:230] ERROR Internal Server Error: /redirected_0
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1317, in do_open
+    encode_chunked=req.has_header('Transfer-encoding'))
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1229, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1275, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1224, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 1016, in _send_output
+    self.send(msg)
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 956, in send
+    self.connect()
+  File "/Users/uic/anaconda3/lib/python3.7/http/client.py", line 928, in connect
+    (self.host,self.port), self.timeout, self.source_address)
+  File "/Users/uic/anaconda3/lib/python3.7/socket.py", line 727, in create_connection
+    raise err
+  File "/Users/uic/anaconda3/lib/python3.7/socket.py", line 716, in create_connection
+    sock.connect(sa)
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 840, in recognize_google
+    response = urlopen(request, timeout=self.operation_timeout)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 525, in open
+    response = self._open(req, data)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 543, in _open
+    '_open', req)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 503, in _call_chain
+    result = func(*args)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1345, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/Users/uic/anaconda3/lib/python3.7/urllib/request.py", line 1319, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 60] Operation timed out>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 58, in recognize
+    result = r.recognize_google(audio, language="en-US", show_all=True)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 844, in recognize_google
+    raise RequestError("recognition connection failed: {}".format(e.reason))
+speech_recognition.RequestError: recognition connection failed: [Errno 60] Operation timed out
+Mon, 10 May 2021 03:21:01 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 10 May 2021 03:22:59 log.py[line:230] ERROR Internal Server Error: /redirected_0
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Documents/Python Projects/miniproject/miniproject/views.py", line 52, in recognize
+    with test as source:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/speech_recognition/__init__.py", line 203, in __enter__
+    self.audio_reader = wave.open(self.filename_or_fileobject, "rb")
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 510, in open
+    return Wave_read(f)
+  File "/Users/uic/anaconda3/lib/python3.7/wave.py", line 160, in __init__
+    f = builtins.open(f, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'Audio/1.wav'
+Mon, 10 May 2021 03:23:53 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Mon, 10 May 2021 03:23:53 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 10 May 2021 03:24:31 views.py[line:112] WARNING '123'
+Mon, 10 May 2021 03:24:43 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Mon, 10 May 2021 03:24:43 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Mon, 10 May 2021 03:25:05 views.py[line:112] WARNING '123'
+Mon, 10 May 2021 03:25:16 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 11 May 2021 02:58:39 log.py[line:230] WARNING Not Found: /favicon.ico
+Tue, 11 May 2021 02:59:31 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Tue, 11 May 2021 02:59:31 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 11 May 2021 03:00:39 autoreload.py[line:240] INFO /Users/uic/Documents/Python Projects/miniproject/miniproject/views.py changed, reloading.
+Tue, 11 May 2021 03:00:39 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 11 May 2021 03:01:37 views.py[line:92] WARNING '123'
+Tue, 11 May 2021 03:02:02 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
