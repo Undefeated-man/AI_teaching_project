@@ -12,11 +12,25 @@ class QuestionList(models.Model):
     Example = models.CharField(max_length=100)
     Meaning = models.CharField(max_length=100)
     Translation = models.CharField(max_length=100)
+    def __str__(self):
+        return self.qid  #return primary key
 
+    class Meta:
+        db_table = "QuestionList"
+        verbose_name = "Questions"
+        verbose_name_plural = verbose_name
 
 class WrongList(models.Model):
     uid = models.AutoField(primary_key=True)  # user id must be unique
     qid = models.CharField(max_length=100)
     create_time = models.DateTimeField(default=timezone.now)
     update_time = models.DateTimeField(auto_now=True)  # keep updated
-    cnt = models.CharField(max_length=100, null=True)  # error times can be null
+    cnt = models.CharField(max_length=100, default='0')  # error times can be null
+    def __str__(self):
+        return self.uid  #return primary key
+
+    class Meta:
+        db_table = "WrongList"
+        unique_together = (('uid', 'qid'),) #two primary keys
+        verbose_name = "WrongQuestions"
+        verbose_name_plural = verbose_name

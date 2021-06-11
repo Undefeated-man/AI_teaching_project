@@ -78,11 +78,13 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'databaseName',  # database name not decided yet
-        'USER': 'Ubuntu-UIC',
-        'PASSPHRASE': '1qazxsw2',
-        'HOST': '34.92.251.246',
-        'PORT': '22',
+        'NAME': 'miniprogram',  # local mysql workbench test database name
+        'USER': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'PASSWORD': 'Zhq124869'
+
+
     }
 }
 
