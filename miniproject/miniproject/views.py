@@ -45,7 +45,7 @@ def recognize(request):
         if checkResult:
             return JsonResponse({'state': 'success', "result": True})
         else:
-            addUserWrong(userID,questionID=)
+            addUserWrong(userID,qnum)
             return  JsonResponse({'state': 'success', "result": False})
     except Exception as e:
         print(e)
