@@ -17,6 +17,7 @@ def recognize(request):
     try:
         qnum = int(request.POST.get('qnum', ''))
         audiofile = request.FILES.get('file', '')
+        userID=int(request.POST.get('userID', ''))
         change = os.path.join("Audio", audiofile.name)
         with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
             for chunck in audiofile.chunks():
@@ -39,7 +40,13 @@ def recognize(request):
         result = r.recognize_google(audio, language="en-US", show_all=True)
         userAnswer = result['alternative'][0]['transcript']
         checkResult = judge(qnum,userAnswer)
-        return checkResult
+        if checkResult.get("Error","")!="":
+            return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
+        if checkResult:
+            return JsonResponse({'state': 'success', "result": True})
+        else:
+            addUserWrong(userID,questionID=)
+            return  JsonResponse({'state': 'success', "result": False})
     except Exception as e:
         print(e)
         return JsonResponse({'state': 'fail',"error":e})
@@ -110,10 +117,8 @@ def getUserWrong(request):
         return JsonResponse({"state": "Fail", "Error": e})
 
 
-def addUserWrong(request):
+def addUserWrong(userID,questionID):
     try:
-        userID = request.POST.get("userID")
-        questionID = request.POST.get("questionID")
         result = Wrong.objects.filter(userID=userID, questionID=questionID)
         if len(result) == 0:
             Wrong.objects.create(userID=userID, question_id=questionID, count=1)
@@ -127,10 +132,9 @@ def addUserWrong(request):
 
 def judge(questionID,answer):
     try:
-        return JsonResponse({"state":"success","result":Question.objects.get(questionID=questionID).meaning==answer,
-                             "answer":answer})
+        return Question.objects.get(questionID=questionID).meaning==answer
     except Exception as e:
-        return JsonResponse({"state":"fail","error":e})
+        return {"Error":e}
 
 
 def welcome(request):

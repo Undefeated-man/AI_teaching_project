@@ -24,5 +24,4 @@ urlpatterns = [
     url(r"^welcome/$",views.welcome),
     url(r"^recognize$",views.recognize,name="recognize"),
     url(r"^getUserWrong$",views.getUserWrong,name="getUserWrong"),
-    url(r"^addUserWrong$",views.addUserWrong,name="getUserWrong"),
 ]
