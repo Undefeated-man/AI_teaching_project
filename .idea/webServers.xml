@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f0d59258-5e2a-4f3f-bfee-6b46916f0bd4" name="AI_Teaching_Project">
+        <fileTransfer rootFolder="/home/Ubuntu-UIC/AI_teaching/AI_teaching_project" accessType="SFTP" host="34.92.251.246" port="22" sshConfigId="bc03587f-117c-44c2-a82f-c5f677e8269a" sshConfig="Ubuntu-UIC@34.92.251.246:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -15,7 +15,7 @@ def upload(request):
 
 def recognize(request):
     try:
-        qnum = request.POST.get('qnum', '')
+        qnum = int(request.POST.get('qnum', ''))
         audiofile = request.FILES.get('file', '')
         change = os.path.join("Audio", audiofile.name)
         with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
@@ -37,16 +37,12 @@ def recognize(request):
             os.remove(change)
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
-        question = result['alternative'][0]['transcript']
-        answer = "The Answer"
-        checkResult = CheckRight({"question": question, "answer": answer})
-        if checkResult.check():
-            return JsonResponse({"state": "succeed", "question": question, "answer": answer})
-        else:
-            return JsonResponse({"state": "fail", "question": question, "answer": answer})
+        userAnswer = result['alternative'][0]['transcript']
+        checkResult = judge(qnum,userAnswer)
+        return checkResult
     except Exception as e:
         print(e)
-        return JsonResponse({'state': 'fail'})
+        return JsonResponse({'state': 'fail',"error":e})
 
 
 import logging, os
@@ -126,14 +122,13 @@ def addUserWrong(request):
             result[0].save()
         return JsonResponse({"state": "Success"})
     except Exception as e:
-        return JsonResponse({"state": "Fail", "Error": e})
+        return JsonResponse({"state": "fail", "Error": e})
 
 
-def judge(request):
+def judge(questionID,answer):
     try:
-        questionID = request.POST.get("questionID")
-        answer=request.POST.get("answer")
-        return JsonResponse({"state":"success","result":Question.objects.get(questionID=questionID).meaning==answer})
+        return JsonResponse({"state":"success","result":Question.objects.get(questionID=questionID).meaning==answer,
+                             "answer":answer})
     except Exception as e:
         return JsonResponse({"state":"fail","error":e})
 

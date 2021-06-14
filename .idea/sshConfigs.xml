@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="34.92.251.246" id="bc03587f-117c-44c2-a82f-c5f677e8269a" keyPath="$PROJECT_DIR$/../Project/uic.ppk" port="22" nameFormat="DESCRIPTIVE" username="Ubuntu-UIC" />
+    </configs>
+  </component>
+</project>

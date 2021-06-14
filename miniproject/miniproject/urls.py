@@ -22,7 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r"^$",views.upload),
     url(r"^welcome/$",views.welcome),
-    url(r"^judge/$", views.judge),
     url(r"^recognize$",views.recognize,name="recognize"),
     url(r"^getUserWrong$",views.getUserWrong,name="getUserWrong"),
     url(r"^addUserWrong$",views.addUserWrong,name="getUserWrong"),
