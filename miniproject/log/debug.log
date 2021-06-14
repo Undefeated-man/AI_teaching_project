@@ -439,3 +439,723 @@ Tue, 11 May 2021 03:00:39 autoreload.py[line:240] INFO /Users/uic/Documents/Pyth
 Tue, 11 May 2021 03:00:39 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
 Tue, 11 May 2021 03:01:37 views.py[line:92] WARNING '123'
 Tue, 11 May 2021 03:02:02 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:07:40 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:08:50 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:09:23 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:09:46 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:09:56 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:13:06 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:26:27 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/questionRecord/admin.py changed, reloading.
+Sun, 13 Jun 2021 14:26:27 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:26:31 log.py[line:230] WARNING Not Found: /favicon.ico
+Sun, 13 Jun 2021 14:26:33 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: welcome() takes 0 positional arguments but 1 was given
+Sun, 13 Jun 2021 14:26:53 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:26:53 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:30:23 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('miniproject/questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'miniproject/questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:31:27 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:31:27 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:31:29 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('AI_teaching_project-main/miniproject/questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'AI_teaching_project-main/miniproject/questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:33:39 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:33:39 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:33:43 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('miniproject/questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'miniproject/questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:33:57 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:33:57 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:35:01 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:35:01 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:35:19 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('../questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:35:37 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:35:37 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:37:13 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:37:18 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('../questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:37:37 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:37:37 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:37:41 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('miniproject/questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'miniproject/questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:38:05 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:38:10 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 129, in welcome
+    lectureExcel_2 = pd.read_excel('/miniproject/questionRecord/Lectures/lecture2.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/miniproject/questionRecord/Lectures/lecture2.xlsx'
+Sun, 13 Jun 2021 14:38:26 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:38:26 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:38:40 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 130, in welcome
+    lectureExcel_3 = pd.read_excel('miniproject/questionRecord/Lectures/lecture3.xlsx')
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 350, in read_excel
+    io = ExcelFile(io, engine=engine)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 653, in __init__
+    self._reader = self._engines[engine](self._io)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 424, in __init__
+    self.book = xlrd.open_workbook(filepath_or_buffer)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/xlrd/__init__.py", line 111, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'miniproject/questionRecord/Lectures/lecture3.xlsx'
+Sun, 13 Jun 2021 14:38:59 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:38:59 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:39:02 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4381, in get_value
+    return libindex.get_value_box(s, key)
+  File "pandas/_libs/index.pyx", line 52, in pandas._libs.index.get_value_box
+  File "pandas/_libs/index.pyx", line 48, in pandas._libs.index.get_value_at
+  File "pandas/_libs/util.pxd", line 113, in pandas._libs.util.get_value_at
+  File "pandas/_libs/util.pxd", line 98, in pandas._libs.util.validate_indexer
+TypeError: 'str' object cannot be interpreted as an integer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 204, in welcome
+    toDataBase(conceptListDataFrame)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 187, in toDataBase
+    if np.isnan(row["Sub-Concept 1"]):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/series.py", line 868, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4389, in get_value
+    raise e1
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4375, in get_value
+    tz=getattr(series.dtype, 'tz', None))
+  File "pandas/_libs/index.pyx", line 81, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 89, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Sub-Concept 1'
+Sun, 13 Jun 2021 14:40:16 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:41:34 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 202, in welcome
+    toDataBase(conceptListDataFrame)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 176, in toDataBase
+    if row["Concept"] in allConceptName:
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/series.py", line 868, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4375, in get_value
+    tz=getattr(series.dtype, 'tz', None))
+  File "pandas/_libs/index.pyx", line 81, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 89, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Concept'
+Sun, 13 Jun 2021 14:46:02 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:46:02 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:49:28 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:49:34 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 176, in welcome
+    toDataBase(lectureExcel_2)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 203, in toDataBase
+    if np.isnan(row["Sub-Concept 1"]):
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+Sun, 13 Jun 2021 14:50:53 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:51:03 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4381, in get_value
+    return libindex.get_value_box(s, key)
+  File "pandas/_libs/index.pyx", line 52, in pandas._libs.index.get_value_box
+  File "pandas/_libs/index.pyx", line 48, in pandas._libs.index.get_value_at
+  File "pandas/_libs/util.pxd", line 113, in pandas._libs.util.get_value_at
+  File "pandas/_libs/util.pxd", line 98, in pandas._libs.util.validate_indexer
+TypeError: 'str' object cannot be interpreted as an integer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 175, in welcome
+    toDataBase(lectureExcel_2)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 216, in toDataBase
+    example=row["example"],
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/series.py", line 868, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4389, in get_value
+    raise e1
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4375, in get_value
+    tz=getattr(series.dtype, 'tz', None))
+  File "pandas/_libs/index.pyx", line 81, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 89, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'example'
+Sun, 13 Jun 2021 14:51:53 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:52:00 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4381, in get_value
+    return libindex.get_value_box(s, key)
+  File "pandas/_libs/index.pyx", line 52, in pandas._libs.index.get_value_box
+  File "pandas/_libs/index.pyx", line 48, in pandas._libs.index.get_value_at
+  File "pandas/_libs/util.pxd", line 113, in pandas._libs.util.get_value_at
+  File "pandas/_libs/util.pxd", line 98, in pandas._libs.util.validate_indexer
+TypeError: 'str' object cannot be interpreted as an integer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 175, in welcome
+    toDataBase(lectureExcel_2)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 217, in toDataBase
+    meaning=row["Meaning （English）"], translation=row["Meaning"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/series.py", line 868, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4389, in get_value
+    raise e1
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4375, in get_value
+    tz=getattr(series.dtype, 'tz', None))
+  File "pandas/_libs/index.pyx", line 81, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 89, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Meaning （English）'
+Sun, 13 Jun 2021 14:54:14 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:54:20 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: SubConcept.subConceptName
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 175, in welcome
+    toDataBase(lectureExcel_2)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 212, in toDataBase
+    subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 447, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 754, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 792, in save_base
+    force_update, using, update_fields,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 895, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 935, in _do_insert
+    using=using, raw=raw,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 1254, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1397, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: SubConcept.subConceptName
+Sun, 13 Jun 2021 14:54:55 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 14:54:55 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:54:59 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 178, in welcome
+    toDataBase(lectureExcel_5)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 208, in toDataBase
+    concept = Concept.objects.create(conceptName=row["Concept"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 447, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 754, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 792, in save_base
+    force_update, using, update_fields,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 895, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 935, in _do_insert
+    using=using, raw=raw,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 1254, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1397, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+Sun, 13 Jun 2021 14:56:27 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:56:32 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 176, in welcome
+    toDataBase(lectureExcel_3)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 208, in toDataBase
+    concept = Concept.objects.create(conceptName=row["Concept"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 447, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 754, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 792, in save_base
+    force_update, using, update_fields,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 895, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 935, in _do_insert
+    using=using, raw=raw,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 1254, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1397, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+Sun, 13 Jun 2021 14:58:55 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 14:59:02 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 178, in welcome
+    toDataBase(lectureExcel_5)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 208, in toDataBase
+    concept = Concept.objects.create(conceptName=row["Concept"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 447, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 754, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 792, in save_base
+    force_update, using, update_fields,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 895, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 935, in _do_insert
+    using=using, raw=raw,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 1254, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1397, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+Sun, 13 Jun 2021 15:01:08 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 15:01:08 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:01:09 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:01:12 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:01:16 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4381, in get_value
+    return libindex.get_value_box(s, key)
+  File "pandas/_libs/index.pyx", line 52, in pandas._libs.index.get_value_box
+  File "pandas/_libs/index.pyx", line 48, in pandas._libs.index.get_value_at
+  File "pandas/_libs/util.pxd", line 113, in pandas._libs.util.get_value_at
+  File "pandas/_libs/util.pxd", line 98, in pandas._libs.util.validate_indexer
+TypeError: 'str' object cannot be interpreted as an integer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 175, in welcome
+    toDataBase(lectureExcel_2)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 193, in toDataBase
+    if pd.isna(row['example']):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/series.py", line 868, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4389, in get_value
+    raise e1
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 4375, in get_value
+    tz=getattr(series.dtype, 'tz', None))
+  File "pandas/_libs/index.pyx", line 81, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 89, in pandas._libs.index.IndexEngine.get_value
+  File "pandas/_libs/index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'example'
+Sun, 13 Jun 2021 15:01:24 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:01:32 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 180, in welcome
+    toDataBase(lectureExcel_7)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 210, in toDataBase
+    concept = Concept.objects.create(conceptName=row["Concept"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 447, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 754, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 792, in save_base
+    force_update, using, update_fields,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 895, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 935, in _do_insert
+    using=using, raw=raw,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 1254, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1397, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: Concept.conceptName
+Sun, 13 Jun 2021 15:02:57 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/questionRecord/models.py changed, reloading.
+Sun, 13 Jun 2021 15:02:57 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:04:20 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py changed, reloading.
+Sun, 13 Jun 2021 15:04:20 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:04:23 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 175, in welcome
+    toDataBase(lectureExcel_2)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 199, in toDataBase
+    if row["Concept"] in allConceptName:
+TypeError: argument of type 'QuerySet' is not iterable
+Sun, 13 Jun 2021 15:05:09 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:05:12 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:05:17 log.py[line:230] ERROR Internal Server Error: /welcome/
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: NOT NULL constraint failed: Question.concept_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 176, in welcome
+    toDataBase(lectureExcel_3)
+  File "/Users/uic/Desktop/AI_teaching_project-main/miniproject/miniproject/views.py", line 197, in toDataBase
+    meaning=row["Meaning （English）"], translation=row["Meaning"])
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 447, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 754, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 792, in save_base
+    force_update, using, update_fields,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 895, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/base.py", line 935, in _do_insert
+    using=using, raw=raw,
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/query.py", line 1254, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1397, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/Users/uic/anaconda3/lib/python3.7/site-packages/django/db/backends/sqlite3/base.py", line 413, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: NOT NULL constraint failed: Question.concept_id
+Sun, 13 Jun 2021 15:07:10 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:07:23 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:07:37 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:07:38 autoreload.py[line:240] INFO /Users/uic/Desktop/AI_teaching_project-main/miniproject/questionRecord/migrations/0001_initial.py changed, reloading.
+Sun, 13 Jun 2021 15:07:38 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:07:45 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:07:47 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Sun, 13 Jun 2021 15:09:27 selector_events.py[line:53] DEBUG Using selector: KqueueSelector

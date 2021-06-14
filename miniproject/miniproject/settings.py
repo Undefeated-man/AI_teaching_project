@@ -83,7 +83,7 @@ DATABASES = {
         'NAME':"AI_Teaching_Project",
         'USER':"root",
         "PASSWORD":"89sW@;ll5J",
-        "HOST":"https://34.92.251.246:22"
+        "HOST":"34.92.251.246:22"
     }
 }
 
