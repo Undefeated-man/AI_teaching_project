@@ -84,7 +84,7 @@ class CheckRight:
             self.q = d["question"]
             self.a = d["answer"]
         except Exception as e:
-            # logging.warning(e)
+            pass
         self.result_ls = []
         self.data = {"Lunch is on me": ["I'll pay for lunch.", "I pay for lunch."]}
         self.state = False
