@@ -115,7 +115,7 @@ def getUserWrong(request):
             wrongRecords.append(self_dict)
         return JsonResponse(wrongRecords, safe=False)
     except Exception as e:
-        return JsonResponse({"state": "Fail", "Error": e})
+        return JsonResponse({"state": "Fail", "Error": e.__str__()})
 
 
 def addUserWrong(userID,questionID):
@@ -128,7 +128,7 @@ def addUserWrong(userID,questionID):
             result[0].save()
         return JsonResponse({"state": "Success"})
     except Exception as e:
-        return JsonResponse({"state": "fail", "Error": e})
+        return JsonResponse({"state": "fail", "Error": e.__str__()})
 
 
 def judge(questionID,answer):
