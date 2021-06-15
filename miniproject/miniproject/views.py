@@ -19,6 +19,8 @@ def recognize(request):
         audiofile = request.FILES.get('file', '')
         userID=int(request.POST.get('userID', ''))
         change = os.path.join("Audio", audiofile.name)
+        if not os.path.exists("Audio"):
+            os.mkdir("Audio")
         with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
             for chunck in audiofile.chunks():
                 fw.write(chunck)
