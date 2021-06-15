@@ -98,6 +98,7 @@ class CheckRight:
                     self.result_ls.append(False)
         except Exception as e:
             # logging.warning(e)
+            pass
 
         if True in self.result_ls:
             self.state = True
