@@ -1159,3 +1159,7 @@ Sun, 13 Jun 2021 15:07:38 selector_events.py[line:53] DEBUG Using selector: Kque
 Sun, 13 Jun 2021 15:07:45 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
 Sun, 13 Jun 2021 15:07:47 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
 Sun, 13 Jun 2021 15:09:27 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 15 Jun 2021 03:06:44 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 15 Jun 2021 03:09:13 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 15 Jun 2021 03:11:34 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
+Tue, 15 Jun 2021 03:16:09 selector_events.py[line:53] DEBUG Using selector: KqueueSelector
