@@ -1,5 +1,5 @@
 import json
-import threading
+import os
 import time
 import pandas as pd
 from django.http import JsonResponse, HttpResponse
@@ -49,7 +49,7 @@ def recognize(request):
             return  JsonResponse({'state': 'success', "result": False})
     except Exception as e:
         print(e)
-        return JsonResponse({'state': 'fail',"error":e})
+        return JsonResponse({'state': 'fail',"error":e.__str__()})
 
 
 # import logging, os
