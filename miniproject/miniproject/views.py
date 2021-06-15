@@ -52,14 +52,14 @@ def recognize(request):
         return JsonResponse({'state': 'fail',"error":e})
 
 
-import logging, os
-
-# make sure there's a directory called "log"
-if not os.path.exists("./log"):
-    os.mkdir("./log")
-
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s', \
-                    datefmt='%a, %d %b %Y %H:%M:%S', filename="log/debug.log", filemode='a')  # initialize the format
+# import logging, os
+#
+# # make sure there's a directory called "log"
+# if not os.path.exists("./log"):
+#     os.mkdir("./log")
+#
+# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s', \
+#                     datefmt='%a, %d %b %Y %H:%M:%S', filename="log/debug.log", filemode='a')  # initialize the format
 
 
 class CheckRight:
@@ -84,7 +84,7 @@ class CheckRight:
             self.q = d["question"]
             self.a = d["answer"]
         except Exception as e:
-            logging.warning(e)
+            # logging.warning(e)
         self.result_ls = []
         self.data = {"Lunch is on me": ["I'll pay for lunch.", "I pay for lunch."]}
         self.state = False
@@ -97,7 +97,7 @@ class CheckRight:
                 else:
                     self.result_ls.append(False)
         except Exception as e:
-            logging.warning(e)
+            # logging.warning(e)
 
         if True in self.result_ls:
             self.state = True
