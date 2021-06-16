@@ -1,0 +1,27 @@
+<view class="page">
+  <!--标题-->
+  <view class='page-head'>
+    <view class="page-title">
+      The test is over! Your score is:
+    </view>
+    <!--分数-->
+    <view class='page-score'>
+      <text class="score-num">{{totalScore}}</text>
+      <text class="score-text">Points</text>
+    </view>
+    <text class="score-remark">{{totalScore==100?remark[0]:(totalScore>=80?remark[1]:remark[2])}}</text>  <!-- 评价 -->
+  </view>
+  <!--查询错误-->
+  <view class='page-footer'>
+    <view class="wrong-view" wx:if="{{wrongList.length > 0}}">
+      <text>Wrong Answer：</text>
+      <text wx:for="{{wrongListSort}}">[{{item-0+1}}]</text> 
+    </view>
+    <view class="wrong-btns">
+      <button type="default" bindtap="toView" hover-class="other-button-hover" class="wrong-btn" wx:if="{{wrongList.length > 0}}"> Wrong questionList </button>
+      <button type="default" bindtap="toIndex" hover-class="other-button-hover" class="wrong-btn"> HOME </button>
+    </view>
+  </view>
+  <wrong-modal modalShow="{{modalShow}}" wrongList="{{wrongList}}" wrongListSort="{{wrongListSort}}" chooseValue="{{chooseValue}}" questionList="{{questionList}}" testId="{{testId}}"
+    ></wrong-modal>
+</view>

@@ -1,0 +1,67 @@
+<!--pages/test/test.wxml-->
+<view class="page">
+  <!--标题-->
+  <view class="question-num-box">{{index+1}}</view>
+  <view class="question">{{questionList[shuffleIndex[index]].question}}</view>
+  <!-- <view class="answer-box">
+  <view class="ans">{{answer}}</view>
+</view> -->
+  <!-- <view class='page__hd'>
+    <view class="page__title">
+      {{index+1}}、{{questionList[shuffleIndex[index]].question}}
+      {{questionList[shuffleIndex[index]].type==1||questionList[shuffleIndex[index]].type==3?"【Single Choice】":"【Multiple Choice】"}}
+      （{{questionList[shuffleIndex[index]].scores}}points）
+    </view>
+  </view> -->
+  <!--内容-->
+  <!-- <view class="page__bd">  -->
+  <view class="option-box" style="pointer-events:{{isChoosed?'none':'auto'}}"
+    wx:if="{{questionList[shuffleIndex[index]].type == 1}}">
+    <!-- <view class="option" bindtap="radioChange" wx:for="{{questionList[shuffleIndex[index]].option}}" wx:for-index="key"  wx:for-item="value">
+      <view class="option-text" value="{{key}}" checked="{{questionList[shuffleIndex[index]].checked}}">{{value}}</view>
+    </view> -->
+    <view class="{{choosed == key?answer == key?'right':'wrong':answer == key?'right':'option'}}"
+      data-optionkey="{{key}}" data-iskey="false" data-istapped="false" bindtap="tapOption"
+      wx:for="{{questionList[shuffleIndex[index]].option}}" wx:for-index="key" wx:for-item="value"
+      pointer-events='none'>
+      {{value}}
+    </view>
+  </view>
+  <!-- <radio-group class="radio-group" bindchange="radioChange" wx:if="{{questionList[shuffleIndex[index]].type == 1}}">
+      <label class="radio my-choosebox" wx:for="{{questionList[shuffleIndex[index]].option}}" wx:for-index="key"  wx:for-item="value">
+        <radio value="{{key}}" checked="{{questionList[shuffleIndex[index]].checked}}"/>{{key}}、{{value}}
+      </label>
+    </radio-group>
+    <checkbox-group bindchange="checkboxChange" wx:elif="{{questionList[shuffleIndex[index]].type == 2}}">
+      <label class="checkbox my-choosebox" wx:for="{{questionList[shuffleIndex[index]].option}}" wx:for-index="key"  wx:for-item="value">
+        <checkbox value="{{key}}" checked="{{questionList[shuffleIndex[index]].checked}}"/>{{key}}、{{value}}
+      </label>
+    </checkbox-group>
+    <radio-group class="radio-group" bindchange="radioChange" wx:else>
+      <label class="radio my-choosebox" wx:for="{{questionList[shuffleIndex[index]].option}}">
+        <radio value="{{item}}" checked="{{questionList[shuffleIndex[index]].checked}}"/>{{item}}
+      </label>
+    </radio-group> -->
+  <!-- </view> -->
+  <!--按钮-->
+  <view class="btom-box">
+    <view class="collect-box">
+      <image class="icon-coll" bindtap="Collect"
+        src="{{collected == true?'images/collected.png':'images/uncollected.png'}}"></image>
+    </view>
+    <view id="btn-box">
+      <view class="btn" bindtap='nextSubmit'>
+        <image class="icon-next" src="images/next.png"></image>
+      </view>
+    </view>
+    <view class="placeholder"></view>
+  </view>
+
+  <!-- <view class='page_ft'>
+    <view class='mybutton'>
+      <button bindtap='nextSubmit' wx:if="{{index == questionList.length-1}}">Summit</button>
+      <button bindtap='nextSubmit' wx:else>Next Question</button>
+      <text bindtap='outTest' class="toindex-btn">Exit</text>
+    </view>
+  </view>-->
+</view>

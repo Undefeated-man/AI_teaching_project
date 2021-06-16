@@ -1,0 +1,52 @@
+<page>
+  <view class="page">
+  <!-- <image id="background" src="Image.jfif"></image> -->
+  <!-- <view class="page-title">Lectures：</view>
+  <view class="flex-box">
+    <view class="flex-item"><view class="item bc_green" bindtap="toTestPage" data-testId="001">Lecture 1</view></view>
+    <view class="flex-item"><view class="item bc_red" bindtap="toTestPage" data-testId="002">Lecture 2</view></view>
+  </view> -->
+<view id="starred-box">
+  <view id="startrred-btn">
+    <image id="star" src="images/star.png" bindtap="jumpPage"></image>
+    <text id="starred-text">收藏夹</text>
+  </view>
+</view>
+  <view id="btn-box" bindtap="toTestPage" data-testId="unit1">
+    <view class="btn">
+     <text class="worng-quantity">20</text>
+    <text class="btn-text">错题数</text>
+  </view>
+  </view>
+  <view id="bottom-panel">
+    <view class="levels-box">
+    <view class="level-btn no-wrong" >
+      <image class="icon" src="images/no-wrong.png" ></image>
+      <text class="level-text">Level 1</text>
+    </view>
+    <view class="level-btn unlocked" >
+      <text class="level-quantity">20</text>
+      <text class="level-text">Level 2</text>
+    </view>
+    <view class="level-btn locked">
+      <image class="icon" src="images/locked.png" ></image>
+      <text class="level-text">Level 3</text>
+    </view>
+  </view>
+  <view class="levels-box">
+    <view class="level-btn locked">
+      <image class="icon" src="images/locked.png" ></image>
+      <text class="level-text">Level 4</text>
+    </view>
+    <view class="level-btn locked">
+      <image class="icon" src="images/locked.png" ></image>
+      <text class="level-text">Level 5</text>
+    </view>
+    <view class="level-btn locked">
+      <image class="icon" src="images/locked.png" ></image>
+      <text class="level-text">Level 6</text>
+    </view>
+  </view>
+  </view>
+</view>
+</page>

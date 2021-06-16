@@ -1,0 +1,96 @@
+<!--miniprogram/pages/index/index.wxml-->
+<view class="page">
+  <view hidden="{{hiddensetting}}">
+    <modal class="setting" title="每日任务" bindconfirm="Confirm" bindcancel="Cancel">
+      <view class="set-box">
+        <view class="set-learn-text">答题</view>
+        <view class="stepper">
+          <!-- 减号 -->
+          <text class="{{minusStatusLearn}}" bindtap="bindMinusLearn">-</text>
+          <!-- 数值 -->
+          <input type="number" value="{{learnSetNum}}" disabled="true"/>
+          <!-- 加号 -->
+          <text class="normal" bindtap="bindPlusLearn">+</text>
+        </view>
+      </view>
+      <view class="set-box">
+        <view class="set-wrong-text">改错</view>
+        <view class="stepper">
+          <!-- 减号 -->
+          <text class="{{minusStatusWrong}}" bindtap="bindMinusWrong">-</text>
+          <!-- 数值 -->
+          <input type="number"  value="{{wrongSetNum}}" disabled="true"/>
+          <!-- 加号 -->
+          <text class="normal" bindtap="bindPlusWrong">+</text>
+        </view>
+      </view>
+    </modal>
+  </view>
+  <view id="rankList-box" bindtap="OpenRank">
+    <view id="rankList-btn">
+      <image id="rankList" src="images/rank.png"></image>
+      <text id="rankList-text">排行榜</text>
+    </view>
+  </view>
+  <view id="btn-box">
+    <view class="btn" bindtap="jumPages">
+      <text class="btn-text" bindtap="Check" wx:if="{{checked == false}}">打卡</text>
+      <text class="btn-text btn-rank" wx:else>{{rank}}</text>
+    </view>
+    <view id="detail-box">
+      <view id="point-box">
+        <text class="detail">距离下一个段位还有</text>
+        <text id="points" class="detail">{{points}}</text>
+        <text class="detail">积分</text>
+      </view>
+      <view id="rank-box">
+        <text class="detail">超越了</text>
+        <text id="rank-precent" class="detail">{{percent}}</text>
+        <text class="detail">%的选手</text>
+      </view>
+    </view>
+  </view>
+  <view id="bottom-panel">
+    <view id="task-bar">
+      <view id="task-bar-left">
+        <image class="icon" id="task-icon" src="images/task.png"></image>
+        <text id="task-text">我的任务</text>
+      </view>
+      <view id="task-bar-right">
+        <image class="icon" id="task-setting" src="images/setting.png" bindtap="OpenSetting"></image>
+      </view>
+    </view>
+    <view class="task-box" id="learning-box">
+      <view class="task-box-left">
+        <image class="icon task-icon" src="images/learning.png"></image>
+        <text class="task-box-text">答题</text>
+      </view>
+      <view class="task-box-right">
+        <view class="finish-state" wx:if="{{taskfinished == false}}">
+          <text class="task-number">{{numLearnDone}}</text>
+          <text class="task-number">/</text>
+          <text class="task-number">{{learnNum}}</text>
+        </view>
+        <view class="finish-state" wx:else>
+          <image class="icon" id="finished-icon" src="images/finished.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="task-box" id="wrong-box">
+      <view class="task-box-left">
+        <image class="icon task-icon" src="images/wrong.png"></image>
+        <text class="task-box-text">改错</text>
+      </view>
+      <view class="task-box-right">
+        <view class="finish-state" wx:if="{{wrongfinished == false}}">
+          <text class="task-number">5</text>
+          <text class="task-number">/</text>
+          <text class="task-number">{{wrongNum}}</text>
+        </view>
+        <view class="finish-state" wx:else>
+          <image class="icon" id="finished-icon" src="images/finished.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
