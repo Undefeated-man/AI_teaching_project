@@ -23,7 +23,7 @@ def recognize(request):
         change = os.path.join("Audio", audiofile.name)
         if not os.path.exists("Audio"):
             os.mkdir("Audio")
-            os.chmod(os.path.join("Audio", audiofile.name, 0o777))
+            os.chmod(os.path.join("Audio", audiofile.name), 0o777)
         with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
             os.chmod(os.path.join(os.getcwd(), "Audio", audiofile.name), 0o777)
             for chunck in audiofile.chunks():
