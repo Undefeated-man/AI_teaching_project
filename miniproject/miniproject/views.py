@@ -7,12 +7,14 @@ from django.shortcuts import render, redirect
 import speech_recognition as sr
 from questionRecord.models import *
 from ffmpy3 import FFmpeg
+from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 def upload(request):
     return render(request, "upload.html")
 
 
+@csrf_exempt
 def recognize(request):
     try:
         qnum = int(request.POST.get('qnum', ''))
@@ -21,12 +23,14 @@ def recognize(request):
         change = os.path.join("Audio", audiofile.name)
         if not os.path.exists("Audio"):
             os.mkdir("Audio")
+            os.chmod(os.path.join("Audio", audiofile.name, 0o777))
         with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
+            os.chmod(os.path.join(os.getcwd(), "Audio", audiofile.name), 0o777)
             for chunck in audiofile.chunks():
                 fw.write(chunck)
         if (audiofile.name.split('.', 1)[1] != "wav"):
             output = os.path.join("Audio", audiofile.name.split('.', 1)[0] + "_.wav")
-            ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192 -f wav'})
+            ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192k -f wav'})
             ff.cmd
             ff.run()
         else:
@@ -40,8 +44,15 @@ def recognize(request):
             os.remove(change)
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
-        userAnswer = result['alternative'][0]['transcript']
-        checkResult = judge(qnum,userAnswer)
+        
+        # Can't recor
+        if len(result):
+            print(result)
+            userAnswer = result['alternative'][0]['transcript']
+            checkResult = judge(qnum,userAnswer)
+        else:
+            userAnswer = "Nothing"
+            checkResult = False
         if checkResult.get("Error","")!="":
             return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
         if checkResult:
@@ -49,10 +60,10 @@ def recognize(request):
         else:
             addUserWrong(userID,qnum)
             return  JsonResponse({'state': 'success', "result": False})
+
     except Exception as e:
         print(e)
-        return JsonResponse({'state': 'fail',"error":e.__str__()})
-
+        return JsonResponse({'state': 'fail', "error": e.__str__})
 
 # import logging, os
 #
@@ -64,6 +75,7 @@ def recognize(request):
 #                     datefmt='%a, %d %b %Y %H:%M:%S', filename="log/debug.log", filemode='a')  # initialize the format
 
 
+@csrf_exempt
 class CheckRight:
     """
         使用说明：
@@ -108,6 +120,7 @@ class CheckRight:
         return self.state
 
 
+@csrf_exempt
 def getUserWrong(request):
     try:
         userID = request.POST.get("userID")
@@ -120,6 +133,7 @@ def getUserWrong(request):
         return JsonResponse({"state": "Fail", "Error": e.__str__()})
 
 
+@csrf_exempt
 def addUserWrong(userID,questionID):
     try:
         result = Wrong.objects.filter(userID=userID, questionID=questionID)
@@ -133,6 +147,7 @@ def addUserWrong(userID,questionID):
         return JsonResponse({"state": "fail", "Error": e.__str__()})
 
 
+@csrf_exempt
 def judge(questionID,answer):
     try:
         return Question.objects.get(questionID=questionID).meaning==answer
@@ -140,6 +155,7 @@ def judge(questionID,answer):
         return {"Error":e}
 
 
+@csrf_exempt
 def welcome(request):
     lectureExcel_2 = pd.read_excel('./questionRecord/Lectures/lecture2.xlsx')
     lectureExcel_3 = pd.read_excel('./questionRecord/Lectures/lecture3.xlsx')
@@ -197,8 +213,10 @@ def welcome(request):
     return HttpResponse("Success")
 
 
+@csrf_exempt
 def toDataBase(dataframe):
     for index, row in dataframe.iterrows():
+        print(row)
         allConceptName = Concept.objects.values_list("conceptName", flat=True).distinct()
         allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
         if pd.isna(row['Example']):
