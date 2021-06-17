@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('questionID', models.AutoField(primary_key=True, serialize=False)),
                 ('example', models.CharField(max_length=100)),
-                ('meaning', models.CharField(max_length=500)),
+                ('meaning', models.TextField()),
                 ('translation', models.CharField(max_length=500)),
                 ('concept', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='question', to='questionRecord.concept')),
             ],
