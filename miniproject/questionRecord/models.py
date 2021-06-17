@@ -34,7 +34,7 @@ class Question(models.Model):
     subConcept2 = models.ForeignKey(SubConcept,related_name="question2",null=True,on_delete=models.CASCADE)
     example = models.CharField(max_length=100)
     meaning = models.CharField(max_length=100)
-    translation = models.CharField(max_length=100)
+    translation = models.CharField(max_length=500)
 
     def __str__(self):
         return "Question:" + str(self.questionID)
