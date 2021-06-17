@@ -152,7 +152,7 @@ def judge(questionID,answer):
     try:
         return Question.objects.get(questionID=questionID).meaning==answer
     except Exception as e:
-        return {"Error":e}
+        return {"Error":e.__str__()}
 
 
 @csrf_exempt
