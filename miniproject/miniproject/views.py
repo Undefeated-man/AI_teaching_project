@@ -64,7 +64,7 @@ def recognize(request):
 
     except Exception as e:
         print(e)
-        return JsonResponse({'state': 'fail', "error": e.__str__})
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 # import logging, os
 #
