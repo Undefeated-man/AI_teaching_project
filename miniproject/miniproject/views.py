@@ -28,7 +28,7 @@ def recognize(request):
             os.chmod(os.path.join(os.getcwd(), "Audio", audiofile.name), 0o777)
             for chunck in audiofile.chunks():
                 fw.write(chunck)
-        if (audiofile.name.split('.', 1)[1] != "wav"):
+        if (audiofile.name.split('.')[2] != "wav"):
             output = os.path.join("Audio", audiofile.name.split('.', 1)[0] + ".wav")
             ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192k -f wav'})
             ff.cmd
@@ -40,7 +40,7 @@ def recognize(request):
         with test as source:
             audio = r.record(source)
         os.remove(output)
-        if (audiofile.name.split('.', 1)[1] != "wav"):
+        if (audiofile.name.split('.')[1] != "wav"):
             os.remove(change)
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
