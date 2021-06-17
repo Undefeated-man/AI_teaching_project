@@ -53,6 +53,7 @@ def recognize(request):
         else:
             userAnswer = "Nothing"
             checkResult = {"result":False}
+
         if checkResult.get("Error","")!="":
             return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
         if checkResult["result"]:
