@@ -44,7 +44,7 @@ def recognize(request):
             os.remove(change)
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
-        
+        print(result)
         # Can't record
         if len(result.get("alternative","")):
             userAnswer = result['alternative'][0]['transcript']
