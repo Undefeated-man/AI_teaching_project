@@ -47,13 +47,11 @@ def recognize(request):
         
         # Can't record
         if len(result.get("alternative","")):
-            print(result)
             userAnswer = result['alternative'][0]['transcript']
             checkResult = {"result":judge(qnum,userAnswer)}
         else:
             userAnswer = "Nothing"
             checkResult = {"result":False}
-        print(checkResult)
         if checkResult.get("Error","")!="":
             return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
         if checkResult["result"]:
@@ -151,7 +149,7 @@ def addUserWrong(userID,questionID):
 @csrf_exempt
 def judge(questionID,answer):
     try:
-        return {"result":str(Question.objects.get(questionID=questionID).meaning)==answer}
+        return str(Question.objects.get(questionID=questionID).meaning)==answer
     except Exception as e:
         return {"Error":e.__str__()}
 
