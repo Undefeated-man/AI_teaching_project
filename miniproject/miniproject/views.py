@@ -49,7 +49,7 @@ def recognize(request):
         if len(result.get("alternative","")):
             print(result)
             userAnswer = result['alternative'][0]['transcript']
-            checkResult = judge(qnum,userAnswer)
+            checkResult = {"result":judge(qnum,userAnswer)}
         else:
             userAnswer = "Nothing"
             checkResult = {"result":False}
