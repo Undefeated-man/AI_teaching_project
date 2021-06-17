@@ -45,17 +45,17 @@ def recognize(request):
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
         
-        # Can't recor
-        if len(result):
+        # Can't record
+        if len(result.get("alternative","")):
             print(result)
             userAnswer = result['alternative'][0]['transcript']
             checkResult = judge(qnum,userAnswer)
         else:
             userAnswer = "Nothing"
-            checkResult = False
+            checkResult = {"result":False}
         if checkResult.get("Error","")!="":
             return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
-        if checkResult:
+        if checkResult["result"]:
             return JsonResponse({'state': 'success', "result": True})
         else:
             addUserWrong(userID,qnum)
@@ -150,7 +150,7 @@ def addUserWrong(userID,questionID):
 @csrf_exempt
 def judge(questionID,answer):
     try:
-        return Question.objects.get(questionID=questionID).meaning==answer
+        return {"result":Question.objects.get(questionID=questionID).meaning==answer}
     except Exception as e:
         return {"Error":e.__str__()}
 
