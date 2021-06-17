@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('questionID', models.AutoField(primary_key=True, serialize=False)),
                 ('example', models.CharField(max_length=100)),
                 ('meaning', models.CharField(max_length=100)),
-                ('translation', models.CharField(max_length=100)),
+                ('translation', models.CharField(max_length=500)),
                 ('concept', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='question', to='questionRecord.concept')),
             ],
             options={
