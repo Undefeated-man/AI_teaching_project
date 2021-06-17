@@ -58,7 +58,7 @@ def recognize(request):
             return JsonResponse({'state': 'success', "result": True})
         else:
             addUserWrong(userID,qnum)
-            return  JsonResponse({'state': 'success', "result": False})
+            return JsonResponse({'state': 'success', "result": False})
 
     except Exception as e:
         print(e)
