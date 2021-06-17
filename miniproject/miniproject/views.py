@@ -29,7 +29,7 @@ def recognize(request):
             for chunck in audiofile.chunks():
                 fw.write(chunck)
         if (audiofile.name.split('.')[-1] != "wav"):
-            output = os.path.join("Audio", "".join(audiofile.name.split('.', 1)[:-1]) + ".wav")
+            output = os.path.join("Audio", "".join(audiofile.name.split('.')[:-1]) + ".wav")
             ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192k -f wav'})
             ff.cmd
             ff.run()
