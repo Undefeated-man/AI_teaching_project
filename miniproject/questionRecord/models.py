@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class Concept(models.Model):
     conceptID=models.AutoField(primary_key=True)
-    conceptName=models.CharField(unique=True,max_length=30,null=False,blank=False)
+    conceptName=models.CharField(unique=True,max_length=100,null=False,blank=False)
 
     def __str__(self):
         return "Concept:" + str(self.conceptName)
@@ -18,7 +18,7 @@ class Concept(models.Model):
 
 class SubConcept(models.Model):
     subConceptID=models.AutoField(primary_key=True)
-    subConceptName=models.CharField(unique=True,max_length=30,null=False,blank=False)
+    subConceptName=models.CharField(unique=True,max_length=100,null=False,blank=False)
 
     def __str__(self):
         return "subConceptName:" + str(self.subConceptID)
