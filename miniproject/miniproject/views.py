@@ -151,7 +151,7 @@ def addUserWrong(userID,questionID):
 @csrf_exempt
 def judge(questionID,answer):
     try:
-        return {"result":Question.objects.get(questionID=questionID).meaning==answer}
+        return {"result":str(Question.objects.get(questionID=questionID).meaning)==answer}
     except Exception as e:
         return {"Error":e.__str__()}
 
