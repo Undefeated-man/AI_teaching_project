@@ -46,19 +46,21 @@ def recognize(request):
         result = r.recognize_google(audio, language="en-US", show_all=True)
         print(result)
         # Can't record
-        if len(result.get("alternative","")):
-            userAnswer = result['alternative'][0]['transcript']
-            checkResult = {"result":judge(qnum,userAnswer)}
-        else:
-            userAnswer = "Nothing"
-            checkResult = {"result":False}
-        if checkResult.get("Error","")!="":
-            return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
-        if checkResult["result"]:
-            return JsonResponse({'state': 'success', "result": True})
-        else:
-            addUserWrong(userID,qnum)
-            return JsonResponse({'state': 'success', "result": False})
+        # if len(result.get("alternative","")):
+        #     userAnswer = result['alternative'][0]['transcript']
+        #     checkResult = {"result":judge(qnum,userAnswer)}
+        # else:
+        #     userAnswer = "Nothing"
+        #     checkResult = {"result":False}
+        # if checkResult.get("Error","")!="":
+        #     return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
+        # if checkResult["result"]:
+        #     return JsonResponse({'state': 'success', "result": True})
+        # else:
+        #     addUserWrong(userID,qnum)
+        #     return JsonResponse({'state': 'success', "result": False})
+        return JsonResponse({'state':'success','userAnswer':result,
+                             'originalAnswer':Question.objects.get(questionID=qnum).meaning})
 
     except Exception as e:
         print(e)
