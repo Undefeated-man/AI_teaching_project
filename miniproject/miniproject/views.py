@@ -18,7 +18,7 @@ def upload(request):
 def recognize(request):
     try:
         audiofile = request.FILES.get('file', '')
-        answer=int(request.POST.get('answer', ''))
+        answer=request.POST.get('answer', '')
         change = os.path.join("Audio", audiofile.name)
         if not os.path.exists("Audio"):
             os.mkdir("Audio")
