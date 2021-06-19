@@ -59,7 +59,7 @@ def recognize(request):
         # else:
         #     addUserWrong(userID,qnum)
         #     return JsonResponse({'state': 'success', "result": False})
-        return JsonResponse({'state':'success','userAnswer':result,
+        return JsonResponse({'state':'success','userAnswer':result['alternative'][0]['transcript'],
                              'originalAnswer':Question.objects.get(questionID=qnum).meaning})
 
     except Exception as e:
