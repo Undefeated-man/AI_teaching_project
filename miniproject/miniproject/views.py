@@ -60,7 +60,8 @@ def recognize(request):
         judgeResult=judge(result,answer)
         if judgeResult.get("error","")!="":
             return JsonResponse({'state': 'fail', 'error': judgeResult.get("error","")})
-        return JsonResponse({'state':'success','result':judgeResult.get("result",False)})
+        return JsonResponse({'state':'success','result':judgeResult.get("result",False),"Your Answer":result,
+                             "True Answer":answer})
 
     except Exception as e:
         print(e)
