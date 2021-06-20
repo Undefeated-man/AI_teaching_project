@@ -57,10 +57,11 @@ def recognize(request):
         # else:
         #     addUserWrong(userID,qnum)
         #     return JsonResponse({'state': 'success', "result": False})
-        judgeResult=judge(result,answer)
+        judgeResult=judge(result['alternative'][0]['transcript'],answer)
         if judgeResult.get("error","")!="":
             return JsonResponse({'state': 'fail', 'error': judgeResult.get("error","")})
-        return JsonResponse({'state':'success','result':judgeResult.get("result",False),"Your Answer":result,
+        return JsonResponse({'state':'success','result':judgeResult.get("result",False),
+                             "Your Answer":result['alternative'][0]['transcript'],
                              "True Answer":answer})
 
     except Exception as e:
