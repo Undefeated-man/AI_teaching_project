@@ -17,9 +17,8 @@ def upload(request):
 @csrf_exempt
 def recognize(request):
     try:
-        qnum = int(request.POST.get('qnum', ''))
         audiofile = request.FILES.get('file', '')
-        userID=int(request.POST.get('userID', ''))
+        answer=request.POST.get('answer', '')
         change = os.path.join("Audio", audiofile.name)
         if not os.path.exists("Audio"):
             os.mkdir("Audio")
@@ -44,21 +43,26 @@ def recognize(request):
             os.remove(change)
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
-        print(result)
         # Can't record
-        if len(result.get("alternative","")):
-            userAnswer = result['alternative'][0]['transcript']
-            checkResult = {"result":judge(qnum,userAnswer)}
-        else:
-            userAnswer = "Nothing"
-            checkResult = {"result":False}
-        if checkResult.get("Error","")!="":
-            return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
-        if checkResult["result"]:
-            return JsonResponse({'state': 'success', "result": True})
-        else:
-            addUserWrong(userID,qnum)
-            return JsonResponse({'state': 'success', "result": False})
+        # if len(result.get("alternative","")):
+        #     userAnswer = result['alternative'][0]['transcript']
+        #     checkResult = {"result":judge(qnum,userAnswer)}
+        # else:
+        #     userAnswer = "Nothing"
+        #     checkResult = {"result":False}
+        # if checkResult.get("Error","")!="":
+        #     return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
+        # if checkResult["result"]:
+        #     return JsonResponse({'state': 'success', "result": True})
+        # else:
+        #     addUserWrong(userID,qnum)
+        #     return JsonResponse({'state': 'success', "result": False})
+        judgeResult=judge(result['alternative'][0]['transcript'],answer)
+        if judgeResult.get("error","")!="":
+            return JsonResponse({'state': 'fail', 'error': judgeResult.get("error","")})
+        return JsonResponse({'state':'success','result':judgeResult.get("result",False),
+                             "Your Answer":result['alternative'][0]['transcript'],
+                             "True Answer":answer})
 
     except Exception as e:
         print(e)
@@ -147,9 +151,9 @@ def addUserWrong(userID,questionID):
 
 
 @csrf_exempt
-def judge(questionID,answer):
+def judge(result,answer):
     try:
-        return str(Question.objects.get(questionID=questionID).meaning)==answer
+        return {"result":result==answer}
     except Exception as e:
         return {"Error":e.__str__()}
 
