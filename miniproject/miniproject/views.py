@@ -8,6 +8,7 @@ import speech_recognition as sr
 from questionRecord.models import *
 from ffmpy3 import FFmpeg
 from django.views.decorators.csrf import csrf_exempt
+import nltk
 
 @csrf_exempt
 def upload(request):
@@ -153,10 +154,56 @@ def addUserWrong(userID,questionID):
 @csrf_exempt
 def judge(result,answer):
     try:
-        return {"result":result==answer}
+        sentences = [result, answer]
+        processedSentences = processPunctuation(sentences)
+        tokens = getTokens(processedSentences)
+        wordVector1, wordVector2 = word2vec(tokens)
+        dist = cosDistance(wordVector1, wordVector2)
+        if (dist > 0.75):
+            compareResult=True
+        else:
+            compareResult=False
+        return {"result":compareResult}
     except Exception as e:
         return {"Error":e.__str__()}
 
+def processPunctuation(sentences):
+    processedSentences = []
+    punctuation = '''!"#$%&()*+,-./:;<=>?@[\\]^_~'{|}'''
+    for sent in sentences:
+        for ch in punctuation:
+            sent = sent.replace(ch,"")
+        processedSentences.append(sent)
+    return processedSentences
+
+def getTokens(processedSentences):
+    tokens1 =nltk.word_tokenize(processedSentences[0])
+    tokens2 =nltk.word_tokenize(processedSentences[1])
+    tokens = [tokens1,tokens2]
+    return tokens
+
+
+def word2vec(tokens):
+    # 列出所有词 取并集
+    keyWord = list(set(tokens[0] + tokens[1]))
+    print(keyWord)
+    wordVector1 = np.zeros(len(keyWord))
+    wordVector2 = np.zeros(len(keyWord))
+
+    for i in range(len(keyWord)):
+        # 遍历key_word中每个词在句子中的出现次数
+        for j in range(len(tokens[0])):
+            if tokens[0][j] == keyWord[i]:
+                wordVector1[i] += 1
+        for k in range(len(tokens[1])):
+            if tokens[1][k] == keyWord[i]:
+                wordVector2[i] += 1
+
+    return wordVector1, wordVector2
+
+def cosDistance(vec1, vec2):
+    cosDist = float(np.dot(vec1,vec2)/(np.linalg.norm(vec1)*np.linalg.norm(vec2)))
+    return cosDist
 
 @csrf_exempt
 def welcome(request):
