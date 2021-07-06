@@ -32,7 +32,7 @@ class Question(models.Model):
     concept = models.ForeignKey(Concept,related_name="question",null=True,on_delete=models.CASCADE)
     subConcept1 = models.ForeignKey(SubConcept,related_name="question1",null=True,on_delete=models.CASCADE)
     subConcept2 = models.ForeignKey(SubConcept,related_name="question2",null=True,on_delete=models.CASCADE)
-    example = models.CharField(max_length=100)
+    example = models.TextField()
     meaning = models.TextField()
     translation = models.TextField()
 
