@@ -60,7 +60,7 @@ def recognize(request):
         #     return JsonResponse({'state': 'success', "result": False})
         judgeResult=judge(result['alternative'][0]['transcript'],answer)
         if judgeResult.get("Error","")!="":
-            return JsonResponse({'state': 'fail', 'error': judgeResult.get("error","")})
+            return JsonResponse({'state': 'fail', 'error': judgeResult.get("Error","")})
         return JsonResponse({'state':'success','result':judgeResult.get("result"),
                              "Your Answer":result['alternative'][0]['transcript'],
                              "True Answer":answer})
