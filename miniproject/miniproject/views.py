@@ -9,6 +9,7 @@ from questionRecord.models import *
 from ffmpy3 import FFmpeg
 from django.views.decorators.csrf import csrf_exempt
 import nltk
+import numpy as np
 
 @csrf_exempt
 def upload(request):
@@ -172,7 +173,7 @@ def processPunctuation(sentences):
     punctuation = '''!"#$%&()*+,-./:;<=>?@[\\]^_~'{|}'''
     for sent in sentences:
         for ch in punctuation:
-            sent = sent.replace(ch,"")
+            sent = sent.replace(ch,"").lower()
         processedSentences.append(sent)
     return processedSentences
 
