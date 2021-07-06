@@ -59,7 +59,7 @@ def recognize(request):
         #     addUserWrong(userID,qnum)
         #     return JsonResponse({'state': 'success', "result": False})
         judgeResult=judge(result['alternative'][0]['transcript'],answer)
-        if judgeResult.get("error","")!="":
+        if judgeResult.get("Error","")!="":
             return JsonResponse({'state': 'fail', 'error': judgeResult.get("error","")})
         return JsonResponse({'state':'success','result':judgeResult.get("result"),
                              "Your Answer":result['alternative'][0]['transcript'],
@@ -159,7 +159,7 @@ def judge(result,answer):
         tokens = getTokens(processedSentences)
         wordVector1, wordVector2 = word2vec(tokens)
         dist = cosDistance(wordVector1, wordVector2)
-        if (dist > 0.75):
+        if dist > 0.75:
             compareResult=True
         else:
             compareResult=False
