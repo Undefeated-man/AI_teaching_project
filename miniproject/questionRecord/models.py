@@ -146,7 +146,7 @@ class Level3(models.Model):
 #### Wait for confirmation incomplete
 class CommonUser(AbstractUser):
     commonUserID = models.TextField(primary_key=True)
-    groupID = models.IntegerField()
+    groupsID = models.IntegerField()
     nickname = models.CharField(max_length=225, verbose_name="昵称", default="")
     avatar_url = models.CharField(max_length=225, verbose_name="头像", default="")
     session_key = models.CharField(max_length=225, verbose_name="session_key", default="")
