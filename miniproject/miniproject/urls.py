@@ -22,8 +22,8 @@ from . import questionRecord
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^questionRecord/',include(('questionRecord.urls','questionRecord'))),
-    url(r"^$",views.upload),
-    url(r"^welcome/$",views.welcome),
-    url(r"^recognize$",views.recognize,name="recognize"),
-    url(r"^getUserWrong$",views.getUserWrong,name="getUserWrong"),
+    # url(r"^$",views.upload),
+    # url(r"^welcome/$",views.welcome),
+    # url(r"^recognize$",views.recognize,name="recognize"),
+    # url(r"^getUserWrong$",views.getUserWrong,name="getUserWrong"),
 ]
