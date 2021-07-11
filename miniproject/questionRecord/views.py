@@ -17,7 +17,7 @@ def getWeChatOAuth(redirect_url):
 def oauth(method):
     def warpper(request):
         if request.session.get('user_info', None) is None:
-            code = request.GET.get('code', None)
+            code = request.POST.get('code', None)
             wechat_oauth = getWeChatOAuth(request.get_raw_uri())
             url = wechat_oauth.authorize_url
             print(url)
