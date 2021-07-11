@@ -10,5 +10,5 @@ admin.register(Wrong)
 admin.register(Level2)
 admin.register(Level3)
 admin.register(CommonUser)
-admin.register(Group)
+admin.register(Groups)
 

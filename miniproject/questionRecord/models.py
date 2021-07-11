@@ -162,14 +162,14 @@ class CommonUser(AbstractUser):
 
 
 ###new here, group table
-class Group(models.Model):
-    groupID = models.IntegerField(primary_key=True)
-    groupName = models.TextField()
+class Groups(models.Model):
+    groupsID = models.IntegerField(primary_key=True)
+    groupsName = models.TextField()
 
     def __str__(self):
-        return "Group:" + str(self.groupID)
+        return "Group:" + str(self.groupsID)
 
     class Meta:
-        db_table = "Group"
+        db_table = "Groups"
         verbose_name = "Groups"
         verbose_name_plural = verbose_name
