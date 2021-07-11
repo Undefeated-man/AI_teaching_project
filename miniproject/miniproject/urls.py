@@ -17,10 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from . import questionRecord
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^questionRecord/',include('questionRecord.urls')),
+    url(r'^questionRecord/',include(('questionRecord.urls','questionRecord'))),
     url(r"^$",views.upload),
     url(r"^welcome/$",views.welcome),
     url(r"^recognize$",views.recognize,name="recognize"),
