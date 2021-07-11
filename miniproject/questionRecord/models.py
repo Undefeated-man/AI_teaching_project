@@ -151,7 +151,6 @@ class CommonUser(AbstractUser):
     avatar_url = models.CharField(max_length=225, verbose_name="头像", default="")
     session_key = models.CharField(max_length=225, verbose_name="session_key", default="")
     mobilePhoneNumber = models.CharField(max_length=225, verbose_name="手机号码", default="")
-    #缺少自己定的每日任务（每天做多少题目），收藏夹，段位，做过的题
     def __str__(self):
         return "User:" + str(self.commonUserID)
 
