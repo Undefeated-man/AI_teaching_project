@@ -1,7 +1,7 @@
 from django.db import models
-
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
@@ -34,7 +34,7 @@ class SubConcept(models.Model):
 class Unit(models.Model):
     UnitID = models.AutoField(primary_key=True)
     UnitName = models.TextField()
-    conceptID = models.ForeignKey(Concept, related_name="concept", null=True, on_delete=models.CASCADE)
+    conceptID = models.ForeignKey(Concept, related_name="Unit", null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return "UnitID:" + str(self.UnitID)
@@ -68,9 +68,9 @@ class Unit(models.Model):
 
 class Example(models.Model):
     exampleID = models.AutoField(primary_key=True)
-    conceptID = models.ForeignKey(Concept, related_name="concept", null=True, on_delete=models.CASCADE)
-    subConcept1 = models.ForeignKey(SubConcept, related_name="subconcept1", null=True, on_delete=models.CASCADE)
-    subConcept2 = models.ForeignKey(SubConcept, related_name="subconcept2", null=True, on_delete=models.CASCADE)
+    conceptID = models.ForeignKey(Concept, related_name="Example", null=True, on_delete=models.CASCADE)
+    subConcept1 = models.ForeignKey(SubConcept, related_name="ExampleFirst", null=True, on_delete=models.CASCADE)
+    subConcept2 = models.ForeignKey(SubConcept, related_name="ExampleSecond", null=True, on_delete=models.CASCADE)
     example = models.TextField()
     meaning = models.TextField()
     translation = models.TextField()
@@ -88,7 +88,7 @@ class Example(models.Model):
 
 class Wrong(models.Model):
     uerID = models.IntegerField(primary_key=True)  # user id must be unique
-    question = models.ForeignKey(Example, related_name="wrong", null=False, blank=False, on_delete=models.CASCADE)
+    question = models.ForeignKey(Example, related_name="Wrong", null=False, blank=False, on_delete=models.CASCADE)
     createTime = models.DateTimeField(default=timezone.now)
     updateTime = models.DateTimeField(auto_now=True)  # keep updated
     count = models.CharField(max_length=100, default='0')  # error times can be null
@@ -108,7 +108,7 @@ class Wrong(models.Model):
 # one correct concept that the example belongs to, three other wrong
 class Level2(models.Model):
     exampleID = models.AutoField(primary_key=True)
-    conceptID = models.ForeignKey(Example, related_name="concept", null=False, blank=False, on_delete=models.CASCADE)
+    conceptID = models.ForeignKey(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
     # three misleading choices
     op1 = models.TextField()
     op2 = models.TextField()
@@ -128,7 +128,7 @@ class Level2(models.Model):
 # one correct english meaning that the example indicates, three other wrong
 class Level3(models.Model):
     exampleID = models.AutoField(primary_key=True)
-    meaning = models.ForeignKey(Example, related_name="meaning", null=False, blank=False, on_delete=models.CASCADE)
+    meaning = models.ForeignKey(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
     # three misleading choices
     op1 = models.TextField()
     op2 = models.TextField()
@@ -144,13 +144,11 @@ class Level3(models.Model):
 
 
 #### Wait for confirmation incomplete
-class CommonUser(AbstractUser):
+class CommonUser(models.Model):
     commonUserID = models.TextField(primary_key=True)
     groupsID = models.IntegerField()
-    nickname = models.CharField(max_length=225, verbose_name="昵称", default="")
-    avatar_url = models.CharField(max_length=225, verbose_name="头像", default="")
     session_key = models.CharField(max_length=225, verbose_name="session_key", default="")
-    mobilePhoneNumber = models.CharField(max_length=225, verbose_name="手机号码", default="")
+
     def __str__(self):
         return "User:" + str(self.commonUserID)
 

@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'miniproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':"AI_Teaching_Project",
+        'NAME':"AI_Teaching_Project",#AI_Teaching_Project
         'USER':"root",
-        "PASSWORD":"89sW@;ll5J",
+        "PASSWORD":"89sW@;ll5J",#89sW@;ll5J
         "HOST":"localhost",
         "PORT":"3306"
     }
