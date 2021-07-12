@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CommonUser',
             fields=[
-                ('commonUserID', models.TextField(primary_key=True, serialize=False)),
+                ('commonUserID', models.CharField(max_length=225,primary_key=True, serialize=False)),
                 ('groupsID', models.IntegerField()),
                 ('session_key', models.CharField(default='', max_length=225, verbose_name='session_key')),
             ],

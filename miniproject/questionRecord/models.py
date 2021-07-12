@@ -145,7 +145,7 @@ class Level3(models.Model):
 
 #### Wait for confirmation incomplete
 class CommonUser(models.Model):
-    commonUserID = models.TextField(primary_key=True)
+    commonUserID = models.CharField(max_length=225,primary_key=True)
     groupsID = models.IntegerField()
     session_key = models.CharField(max_length=225, verbose_name="session_key", default="")
 
