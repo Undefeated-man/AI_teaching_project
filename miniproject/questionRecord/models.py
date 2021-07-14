@@ -34,7 +34,6 @@ class SubConcept(models.Model):
 class Unit(models.Model):
     UnitID = models.AutoField(primary_key=True)
     UnitName = models.TextField()
-    conceptID = models.ForeignKey(Concept, related_name="Unit", null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return "UnitID:" + str(self.UnitID)
@@ -71,6 +70,7 @@ class Example(models.Model):
     conceptID = models.ForeignKey(Concept, related_name="Example", null=True, on_delete=models.CASCADE)
     subConcept1 = models.ForeignKey(SubConcept, related_name="ExampleFirst", null=True, on_delete=models.CASCADE)
     subConcept2 = models.ForeignKey(SubConcept, related_name="ExampleSecond", null=True, on_delete=models.CASCADE)
+    unit=models.ForeignKey(Unit,related_name="Example",on_delete=models.CASCADE)
     example = models.TextField()
     meaning = models.TextField()
     translation = models.TextField()
