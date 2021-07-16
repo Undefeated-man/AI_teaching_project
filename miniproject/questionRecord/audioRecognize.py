@@ -1,9 +1,9 @@
 import json
 import os
-import time
+from .models import *
 import pandas as pd
 import speech_recognition as sr
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from ffmpy3 import FFmpeg
 import nltk
 import numpy as np
@@ -174,98 +174,76 @@ def cosDistance(vec1, vec2):
 
 @csrf_exempt
 def welcome(request):
-    lectureExcel_2 = pd.read_excel('./questionRecord/Lectures/lecture2.xlsx')
-    lectureExcel_3 = pd.read_excel('./questionRecord/Lectures/lecture3.xlsx')
-    lectureExcel_4 = pd.read_excel('./questionRecord/Lectures/lecture4.xlsx')
-    lectureExcel_5 = pd.read_excel('./questionRecord/Lectures/lecture5.xlsx')
-    lectureExcel_6 = pd.read_excel('./questionRecord/Lectures/lecture2.xlsx')
-    lectureExcel_7 = pd.read_excel('./questionRecord/Lectures/lecture7.xlsx')
-    lectureExcel_8 = pd.read_excel('./questionRecord/Lectures/lecture8.xlsx')
-    lectureExcel_9 = pd.read_excel('./questionRecord/Lectures/lecture9.xlsx')
-    lectureExcel_10 = pd.read_excel('./questionRecord/Lectures/lecture10.xlsx')
-    lectureExcel_11 = pd.read_excel('./questionRecord/Lectures/lecture11.xlsx')
-
-    # to generate a list with all the concept in all excels
-    # conceptList = lectureExcel_2['Concept'].tolist() + lectureExcel_3['Concept'].tolist() + \
-    #               lectureExcel_4['Concept'].tolist() + lectureExcel_5['Concept'].tolist() + \
-    #               lectureExcel_6['Concept'].tolist() + lectureExcel_7['Concept'].tolist() + \
-    #               lectureExcel_8['Concept'].tolist() + lectureExcel_9['Concept'].tolist() + \
-    #               lectureExcel_10['Concept'].tolist() + lectureExcel_11['Concept'].tolist()
-
-    # to generate a list with all the sub-concept 1 in all excels
-    # subConceptList_1 = lectureExcel_2['Sub-Concept 1'].tolist() + lectureExcel_3['Sub-Concept 1'].tolist() + \
-    #                    lectureExcel_4['Sub-Concept 1'].tolist() + lectureExcel_5['Sub-Concept 1'].tolist() + \
-    #                    lectureExcel_6['Sub-Concept 1'].tolist() + lectureExcel_7['Sub-Concept 1'].tolist() + \
-    #                    lectureExcel_8['Sub-Concept 1'].tolist() + lectureExcel_9['Sub-Concept 1'].tolist() + \
-    #                    lectureExcel_10['Sub-Concept 1'].tolist() + lectureExcel_11['Sub-Concept 1'].tolist()
-
-    # to generate a list with all the sub-concept 2 in all excels (llectureExcel_4 does not have sub-concept 2 column1!)
-    # subConceptList_2 = lectureExcel_2['Sub-Concept 2'].tolist() + lectureExcel_3['Sub-Concept 2'].tolist() + \
-    #                    lectureExcel_10['Sub-Concept 2'].tolist() + lectureExcel_5['Sub-Concept 2'].tolist() + \
-    #                    lectureExcel_6['Sub-Concept 2'].tolist() + lectureExcel_7['Sub-Concept 2'].tolist() + \
-    #                    lectureExcel_8['Sub-Concept 2'].tolist() + lectureExcel_9['Sub-Concept 2'].tolist() + \
-    #                    lectureExcel_11['Sub-Concept 2'].tolist()
-
-    # to generate a dataframe with unique concept in all excels
-    # conceptListDataFrame = pd.Series(conceptList).dropna().drop_duplicates().reset_index().drop(labels="index", axis=1)
-
-    # to generate a dataframe with unique sub-concept 1 & 2 in all excels
-    # subConceptListDataFrame1 = pd.Series(subConceptList_1).dropna().drop_duplicates().reset_index().drop(
-    #    labels="index", axis=1)
-    # subConceptListDataFrame2 = pd.Series(subConceptList_2).dropna().drop_duplicates().reset_index().drop(
-    #    labels="index", axis=1)
-    # subConceptListDataFrame = pd.concat([subConceptListDataFrame1, subConceptListDataFrame2], axis=0,
-    #                                    ignore_index=True)
-    toDataBase(lectureExcel_2)
-    toDataBase(lectureExcel_3)
-    toDataBase(lectureExcel_4)
-    toDataBase(lectureExcel_5)
-    toDataBase(lectureExcel_6)
-    toDataBase(lectureExcel_7)
-    toDataBase(lectureExcel_8)
-    toDataBase(lectureExcel_9)
-    toDataBase(lectureExcel_10)
-    toDataBase(lectureExcel_11)
+    lectureExcel_1 = pd.read_excel('./questionRecord/Lectures/Lecture  1.xlsx')
+    lectureExcel_2 = pd.read_excel('./questionRecord/Lectures/Lecture  2.xlsx')
+    lectureExcel_3 = pd.read_excel('./questionRecord/Lectures/Lecture 3.xlsx')
+    lectureExcel_4 = pd.read_excel('./questionRecord/Lectures/Lecture 4.xlsx')
+    lectureExcel_5 = pd.read_excel('./questionRecord/Lectures/Lecture 5.xlsx')
+    lectureExcel_6 = pd.read_excel('./questionRecord/Lectures/Lecture 2.xlsx')
+    lectureExcel_7 = pd.read_excel('./questionRecord/Lectures/Lecture 7.xlsx')
+    lectureExcel_8 = pd.read_excel('./questionRecord/Lectures/Lecture 8.xlsx')
+    lectureExcel_9 = pd.read_excel('./questionRecord/Lectures/Lecture 9.xlsx')
+    lectureExcel_10 = pd.read_excel('./questionRecord/Lectures/Lecture 10.xlsx')
+    lectureExcel_11 = pd.read_excel('./questionRecord/Lectures/Lecture 11.xlsx')
+    toDataBase(lectureExcel_1,"Lecture  1")
+    toDataBase(lectureExcel_2,"Lecture  2")
+    toDataBase(lectureExcel_3,"Lecture  3")
+    toDataBase(lectureExcel_4,"Lecture  4")
+    toDataBase(lectureExcel_5,"Lecture  5")
+    toDataBase(lectureExcel_6,"Lecture  6")
+    toDataBase(lectureExcel_7,"Lecture  7")
+    toDataBase(lectureExcel_8,"Lecture  8")
+    toDataBase(lectureExcel_9,"Lecture  9")
+    toDataBase(lectureExcel_10,"Lecture  10")
+    toDataBase(lectureExcel_11,"Lecture  11")
 
     return HttpResponse("Success")
 
 
 @csrf_exempt
-def toDataBase(dataframe):
-    pass
-    # for index, row in dataframe.iterrows():
-    #     print(row)
-    #     allConceptName = Concept.objects.values_list("conceptName", flat=True).distinct()
-    #     allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
-    #     if pd.isna(row['Example']):
-    #         continue
-    #     if pd.isna(row['Concept']):
-    #         question = Question.objects.create(example=row["Example"],
-    #                                        meaning=row["Meaning （English）"], translation=row["Meaning"])
-    #         continue
-    #     if row["Concept"] in allConceptName:
-    #         if pd.isna(row["Sub-Concept 1"]):
-    #             subConcept = None
-    #         elif row["Sub-Concept 1"] in allSubConceptName:
-    #             subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-    #         else:
-    #             subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-    #         concept = Concept.objects.get(conceptName=row["Concept"])
-    #     else:
-    #         if pd.isna(row["Sub-Concept 1"]):
-    #             subConcept = None
-    #         elif row["Sub-Concept 1"] in allSubConceptName:
-    #             subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-    #         else:
-    #             subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-    #         concept = Concept.objects.create(conceptName=row["Concept"])
-    #     if pd.isna(row["Sub-Concept 2"]):
-    #         subConcept2 = None
-    #     elif row["Sub-Concept 2"] in allSubConceptName:
-    #         subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
-    #     else:
-    #         subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
-    #     question = Question.objects.create(concept=concept, subConcept1=subConcept, subConcept2=subConcept2,
-    #                                        example=row["Example"],
-    #                                        meaning=row["Meaning （English）"], translation=row["Meaning"])
+def toDataBase(dataframe,dataFrameName):
+    for index, row in dataframe.iterrows():
+        unit=Unit.objects.create(unitName=dataFrameName)
+        allConceptID = unit.concept.values_list("conceptID",flat=True)
+        allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
+        if pd.isna(row['Example']):
+            continue
+        if row["ConceptID"] in allConceptID:
+            if pd.isna(row["Sub-Concept 1"]):
+                subConcept = None
+            elif row["Sub-Concept 1"] in allSubConceptName:
+                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
+            else:
+                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+            concept = Concept.objects.get(conceptID=row["ConceptID"])
+        else:
+            if pd.isna(row["Sub-Concept 1"]):
+                subConcept = None
+            elif row["Sub-Concept 1"] in allSubConceptName:
+                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
+            else:
+                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+            concept = Concept.objects.create(conceptName=row["Concept"],conceptID=row["ConceptID"])
+        if pd.isna(row["Sub-Concept 2"]):
+            subConcept2 = None
+        elif row["Sub-Concept 2"] in allSubConceptName:
+            subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+        else:
+            subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
+        example = Example.objects.create(unit=unit,concept=concept,subConcept1=subConcept,subConcept2=subConcept2,
+                                         exampleID=row["ExampleID"],example=row["Example"],meaning=row["Meaning"],
+                                         translation=row["Meaning（中文）"],
+                                         level2Mode=int(row["level_2"]),
+                                         level3Mode=int(row["level_3"]),
+                                         level4Mode=int(row["level_4"]),
+                                         level5Mode=int(row["level_5"]),
+                                         level6Mode=int(row["level_6"]),)
+        if int(row["level_2"]):
+            Level2.objects.create(questionID=row["QueationL2ID"],question=row["Question_L2"],op1=row["wrong concept 1"],
+                                  op2=row["wrong concept 2"],op3=row["wrong concept 3"],example=example)
+        if int(row["level_3"]):
+            Level3.objects.create(questionID=row["QueationL3ID"],question=row["Question_L3"],op1=row["wrong option 1"],
+                                  op2=row["wrong option 2"],op3=row["wrong option 3"],example=example)
+        if int(row["level_4"]):
+            Level3.objects.create(questionID=row["QueationL4ID"],question=row["Question_L4"],example=example)
 
