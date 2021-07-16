@@ -72,14 +72,14 @@ class Example(models.Model):
 
 #错题
 class Wrong(models.Model):
-    uerID = models.IntegerField()  # user id must be unique
+    commonUserID = models.IntegerField()  # user id must be unique
     question = models.ForeignKey(Example, related_name="wrong", null=False, blank=False, on_delete=models.CASCADE)
     createTime = models.DateTimeField(default=timezone.now) #首次错误时间
     updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
     count = models.CharField(max_length=100, default='0')  # error times can be null
 
     def __str__(self):
-        return "User:" + str(self.uerID) + " Example:" + str(self.example.exampleID)  # return primary key
+        return "User:" + str(self.commonUserID) + " Example:" + str(self.example.exampleID)  # return primary key
 
     class Meta:
         db_table = "Wrong"
@@ -175,11 +175,11 @@ class Groups(models.Model):
 
 ###收藏夹
 class NotesCollection(models.Model):
-    uerId = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
-    example = models.ManyToManyField(Example)
+    commonUserID = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
+    example = models.ForeignKey(Example,on_delete=models.CASCADE)
 
     def __str__(self):
-        return "NotesCollection:" + str(self.uerID) + str(self.collectExampleID)
+        return "NotesCollection:" + str(self.commonUserID) + str(self.example.exampleID)
 
     class Meta:
         db_table = "NotesCollection"
@@ -189,7 +189,7 @@ class NotesCollection(models.Model):
 
 ##每日任务
 class DailyTask(models.Model):
-    commonUserID = models.ForeignKey(CommonUser, related_name='uerID', null=False, blank=False, on_delete=models.CASCADE)
+    commonUserID = models.ForeignKey(CommonUser, related_name='DailyTask', null=False, blank=False, on_delete=models.CASCADE)
     dailyGoalNum = models.IntegerField()
 
     def __str__(self):
