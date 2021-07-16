@@ -30,20 +30,22 @@ class SubConcept(models.Model):
         db_table = "SubConcept"
 
 
-###new here, one concept belongs to exactly one unit, 11 units in total
+###one concept belongs to exactly one unit
+##单元里包含概念
 class Unit(models.Model):
-    UnitID = models.AutoField(primary_key=True)
-    UnitName = models.TextField()
+    unitID = models.AutoField(primary_key=True)
+    unitName = models.TextField()
+    concept = models.ForeignKey(Concept, related_name="concept", null=True, on_delete=models.CASCADE)
+    #一个unit有多个concept,一个concept只在一个unit
 
     def __str__(self):
-        return "UnitID:" + str(self.UnitID)
+        return "Unit:" + str(self.unitID) + str(self.unitName)
 
     class Meta:
         db_table = "Unit"
 
 
-# ###new here, delete Question table and add Example Table
-
+# delete Question table and add Example Table
 
 # class Question(models.Model):
 #     questionID = models.AutoField(primary_key=True)
@@ -64,18 +66,39 @@ class Unit(models.Model):
 #         verbose_name = "Questions"
 #         verbose_name_plural = verbose_name
 
+#delete LevelList and use 0/1 to mark the level
+
+# #等级表 为了Level跟Example多对多而设
+# class LevelList(models.Model):
+#     levelId = models.IntegerField(primary_key=True)
+#     levelName = models.TextField(default="Level") ##无用属性
+#     def __str__(self):
+#         return "LevelList:" + str(self.levelId)
+#
+#     class Meta:
+#         db_table = "LevelList"
+#         verbose_name = "LevelLists"
+#         verbose_name_plural = verbose_name
 
 class Example(models.Model):
+    unit = models.ForeignKey(Unit, related_name="unit", null=True, on_delete=models.CASCADE)
+
+    conceptID = models.ForeignKey(Concept, related_name="concept", null=True, on_delete=models.CASCADE)
+    subConcept1id = models.ForeignKey(SubConcept, related_name="subconcept1", null=True, on_delete=models.CASCADE)
+    subConcept2id = models.ForeignKey(SubConcept, related_name="subconcept2", null=True, on_delete=models.CASCADE)
     exampleID = models.AutoField(primary_key=True)
-    conceptID = models.ForeignKey(Concept, related_name="Example", null=True, on_delete=models.CASCADE)
-    subConcept1 = models.ForeignKey(SubConcept, related_name="ExampleFirst", null=True, on_delete=models.CASCADE)
-    subConcept2 = models.ForeignKey(SubConcept, related_name="ExampleSecond", null=True, on_delete=models.CASCADE)
-    unit=models.ForeignKey(Unit,related_name="Example",on_delete=models.CASCADE)
-    example = models.TextField()
+    example = models.TextField() ##example的具体内容
     meaning = models.TextField()
     translation = models.TextField()
-    ###new here, add questionlevel attribute
-    level = models.IntegerField(default='1')  # default in level 1
+    #add questionlevel attribute
+    level1Mode = models.BooleanField(default=1)
+    level2Mode = models.BooleanField(default=1)
+    level3Mode = models.BooleanField(default=1)
+    level4Mode = models.BooleanField(default=1)
+    level5Mode = models.BooleanField(default=0)
+    level6Mode = models.BooleanField(default=0)
+
+    # level =  models.ManyToManyField(LevelList) #多对多
 
     def __str__(self):
         return "Example:" + str(self.exampleID)
@@ -85,12 +108,12 @@ class Example(models.Model):
         verbose_name = "Examples"
         verbose_name_plural = verbose_name
 
-
+#错题
 class Wrong(models.Model):
     uerID = models.IntegerField(primary_key=True)  # user id must be unique
-    question = models.ForeignKey(Example, related_name="Wrong", null=False, blank=False, on_delete=models.CASCADE)
-    createTime = models.DateTimeField(default=timezone.now)
-    updateTime = models.DateTimeField(auto_now=True)  # keep updated
+    question = models.ForeignKey(Example, related_name="wrong", null=False, blank=False, on_delete=models.CASCADE)
+    createTime = models.DateTimeField(default=timezone.now) #首次错误时间
+    updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
     count = models.CharField(max_length=100, default='0')  # error times can be null
 
     def __str__(self):
@@ -102,20 +125,20 @@ class Wrong(models.Model):
 
 ### two types of choice questions: Level2 and Level3
 
-###new here, add Level2 Table
+### add Level2 Table
 
-##Level2: what's the concept of '(the example sentence or phrases)'?
+## Level2: what's the concept of '(the example sentence or phrases)'?
 # one correct concept that the example belongs to, three other wrong
 class Level2(models.Model):
-    exampleID = models.AutoField(primary_key=True)
-    conceptID = models.ForeignKey(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
-    # three misleading choices
+    qstID = models.TextField() #L2....
+    conceptID = models.ForeignKey(Example, related_name="conceptL2", null=False, blank=False, on_delete=models.CASCADE)
+    # three misleading choices(similar concepts in the same unit?)
     op1 = models.TextField()
     op2 = models.TextField()
     op3 = models.TextField()
 
     def __str__(self):
-        return "Level2Question:" + str(self.exampleID)
+        return "Level2Question:" + str(self.qstID)
 
     class Meta:
         db_table = "Level2"
@@ -123,24 +146,38 @@ class Level2(models.Model):
         verbose_name_plural = verbose_name
 
 
-###new here, add Level3 Table
-##Level3: what's the meaning of '(the example sentence or phrases)'?
+## add Level3 Table
+## Level3: what's the meaning of '(the example sentence or phrases)'?
 # one correct english meaning that the example indicates, three other wrong
 class Level3(models.Model):
-    exampleID = models.AutoField(primary_key=True)
-    meaning = models.ForeignKey(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
+    qstID = models.AutoField(primary_key=True) #L3...
+    meaning = models.ForeignKey(Example, related_name="meaningL3", null=False, blank=False, on_delete=models.CASCADE)
     # three misleading choices
     op1 = models.TextField()
     op2 = models.TextField()
     op3 = models.TextField()
 
     def __str__(self):
-        return "Level3Question:" + str(self.exampleID)
+        return "Level3Question:" + str(self.qstID)
 
     class Meta:
         db_table = "Level3"
         verbose_name = "Level3Questions"
         verbose_name_plural = verbose_name
+
+class Level4(models.Model):
+    qstID = models.AutoField(primary_key=True) #L4...
+    translation = models.ForeignKey(Example, related_name="chineseMeaningL4", null=False, blank=False, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return "Level4Question:" + str(self.qstID)
+
+    class Meta:
+        db_table = "Level4"
+        verbose_name = "Level4Questions"
+        verbose_name_plural = verbose_name
+
 
 
 #### Wait for confirmation incomplete
@@ -158,15 +195,84 @@ class CommonUser(models.Model):
         verbose_name_plural = verbose_name
 
 
-###new here, group table
+##分组
 class Groups(models.Model):
-    groupsID = models.IntegerField(primary_key=True)
-    groupsName = models.TextField()
+    gID = models.IntegerField(primary_key=True)
+    gName = models.TextField()
 
     def __str__(self):
-        return "Group:" + str(self.groupsID)
+        return "Group:" + str(self.gID)
 
     class Meta:
         db_table = "Groups"
         verbose_name = "Groups"
+        verbose_name_plural = verbose_name
+
+
+###收藏夹
+class NotesCollection(models.Model):
+    uerId = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
+    collectExampleID = models.ManyToManyField(Example)
+
+    def __str__(self):
+        return "NotesCollection:" + str(self.uerID) + str(self.collectExampleID)
+
+    class Meta:
+        db_table = "NotesCollection"
+        verbose_name = "NotesCollections"
+        verbose_name_plural = verbose_name
+
+
+##每日任务
+class DailyTask(models.Model):
+    uerId = models.ForeignKey(CommonUser, related_name='uerID', null=False, blank=False, on_delete=models.CASCADE)
+    dailyGoalNum = models.IntegerField()
+
+    def __str__(self):
+        return "DailyTask:" + str(self.uerID) + str(self.dailyGoalNum)
+
+    class Meta:
+        db_table = "DailyTask"
+        verbose_name = "DailyTasks"
+        verbose_name_plural = verbose_name
+
+##做题历史记录
+class History(models.Model):
+    uerId = models.ForeignKey(CommonUser, related_name='uerIDhist')
+    eId = models.TextField() ##所有做过的题的exampleID
+
+    def __str__(self):
+        return "History:" + str(self.uerId) + str(self.eID)
+
+    class Meta:
+        db_table = "History"
+        verbose_name = "Histories"
+        verbose_name_plural = verbose_name
+
+
+
+##进度：做题量跟积分
+class Progress(models.Model):
+    uerId = models.ForeignKey(CommonUser, related_name='uerIDprogress')
+    qstNum = models.TextField()  ##做过的题数
+    cumScore = models.TextField()
+
+    def __str__(self):
+        return "Progress:" + str(self.uerId) + str(self.qstNum) + str(self.cumScore)
+
+    class Meta:
+        db_table = "Progress"
+        verbose_name = "Progresses"
+        verbose_name_plural = verbose_name
+
+##排位对照表
+class RankScale(models.Model):
+    ranking = models.TextField()
+    score = models.TextField()
+    def __str__(self):
+        return "RankScale:" + str(self.score) + str(self.ranking)
+
+    class Meta:
+        db_table = "RankScale"
+        verbose_name = "RankScales"
         verbose_name_plural = verbose_name

@@ -46,6 +46,11 @@ def oauth(method):
 @oauth
 def userinfo(request):
     user_info = request.session.get('user_info')
+    try:
+        CommonUser.objects.get(uerID=user_info.openid)
+    except:
+        commonUser=CommonUser.objects.create(uerID=user_info.openid)
+        commonUser.session_key=request.session.session_key
     return JsonResponse({"OpenID":user_info.openid})
 
 
