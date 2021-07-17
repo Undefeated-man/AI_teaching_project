@@ -212,7 +212,7 @@ def toDataBase(dataframe, dataFrameName):
         unit = Unit.objects.get(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        isHave = Concept.objects.filer(conceptName=row["Concept"])
+        isHave = Concept.objects.filter(conceptName=row["Concept"])
         allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
         if pd.isna(row['Example']):
             continue
