@@ -174,7 +174,7 @@ def cosDistance(vec1, vec2):
 
 @csrf_exempt
 def welcome(request):
-    lectureExcel_2 = pd.read_excel('/Lectures/Lecture  2.xlsx')
+    lectureExcel_2 = pd.read_excel('Lectures/Lecture  2.xlsx')
     lectureExcel_3 = pd.read_excel('/Lectures/Lecture 3.xlsx')
     lectureExcel_4 = pd.read_excel('/Lectures/Lecture 4.xlsx')
     lectureExcel_5 = pd.read_excel('/Lectures/Lecture 5.xlsx')
