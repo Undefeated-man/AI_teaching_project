@@ -92,7 +92,7 @@ class Wrong(models.Model):
 ## Level2: what's the concept of '(the example sentence or phrases)'?
 # one correct concept that the example belongs to, three other wrong
 class Level2(models.Model):
-    questionID = models.CharField(max_length=20,) #L2....
+    questionID = models.CharField(max_length=20,primary_key=True) #L2....
     example = models.ForeignKey(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
     question=models.TextField(null=False,blank=False)
     # three misleading choices(similar concepts in the same unit?)
@@ -113,7 +113,7 @@ class Level2(models.Model):
 ## Level3: what's the meaning of '(the example sentence or phrases)'?
 # one correct english meaning that the example indicates, three other wrong
 class Level3(models.Model):
-    questionID = models.AutoField(primary_key=True) #L3...
+    questionID = models.CharField(max_length=20,primary_key=True) #L3...
     example = models.ForeignKey(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
     question=models.TextField(null=False,blank=False)
     # three misleading choices
@@ -130,7 +130,7 @@ class Level3(models.Model):
         verbose_name_plural = verbose_name
 
 class Level4(models.Model):
-    questionID = models.AutoField(primary_key=True) #L4...
+    questionID = models.CharField(max_length=20,primary_key=True) #L4...
     example = models.ForeignKey(Example, related_name="Level4", null=False, blank=False, on_delete=models.CASCADE)
     question=models.TextField(null=False,blank=False)
 
