@@ -212,47 +212,50 @@ def toDataBase(dataframe, dataFrameName):
         unit = Unit.objects.get(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        isHave = Concept.objects.filter(conceptName=row["Concept"])
-        allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
-        if pd.isna(row['Example']):
+        try:
+            isHave = Concept.objects.filter(conceptName=row["Concept"])
+            allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
+            if pd.isna(row['Example']):
+                continue
+            if len(isHave)!=0:
+                if pd.isna(row["Sub-Concept 1"]):
+                    subConcept = None
+                elif row["Sub-Concept 1"] in allSubConceptName:
+                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
+                else:
+                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+                concept = Concept.objects.get(conceptName=row["Concept"])
+            else:
+                if pd.isna(row["Sub-Concept 1"]):
+                    subConcept = None
+                elif row["Sub-Concept 1"] in allSubConceptName:
+                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
+                else:
+                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+                concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
+            if pd.isna(row["Sub-Concept 2"]):
+                subConcept2 = None
+            elif row["Sub-Concept 2"] in allSubConceptName:
+                subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+            else:
+                subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
+            example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept, subConcept2=subConcept2,
+                                             exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
+                                             translation=row["Meaning（中文）"],
+                                             level2Mode=int(row["level_2"]),
+                                             level3Mode=int(row["level_3"]),
+                                             level4Mode=int(row["level_4"]),
+                                             level5Mode=int(row["level_5"]),
+                                             level6Mode=int(row["level_6"]), )
+            if int(row["level_2"]):
+                Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"],
+                                      op1=row["wrong concept 1"],
+                                      op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
+            if int(row["level_3"]):
+                Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                                      op1=row["wrong option 1"],
+                                      op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
+            if int(row["level_4"]):
+                Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+        except:
             continue
-        if len(isHave)!=0:
-            if pd.isna(row["Sub-Concept 1"]):
-                subConcept = None
-            elif row["Sub-Concept 1"] in allSubConceptName:
-                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-            else:
-                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-            concept = Concept.objects.get(conceptName=row["Concept"])
-        else:
-            if pd.isna(row["Sub-Concept 1"]):
-                subConcept = None
-            elif row["Sub-Concept 1"] in allSubConceptName:
-                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-            else:
-                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-            concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
-        if pd.isna(row["Sub-Concept 2"]):
-            subConcept2 = None
-        elif row["Sub-Concept 2"] in allSubConceptName:
-            subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
-        else:
-            subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
-        example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept, subConcept2=subConcept2,
-                                         exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
-                                         translation=row["Meaning（中文）"],
-                                         level2Mode=int(row["level_2"]),
-                                         level3Mode=int(row["level_3"]),
-                                         level4Mode=int(row["level_4"]),
-                                         level5Mode=int(row["level_5"]),
-                                         level6Mode=int(row["level_6"]), )
-        if int(row["level_2"]):
-            Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"],
-                                  op1=row["wrong concept 1"],
-                                  op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
-        if int(row["level_3"]):
-            Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
-                                  op1=row["wrong option 1"],
-                                  op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
-        if int(row["level_4"]):
-            Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
