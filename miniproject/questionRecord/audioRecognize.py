@@ -212,11 +212,11 @@ def toDataBase(dataframe, dataFrameName):
         unit = Unit.objects.get(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        allConceptID = Concept.objects.values_list("conceptID", flat=True)
+        isHave = Concept.objects.filer(conceptName=row["Concept"])
         allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
         if pd.isna(row['Example']):
             continue
-        if row["ConceptID"] in allConceptID:
+        if len(isHave)!=0:
             if pd.isna(row["Sub-Concept 1"]):
                 subConcept = None
             elif row["Sub-Concept 1"] in allSubConceptName:
