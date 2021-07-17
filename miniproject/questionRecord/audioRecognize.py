@@ -200,7 +200,12 @@ def welcome(request):
 
 @csrf_exempt
 def toDataBase(dataframe,dataFrameName):
-    unit = Unit.objects.create(unitName=dataFrameName)
+
+    if len(Unit.objects.filter(unitName=dataFrameName))==0:
+        unit = Unit.objects.create(unitName=dataFrameName)
+    else:
+        unit=Unit.objects.get(unitName=dataFrameName)
+
     for index, row in dataframe.iterrows():
         allConceptID = Concept.objects.values_list("conceptID",flat=True)
         allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
