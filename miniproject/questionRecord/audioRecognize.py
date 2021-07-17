@@ -202,7 +202,7 @@ def welcome(request):
 def toDataBase(dataframe,dataFrameName):
     for index, row in dataframe.iterrows():
         unit=Unit.objects.create(unitName=dataFrameName)
-        allConceptID = unit.concept.values_list("conceptID",flat=True)
+        allConceptID = Concept.objects.values_list("conceptID",flat=True)
         allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
         if pd.isna(row['Example']):
             continue
@@ -221,7 +221,7 @@ def toDataBase(dataframe,dataFrameName):
                 subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
             else:
                 subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-            concept = Concept.objects.create(conceptName=row["Concept"],conceptID=row["ConceptID"])
+            concept = Concept.objects.create(conceptName=row["Concept"],conceptID=row["ConceptID"],unit=unit)
         if pd.isna(row["Sub-Concept 2"]):
             subConcept2 = None
         elif row["Sub-Concept 2"] in allSubConceptName:
