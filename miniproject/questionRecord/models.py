@@ -241,4 +241,7 @@ class RankScale(models.Model):
         verbose_name = "RankScales"
         verbose_name_plural = verbose_name
 
-#alter table tableName(你自己的表名) default character set utf8;
+# ALTER TABLE Example MODIFY COLUMN translation longtext
+#     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+# ALTER TABLE Level4 MODIFY COLUMN question longtext
+#     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;

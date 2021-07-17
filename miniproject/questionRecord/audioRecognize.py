@@ -248,5 +248,5 @@ def toDataBase(dataframe,dataFrameName):
             Level3.objects.create(questionID=row["QueationL3ID"],question=row["Question_L3"],op1=row["wrong option 1"],
                                   op2=row["wrong option 2"],op3=row["wrong option 3"],example=example)
         if int(row["level_4"]):
-            Level3.objects.create(questionID=row["QueationL4ID"],question=row["Question_L4"],example=example)
+            Level4.objects.create(questionID=row["QueationL4ID"],question=row["Question_L4"],example=example)
 
