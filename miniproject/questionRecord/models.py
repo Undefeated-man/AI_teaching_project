@@ -240,3 +240,5 @@ class RankScale(models.Model):
         db_table = "RankScale"
         verbose_name = "RankScales"
         verbose_name_plural = verbose_name
+
+#alter table TABLE_NAME convert to character set utf8mb4 collate utf8mb4_bin;
