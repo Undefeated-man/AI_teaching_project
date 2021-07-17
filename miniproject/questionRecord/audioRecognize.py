@@ -200,8 +200,8 @@ def welcome(request):
 
 @csrf_exempt
 def toDataBase(dataframe,dataFrameName):
+    unit = Unit.objects.create(unitName=dataFrameName)
     for index, row in dataframe.iterrows():
-        unit=Unit.objects.create(unitName=dataFrameName)
         allConceptID = Concept.objects.values_list("conceptID",flat=True)
         allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
         if pd.isna(row['Example']):
