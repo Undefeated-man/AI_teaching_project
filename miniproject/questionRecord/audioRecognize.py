@@ -223,7 +223,7 @@ def toDataBase(dataframe, dataFrameName):
                 subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
             else:
                 subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-            concept = Concept.objects.get(conceptName=row["conceptName"])
+            concept = Concept.objects.get(conceptName=row["Concept"])
         else:
             if pd.isna(row["Sub-Concept 1"]):
                 subConcept = None
