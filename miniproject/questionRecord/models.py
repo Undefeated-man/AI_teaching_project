@@ -10,7 +10,8 @@ from django.contrib.auth.models import AbstractUser
 class Unit(models.Model):
     unitID = models.AutoField(primary_key=True)
     unitName = models.TextField()
-    #一个unit有多个concept,一个concept只在一个unit
+
+    # 一个unit有多个concept,一个concept只在一个unit
 
     def __str__(self):
         return "Unit:" + str(self.unitID) + str(self.unitName)
@@ -18,10 +19,11 @@ class Unit(models.Model):
     class Meta:
         db_table = "Unit"
 
+
 class Concept(models.Model):
     conceptID = models.AutoField(primary_key=True)
     conceptName = models.CharField(unique=True, max_length=100, null=False, blank=False)
-    unit=models.ForeignKey(Unit,related_name="concept", null=True, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, related_name="concept", null=True, on_delete=models.CASCADE)
     ###new here, add description attribute
     conceptDescription = models.TextField()
 
@@ -42,18 +44,18 @@ class SubConcept(models.Model):
     class Meta:
         db_table = "SubConcept"
 
+
 class Example(models.Model):
     unit = models.ForeignKey(Unit, related_name="unit", null=True, on_delete=models.CASCADE)
 
     concept = models.ForeignKey(Concept, related_name="concept", null=True, on_delete=models.CASCADE)
     subConcept1 = models.ForeignKey(SubConcept, related_name="Example1", null=True, on_delete=models.CASCADE)
     subConcept2 = models.ForeignKey(SubConcept, related_name="Example2", null=True, on_delete=models.CASCADE)
-    exampleID = models.CharField(max_length=20,primary_key=True)
-    example = models.TextField() ##example的具体内容
+    exampleID = models.CharField(max_length=20, primary_key=True)
+    example = models.TextField()  ##example的具体内容
     meaning = models.TextField()
     translation = models.TextField()
-    #add questionlevel attribute
-    level1Mode = models.BooleanField(default=1)
+    # add questionlevel attribute
     level2Mode = models.BooleanField(default=1)
     level3Mode = models.BooleanField(default=1)
     level4Mode = models.BooleanField(default=1)
@@ -70,20 +72,6 @@ class Example(models.Model):
         verbose_name = "Examples"
         verbose_name_plural = verbose_name
 
-#错题
-class Wrong(models.Model):
-    commonUserID = models.IntegerField()  # user id must be unique
-    question = models.ForeignKey(Example, related_name="wrong", null=False, blank=False, on_delete=models.CASCADE)
-    createTime = models.DateTimeField(default=timezone.now) #首次错误时间
-    updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
-    count = models.CharField(max_length=100, default='0')  # error times can be null
-
-    def __str__(self):
-        return "User:" + str(self.commonUserID) + " Example:" + str(self.example.exampleID)  # return primary key
-
-    class Meta:
-        db_table = "Wrong"
-
 
 ### two types of choice questions: Level2 and Level3
 
@@ -92,13 +80,13 @@ class Wrong(models.Model):
 ## Level2: what's the concept of '(the example sentence or phrases)'?
 # one correct concept that the example belongs to, three other wrong
 class Level2(models.Model):
-    questionID = models.CharField(max_length=20,primary_key=True) #L2....
+    questionID = models.CharField(max_length=20, primary_key=True)  # L2....
     example = models.ForeignKey(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
-    question=models.TextField(null=False,blank=False)
+    question = models.TextField(null=False, blank=False)
     # three misleading choices(similar concepts in the same unit?)
-    op1 = models.TextField(null=False,blank=False)
-    op2 = models.TextField(null=False,blank=False)
-    op3 = models.TextField(null=False,blank=False)
+    op1 = models.TextField(null=False, blank=False)
+    op2 = models.TextField(null=False, blank=False)
+    op3 = models.TextField(null=False, blank=False)
 
     def __str__(self):
         return "Level2Question:" + str(self.questionID)
@@ -113,13 +101,13 @@ class Level2(models.Model):
 ## Level3: what's the meaning of '(the example sentence or phrases)'?
 # one correct english meaning that the example indicates, three other wrong
 class Level3(models.Model):
-    questionID = models.CharField(max_length=20,primary_key=True) #L3...
+    questionID = models.CharField(max_length=20, primary_key=True)  # L3...
     example = models.ForeignKey(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
-    question=models.TextField(null=False,blank=False)
+    question = models.TextField(null=False, blank=False)
     # three misleading choices
-    op1 = models.TextField(null=False,blank=False)
-    op2 = models.TextField(null=False,blank=False)
-    op3 = models.TextField(null=False,blank=False)
+    op1 = models.TextField(null=False, blank=False)
+    op2 = models.TextField(null=False, blank=False)
+    op3 = models.TextField(null=False, blank=False)
 
     def __str__(self):
         return "Level3Question:" + str(self.questionID)
@@ -129,10 +117,11 @@ class Level3(models.Model):
         verbose_name = "Level3Questions"
         verbose_name_plural = verbose_name
 
+
 class Level4(models.Model):
-    questionID = models.CharField(max_length=20,primary_key=True) #L4...
+    questionID = models.CharField(max_length=20, primary_key=True)  # L4...
     example = models.ForeignKey(Example, related_name="Level4", null=False, blank=False, on_delete=models.CASCADE)
-    question=models.TextField(null=False,blank=False)
+    question = models.TextField(null=False, blank=False)
 
     def __str__(self):
         return "Level4Question:" + str(self.questionID)
@@ -143,11 +132,28 @@ class Level4(models.Model):
         verbose_name_plural = verbose_name
 
 
+##分组
+class Groups(models.Model):
+    groupID = models.IntegerField(primary_key=True)
+    groupName = models.TextField()
+
+    def __str__(self):
+        return "Group:" + str(self.groupID)
+
+    class Meta:
+        db_table = "Groups"
+        verbose_name = "Groups"
+        verbose_name_plural = verbose_name
+
 
 #### Wait for confirmation incomplete
 class CommonUser(models.Model):
-    commonUserID = models.CharField(max_length=225,primary_key=True)
-    groupsID = models.IntegerField()
+    commonUserID = models.CharField(max_length=225, primary_key=True)
+    commonUserName = models.CharField(max_length=25)
+    group = models.ForeignKey(Groups, related_name="CommonUser", on_delete=models.CASCADE)
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
+        , (3,"Level3"),(4,"Level4")],
+                             default="Level1")
     session_key = models.CharField(max_length=225, verbose_name="session_key", default="")
 
     def __str__(self):
@@ -159,27 +165,16 @@ class CommonUser(models.Model):
         verbose_name_plural = verbose_name
 
 
-##分组
-class Groups(models.Model):
-    gID = models.IntegerField(primary_key=True)
-    gName = models.TextField()
-
-    def __str__(self):
-        return "Group:" + str(self.gID)
-
-    class Meta:
-        db_table = "Groups"
-        verbose_name = "Groups"
-        verbose_name_plural = verbose_name
-
-
 ###收藏夹
 class NotesCollection(models.Model):
-    commonUserID = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
-    example = models.ForeignKey(Example,on_delete=models.CASCADE)
+    commonUser = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
+    level = models.CharField(max_length=20, null=False, blank=False,choices=[(1,"Level1"),(2, "Level2")
+        , (3,"Level3"),(4,"Level4")],
+                             default="Level1")
+    questionID = models.CharField(max_length=25, blank=False, null=False)
 
     def __str__(self):
-        return "NotesCollection:" + str(self.commonUserID) + str(self.example.exampleID)
+        return "NotesCollection:" + str(self.commonUser.commonUserID) + str(self.example.exampleID)
 
     class Meta:
         db_table = "NotesCollection"
@@ -189,7 +184,8 @@ class NotesCollection(models.Model):
 
 ##每日任务
 class DailyTask(models.Model):
-    commonUserID = models.ForeignKey(CommonUser, related_name='DailyTask', null=False, blank=False, on_delete=models.CASCADE)
+    commonUserID = models.ForeignKey(CommonUser, related_name='DailyTask', null=False, blank=False,
+                                     on_delete=models.CASCADE)
     dailyGoalNum = models.IntegerField()
 
     def __str__(self):
@@ -200,13 +196,17 @@ class DailyTask(models.Model):
         verbose_name = "DailyTasks"
         verbose_name_plural = verbose_name
 
+
 ##做题历史记录
 class History(models.Model):
-    commonUser = models.ForeignKey(CommonUser, related_name='History',on_delete=models.CASCADE)
-    example = models.ForeignKey(Example, on_delete=models.CASCADE)
+    commonUser = models.ForeignKey(CommonUser, related_name='History', on_delete=models.CASCADE)
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
+        , (3,"Level3"),(4,"Level4")],
+                             default="Level1")
+    questionID = models.CharField(max_length=25, blank=False, null=False)
 
     def __str__(self):
-        return "History:" + str(self.commonUser.commonUserID)+" " + str(self.example.exampleID)
+        return "History:" + str(self.commonUser.commonUserID) + " " + str(self.example.exampleID)
 
     class Meta:
         db_table = "History"
@@ -214,32 +214,38 @@ class History(models.Model):
         verbose_name_plural = verbose_name
 
 
-
 ##进度：做题量跟积分
 class Progress(models.Model):
-    commonUserID = models.ForeignKey(CommonUser, related_name='Progress', on_delete=models.CASCADE)
-    qstNum = models.TextField()  ##做过的题数
-    cumScore = models.TextField()
+    commonUser = models.ForeignKey(CommonUser, related_name='Progress', on_delete=models.CASCADE)
+    qstNum = models.IntegerField()  ##做过的题数
+    cumScore = models.IntegerField()
 
     def __str__(self):
-        return "Progress:" + str(self.commonUserID) + str(self.qstNum) + str(self.cumScore)
+        return "Progress:" + str(self.commonUser.commonUserID) + str(self.qstNum) + str(self.cumScore)
 
     class Meta:
         db_table = "Progress"
         verbose_name = "Progresses"
         verbose_name_plural = verbose_name
 
-##排位对照表
-class RankScale(models.Model):
-    ranking = models.TextField()
-    score = models.TextField()
+
+# 错题
+class Wrong(models.Model):
+    commonUser = models.ForeignKey(CommonUser, on_delete=models.CASCADE)  # user id must be unique
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
+        , (3,"Level3"),(4,"Level4")],
+                             default="Level1")
+    questionID = models.CharField(max_length=25, blank=False, null=False)
+    createTime = models.DateTimeField(default=timezone.now)  # 首次错误时间
+    updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
+    count = models.CharField(max_length=100, default='0')  # error times can be null
+
     def __str__(self):
-        return "RankScale:" + str(self.score) + str(self.ranking)
+        return "User:" + str(self.commonUser.commonUserID) + " Example:" + str(
+            self.example.exampleID)  # return primary key
 
     class Meta:
-        db_table = "RankScale"
-        verbose_name = "RankScales"
-        verbose_name_plural = verbose_name
+        db_table = "Wrong"
 
 # ALTER TABLE Example MODIFY COLUMN translation longtext
 #     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;

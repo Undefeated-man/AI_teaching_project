@@ -1,3 +1,5 @@
+import random
+
 from wechatpy.oauth import WeChatOAuth
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
@@ -47,10 +49,10 @@ def oauth(method):
 def userinfo(request):
     user_info = request.session.get('user_info')
     try:
-        CommonUser.objects.get(uerID=user_info.openid)
+        commonUser=CommonUser.objects.get(commonUserID=user_info.openid)
     except:
-        commonUser=CommonUser.objects.create(uerID=user_info.openid)
-        commonUser.session_key=request.session.session_key
+        commonUser=CommonUser.objects.create(commonUserID=user_info.openid,commonUserName=user_info.nickname)
+    commonUser.session_key = request.session.session_key
     return JsonResponse({"OpenID":user_info.openid})
 
 
@@ -60,29 +62,158 @@ def upload(request):
 
 
 @csrf_exempt
-def getUserWrong(request):
+def getUserInformation(request):
     try:
-        userID = request.POST.get("userID")
-        wrongRecords = []
-        for i in Wrong.objects.filter(userID=userID):
-            self_dict = {"count": i.count, "question": {"example": i.question.example, "meaning": i.question.meaning}}
-            wrongRecords.append(self_dict)
-        return JsonResponse(wrongRecords, safe=False)
+        openID=request.POST.get("openID")
+        commonUser=CommonUser.objects.get(commonUserID=openID)
+        score=Progress.objects.get(commonUser=commonUser).cumScore
+        level=commonUser.level
+        doneQuestion=[]
+        wrongQuestion=[]
+        for i in History.objects.filter(commonUser=commonUser):
+            level=i.level
+            example=eval(level).objects.get(questionID=i.questionID).example
+            doneQuestion.append(serializationQuestion(example,i.level))
+        for i in Wrong.objects.filter(commonUser=commonUser):
+            example = i.example
+            wrongQuestion.append(serializationQuestion(example,i.level))
+        return JsonResponse({"state":"success","openID":openID,"score":score,"level":level,"doneQuestion":doneQuestion,
+                             "wrongQuestion":wrongQuestion})
     except Exception as e:
-        return JsonResponse({"state": "Fail", "Error": e.__str__()})
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
-@csrf_exempt
-def addUserWrong(userID,questionID):
+def getRankWithLevel(request):
     try:
-        result = Wrong.objects.filter(userID=userID, questionID=questionID)
-        if len(result) == 0:
-            Wrong.objects.create(userID=userID, question_id=questionID, count=1)
+        level=request.POST.get("level")
+        allCommonUser=CommonUser.objects.filter(level=level,).order_by("Progress__cumScore")
+        result=[]
+        for i in allCommonUser:
+            result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
+                           "score":i.Progress.cumScore})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def getRankWithoutLevel(request):
+    try:
+        allCommonUser=CommonUser.objects.order_by("Progress__cumScore")
+        result=[]
+        for i in allCommonUser:
+            result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
+                           "score":i.Progress.cumScore,"level":i.level})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def getNewQuestion(request):
+    try:
+        openID = request.POST.get("openID")
+        commonUser = CommonUser.objects.get(commonUserID=openID)
+        level = request.POST.get("level")
+        if level=="Level1":
+            alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
+            allLevelQuestion=Level2.objects.exclude(question__in=alreadyDoneID).example
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level2")}
+        if level=="Level2":
+            alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
+            allLevelQuestion=Level3.objects.exclude(question__in=alreadyDoneID).example
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level3")}
+        if level=="Level3":
+            alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
+            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).example
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4")}
+        if level=="Level4":
+            alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
+            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).example
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4")}
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def getOneQuesiton(request):
+    try:
+        level = request.POST.get("level")
+        questionID = request.POST.get("questionID")
+        example=eval(level).objects.get(questionID=questionID).example
+        if level == "Level3":
+            if example.level3Mode:
+                level3Question = example.Level3
+                exampleDict = {"level": level, "questionID": level3Question.questionID,
+                                                 "question": level3Question.question, "op1": level3Question.op1,
+                                                 "op2": level3Question.op2, "op3": level3Question.op3}
+        elif level == "Level4":
+            if example.level4Mode:
+                level4Question = example.Level4
+                exampleDict= {"level": level, "questionID": level4Question.questionID,"question": level4Question.question}
         else:
-            result[0].count += 1
-            result[0].save()
-        return JsonResponse({"state": "Success"})
+            level2Question = example.Level2
+            exampleDict= {"level": level, "questionID": level2Question.questionID,"question": level2Question.question, "op1": level2Question.op1,
+                                             "op2": level2Question.op2, "op3": level2Question.op3}
+        return JsonResponse({"state":"success","question":exampleDict})
     except Exception as e:
-        return JsonResponse({"state": "fail", "Error": e.__str__()})
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def getWrongQuestion(request):
+    try:
+        openID = request.POST.get("openID")
+        commonUser = CommonUser.objects.get(commonUserID=openID)
+        level = request.POST.get("level")
+        wrongQuestion = []
+        for i in Wrong.objects.filter(commonUser=commonUser,level=level):
+            example = i.example
+            wrongQuestion.append(serializationQuestion(example,level))
+        return JsonResponse({"state":"success","wrongQuestion":wrongQuestion})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def getNotesCollection(request):
+    try:
+        openID = request.POST.get("openID")
+        commonUser = CommonUser.objects.get(commonUserID=openID)
+        collectedQuestion = []
+        for i in NotesCollection.objects.filter(commonUser=commonUser):
+            example = i.example
+            collectedQuestion.append(serializationQuestion(example,i.level))
+        return JsonResponse({"state":"success","collectedQuestion":collectedQuestion})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def getHistory(request):
+    try:
+        openID = request.POST.get("openID")
+        commonUser = CommonUser.objects.get(commonUserID=openID)
+        historyQuestion = []
+        for i in History.objects.filter(commonUser=commonUser):
+            example = i.example
+            historyQuestion.append(serializationQuestion(example, i.level))
+        return JsonResponse({"state": "success", "collectedQuestion": historyQuestion})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+def serializationQuestion(example,level):
+    exampleDict = {}
+    exampleDict["unit"] = example.unit.unitName
+    exampleDict["example"] = example.example
+    exampleDict["meaning"] = example.meaning
+    exampleDict["translation"] = example.translation
+    if level=="Level3":
+        if example.level3Mode:
+            level3Question = example.Level3
+            exampleDict["level3Question"] = {"level":level,"questionID":level3Question.questionID,"question": level3Question.question, "op1": level3Question.op1,
+                                            "op2": level3Question.op2, "op3": level3Question.op3}
+    elif level=="Level4":
+        if example.level4Mode:
+            level4Question = example.Level4
+            exampleDict["level4Question"] = {"level": level, "questionID": level4Question.questionID,"question": level4Question.question}
+    else:
+        level2Question = example.Level2
+        exampleDict["level2Question"] = {"level": level, "questionID": level2Question.questionID,"question": level2Question.question, "op1": level2Question.op1,
+                                         "op2": level2Question.op2, "op3": level2Question.op3}
+
+    return exampleDict
 
 
