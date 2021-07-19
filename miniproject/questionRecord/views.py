@@ -37,21 +37,24 @@ def get_user_info(js_code,userinfo,iv):
 
 # 获取用户信息UserInfo
 def userinfo(request):
-    code = request.POST.get('code', None)
-    name = request.POST.get('name', None)
-    userinfo=request.POST.get("userinfo","")
-    iv=request.POST.get("iv","")
-    user_info = get_user_info(code,userinfo,iv)
     try:
-        commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
-        commonUser.commonUserName=name
-        commonUser.save()
-    except:
-        group=Groups.objects.get(groupID=1)
-        commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
-        Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
-        commonUser.session_key = request.session.session_key
-    return JsonResponse({"OpenID":user_info['openId'],"Name":name})
+        code = request.POST.get('code', None)
+        name = request.POST.get('name', None)
+        userinfo=request.POST.get("userinfo","")
+        iv=request.POST.get("iv","")
+        user_info = get_user_info(code,userinfo,iv)
+        try:
+            commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
+            commonUser.commonUserName=name
+            commonUser.save()
+        except:
+            group=Groups.objects.get(groupID=1)
+            commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
+            Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
+            commonUser.session_key = request.session.session_key
+        return JsonResponse({"state":"success","OpenID":user_info['openId'],"Name":name})
+    except Exception as e:
+        return JsonResponse({"state":"fail","error":e.__str__()})
 
 
 @csrf_exempt
