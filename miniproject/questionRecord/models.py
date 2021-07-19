@@ -184,7 +184,7 @@ class NotesCollection(models.Model):
 
 ##每日任务
 class DailyTask(models.Model):
-    commonUserID = models.ForeignKey(CommonUser, related_name='DailyTask', null=False, blank=False,
+    commonUserID = models.OneToOneField(CommonUser, related_name='DailyTask', null=False, blank=False,
                                      on_delete=models.CASCADE)
     dailyGoalNum = models.IntegerField()
 
@@ -216,7 +216,7 @@ class History(models.Model):
 
 ##进度：做题量跟积分
 class Progress(models.Model):
-    commonUser = models.ForeignKey(CommonUser, related_name='Progress', on_delete=models.CASCADE)
+    commonUser = models.OneToOneField(CommonUser, related_name='Progress', on_delete=models.CASCADE)
     qstNum = models.IntegerField()  ##做过的题数
     cumScore = models.IntegerField()
 
