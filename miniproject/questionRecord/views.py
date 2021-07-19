@@ -110,7 +110,7 @@ def getRankWithoutLevel(request):
 
 
 def getNewQuestion(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
@@ -130,8 +130,8 @@ def getNewQuestion(request):
             alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
             allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).values_list("example")
             return {"state":"success","question":serializationQuestion(allLevelQuestion[0],"Level4",commonUser)}
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getOneQuesiton(request):
