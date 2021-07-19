@@ -81,7 +81,7 @@ class Example(models.Model):
 # one correct concept that the example belongs to, three other wrong
 class Level2(models.Model):
     questionID = models.CharField(max_length=20, primary_key=True)  # L2....
-    example = models.ForeignKey(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
+    example = models.OneToOneField(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
     question = models.TextField(null=False, blank=False)
     # three misleading choices(similar concepts in the same unit?)
     op1 = models.TextField(null=False, blank=False)
@@ -102,7 +102,7 @@ class Level2(models.Model):
 # one correct english meaning that the example indicates, three other wrong
 class Level3(models.Model):
     questionID = models.CharField(max_length=20, primary_key=True)  # L3...
-    example = models.ForeignKey(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
+    example = models.OneToOneField(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
     question = models.TextField(null=False, blank=False)
     # three misleading choices
     op1 = models.TextField(null=False, blank=False)
@@ -120,7 +120,7 @@ class Level3(models.Model):
 
 class Level4(models.Model):
     questionID = models.CharField(max_length=20, primary_key=True)  # L4...
-    example = models.ForeignKey(Example, related_name="Level4", null=False, blank=False, on_delete=models.CASCADE)
+    example = models.OneToOneField(Example, related_name="Level4", null=False, blank=False, on_delete=models.CASCADE)
     question = models.TextField(null=False, blank=False)
 
     def __str__(self):
