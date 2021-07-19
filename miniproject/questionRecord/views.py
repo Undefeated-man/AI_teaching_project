@@ -110,28 +110,16 @@ def getRankWithoutLevel(request):
 
 
 def getNewQuestion(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        if level=="Level1":
-            alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level2.objects.exclude(question__in=alreadyDoneID).values_list("example")
-            return {"state":"success","question":serializationQuestion(allLevelQuestion[0],"Level2",commonUser)}
-        if level=="Level2":
-            alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level3.objects.exclude(question__in=alreadyDoneID).values_list("example")
-            return {"state":"success","question":serializationQuestion(allLevelQuestion[0],"Level3",commonUser)}
-        if level=="Level3":
-            alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).values_list("example")
-            return {"state":"success","question":serializationQuestion(allLevelQuestion[0],"Level4",commonUser)}
-        if level=="Level4":
-            alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).values_list("example")
-            return {"state":"success","question":serializationQuestion(allLevelQuestion[0],"Level4",commonUser)}
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+        alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
+        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID).values_list("example")
+        example=eval(level).objects.get(questionID=allLevelQuestion[0][0]).example
+        return {"state":"success","question":serializationQuestion(example,"Level4",commonUser)}
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getOneQuesiton(request):
