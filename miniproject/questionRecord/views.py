@@ -116,19 +116,19 @@ def getNewQuestion(request):
         level = request.POST.get("level")
         if level=="Level1":
             alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level2.objects.exclude(question__in=alreadyDoneID).example
+            allLevelQuestion=Level2.objects.exclude(question__in=alreadyDoneID).values_list("example")
             return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level2")}
         if level=="Level2":
             alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level3.objects.exclude(question__in=alreadyDoneID).example
+            allLevelQuestion=Level3.objects.exclude(question__in=alreadyDoneID).values_list("example")
             return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level3",commonUser)}
         if level=="Level3":
             alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).example
+            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).values_list("example")
             return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4",commonUser)}
         if level=="Level4":
             alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).example
+            allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).values_list("example")
             return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4",commonUser)}
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
