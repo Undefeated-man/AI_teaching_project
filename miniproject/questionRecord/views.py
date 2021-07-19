@@ -7,6 +7,9 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from . import audioRecognize
+from weixin.lib.wxcrypt import WXBizDataCrypt
+from weixin import WXAPPAPI
+
 # Create your views here.
 
 
@@ -16,15 +19,27 @@ AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 #cd AI_teaching/AI_teaching_project/miniproject
 
 
-def get_user_info(js_code):
-    req_result = requests.get("https://api.weixin.qq.com/sns/jscode2session?"+"appid=" + AppID + "&secret=" + AppSecret + "&js_code=" + js_code)#+ "&grant_type=authorization_code"
-    return req_result.json()
+def get_user_info(js_code,userinfo,iv):
+    api = WXAPPAPI(AppID, AppSecret)
+    session_info = api.exchange_code_for_session_key(js_code)
+    # print(api);
+
+    # 获取session_info 后
+
+    session_key = session_info.get('session_key')
+    print("session_key", session_key)
+    # print()
+    crypt = WXBizDataCrypt(AppID, session_key)
+    user_info = crypt.decrypt(userinfo, iv)
+    return user_info
 
 
 # 获取用户信息UserInfo
 def userinfo(request):
     code = request.POST.get('code', None)
     name = request.POST.get('name', None)
+    userinfo=request.POST.get("userinfo","")
+    iv=request.POST.get("iv","")
     user_info = get_user_info(code)
     try:
         commonUser=CommonUser.objects.get(commonUserID=user_info['openid'])
@@ -34,7 +49,7 @@ def userinfo(request):
         group=Groups.objects.get(groupID=1)
         commonUser=CommonUser.objects.create(commonUserID=user_info['openid'],commonUserName=name,group=group)
         Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
-    commonUser.session_key = request.session.session_key
+        commonUser.session_key = request.session.session_key
     return JsonResponse({"OpenID":user_info['openid'],"Name":name})
 
 
