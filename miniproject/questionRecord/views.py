@@ -15,20 +15,29 @@ AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 
 #cd AI_teaching/AI_teaching_project/miniproject
 
+
+def get_user_info(js_code):
+    req_params = {
+         "appid": AppID,  # 小程序的 ID
+         "secret": AppSecret,  # 小程序的 secret
+        "js_code": js_code,
+         "grant_type": 'authorization_code'
+     }
+    req_result = requests.get('https://api.weixin.qq.com/sns/jscode2session', params=req_params, timeout=3, verify=False)
+    return req_result.json()
+
+
 # 获取用户信息UserInfo
 def userinfo(request):
     code = request.POST.get('code', None)
-    url = 'https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={code}&grant_type=authorization_code'.format(appid=AppID,secret=AppSecret,code=code)
-    res = requests.get(url)
-    openid = res.json().get('openid')
-    user_info = request.session.get('user_info')
+    user_info = get_user_info(code)
     try:
         commonUser=CommonUser.objects.get(commonUserID=user_info.openid)
     except:
-        commonUser=CommonUser.objects.create(commonUserID=openid,commonUserName=user_info.nickname)
+        commonUser=CommonUser.objects.create(commonUserID=user_info.openid,commonUserName=user_info.nickname)
         Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
     commonUser.session_key = request.session.session_key
-    return JsonResponse({"OpenID":openid,"Name":user_info})
+    return JsonResponse({"OpenID":user_info.openid,"Name":user_info})
 
 
 @csrf_exempt
