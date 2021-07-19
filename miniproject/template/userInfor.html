@@ -5,16 +5,13 @@
     <base href="/">
 </head>
 <body>
-    <form action="/questionRecord/userinfo" method="post" enctype="multipart/form-data">
+    <form action="/questionRecord/getNewQuestion" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>
-            Code:<input type="test" name="code">
+            commonUserID:<input type="test" name="commonUserID">
             <br>
-            Name:<input type="test" name="name">
+            level:<input type="test" name="level">
             <br>
-            userinfo:<input type="test" name="userinfo">
-            <br>
-            iv:<input type="test" name="iv">
         </p>
         <button type="submit">Click</button>
     </form>
