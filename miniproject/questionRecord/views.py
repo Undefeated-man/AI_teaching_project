@@ -13,6 +13,7 @@ from . import audioRecognize
 AppID = "wxd27ea3eb3d649f0d"
 AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 
+#cd AI_teaching/AI_teaching_project/miniproject
 
 # 获取用户信息UserInfo
 def userinfo(request):
