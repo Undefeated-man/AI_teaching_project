@@ -61,7 +61,7 @@ def userinfo(request):
 
 @csrf_exempt
 def upload(request):
-    return render(request, "upload.html")
+    return render(request, "userInfor.html")
 
 
 @csrf_exempt
