@@ -251,3 +251,5 @@ class Wrong(models.Model):
 #     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 # ALTER TABLE Level4 MODIFY COLUMN question longtext
 #     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+# ALTER TABLE CommonUser MODIFY COLUMN commonUserName varchar(25)
+#     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
