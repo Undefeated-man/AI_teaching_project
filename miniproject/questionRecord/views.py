@@ -16,10 +16,11 @@ from weixin import WXAPPAPI
 AppID = "wxd27ea3eb3d649f0d"
 AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 
+
 #cd AI_teaching/AI_teaching_project/miniproject
 
 
-def get_user_info(js_code,userinfo,iv):
+def get_user_info(js_code,ls,iv):
     api = WXAPPAPI(AppID, AppSecret)
     session_info = api.exchange_code_for_session_key(js_code)
     # print(api);
