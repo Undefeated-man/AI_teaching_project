@@ -5,12 +5,10 @@
     <base href="/">
 </head>
 <body>
-    <form action="/questionRecord/recognize" method="post" enctype="multipart/form-data">
+    <form action="/questionRecord/userinfo" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>
-            Input:<input type="file" name="file">
-            <br>
-            Answer:<input type="test" name="answer">
+            Code:<input type="test" name="code">
             <br>
         </p>
         <button type="submit">Click</button>
