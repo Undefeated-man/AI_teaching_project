@@ -39,20 +39,19 @@ def get_user_info(js_code,userinfo,iv):
 def userinfo(request):
     try:
         code = request.POST.get('code', None)
-        name = request.POST.get('name', None)
         userinfo=request.POST.get("userinfo","")
         iv=request.POST.get("iv","")
         user_info = get_user_info(code,userinfo,iv)
         try:
             commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
-            commonUser.commonUserName=name
+            commonUser.commonUserName=user_info['nickName']
             commonUser.save()
         except:
             group=Groups.objects.get(groupID=1)
-            commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
+            commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=user_info['nickName'],group=group)
             Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
             commonUser.session_key = request.session.session_key
-        return JsonResponse({"state":"success","OpenID":user_info['openId'],"Name":name})
+        return JsonResponse({"state":"success","OpenID":user_info['openId'],"Name":user_info['nickName']})
     except Exception as e:
         return JsonResponse({"state":"fail","error":e.__str__()})
 
