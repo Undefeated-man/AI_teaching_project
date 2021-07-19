@@ -17,8 +17,8 @@ AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 
 
 def get_user_info(js_code):
-    req_result = requests.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid='+AppID+'&redirect_uri='+'34.92.251.246'+'&response_type='+js_code+'&scope=snsapi_userinfo&state=JeffreySu-954&connect_redirect=1')
-    return req_result
+    req_result = requests.get("https://api.weixin.qq.com/sns/jscode2session"+"appid=" + AppID + "&secret=" + AppSecret + "&js_code=" + js_code + "&grant_type=authorization_code";)
+    return req_result.json()
 
 
 # 获取用户信息UserInfo
