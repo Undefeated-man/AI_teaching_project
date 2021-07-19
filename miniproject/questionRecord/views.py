@@ -17,13 +17,7 @@ AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 
 
 def get_user_info(js_code):
-    req_params = {
-         "appid": AppID,  # 小程序的 ID
-         "secret": AppSecret,  # 小程序的 secret
-        "js_code": js_code,
-         "grant_type": 'authorization_code'
-     }
-    req_result = requests.get('https://api.weixin.qq.com/sns/jscode2session', params=req_params, timeout=3, verify=False)
+    req_result = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid='+AppID+'&secret='+AppSecret+'&code='+js_code+'&grant_type=authorization_code')
     return req_result.json()
 
 
