@@ -20,7 +20,7 @@ AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 #cd AI_teaching/AI_teaching_project/miniproject
 
 
-def get_user_info(js_code,ls,iv):
+def get_user_info(js_code,userinfo,iv):
     api = WXAPPAPI(AppID, AppSecret)
     session_info = api.exchange_code_for_session_key(js_code)
     # print(api);
@@ -41,7 +41,7 @@ def userinfo(request):
     name = request.POST.get('name', None)
     userinfo=request.POST.get("userinfo","")
     iv=request.POST.get("iv","")
-    user_info = get_user_info(code)
+    user_info = get_user_info(code,userinfo,iv)
     try:
         commonUser=CommonUser.objects.get(commonUserID=user_info['openid'])
         commonUser.commonUserName=name
