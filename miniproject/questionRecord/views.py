@@ -72,8 +72,8 @@ def getUserInformation(request):
         doneQuestion=[]
         wrongQuestion=[]
         for i in History.objects.filter(commonUser=commonUser):
-            level=i.level
-            example=eval(level).objects.get(questionID=i.questionID).example
+            levelToDeal=i.level
+            example=eval(levelToDeal).objects.get(questionID=i.questionID).example
             doneQuestion.append(serializationQuestion(example,i.level,commonUser))
         for i in Wrong.objects.filter(commonUser=commonUser):
             example = i.example
@@ -114,10 +114,12 @@ def getNewQuestion(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
+        if level=="Level1":
+            level="Level2"
         alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
         allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID).values_list("example")
         example=eval(level).objects.get(questionID=allLevelQuestion[0][0]).example
-        return {"state":"success","question":serializationQuestion(example,"Level4",commonUser)}
+        return {"state":"success","question":serializationQuestion(example,level,commonUser)}
     # except Exception as e:
     #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -128,6 +130,8 @@ def getOneQuesiton(request):
         questionID = request.POST.get("questionID")
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        if level=="Level1":
+            level="Level2"
         example=eval(level).objects.get(questionID=questionID).example
         if level == "Level3":
             if example.level3Mode:
@@ -238,6 +242,8 @@ def judgeAnswer(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         questionID = request.POST.get("questionID")
+        if level=="Level1":
+            level="Level2"
         example=eval(level).objects.get(questionID=questionID).example
         if level=="Level4":
             audiofile = request.FILES.get('file', '')
