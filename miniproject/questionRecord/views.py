@@ -117,8 +117,8 @@ def getNewQuestion(request):
         if level=="Level1":
             level="Level2"
         alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID).values_list("example")
-        example=eval(level).objects.get(questionID=allLevelQuestion[0][0]).example
+        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID)
+        example=allLevelQuestion[0][0].example
         return {"state":"success","question":serializationQuestion(example,level,commonUser)}
     # except Exception as e:
     #     return JsonResponse({'state': 'fail', "error": e.__str__()})
