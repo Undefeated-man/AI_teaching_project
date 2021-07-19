@@ -43,15 +43,15 @@ def userinfo(request):
     iv=request.POST.get("iv","")
     user_info = get_user_info(code,userinfo,iv)
     try:
-        commonUser=CommonUser.objects.get(commonUserID=user_info['openid'])
+        commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
         commonUser.commonUserName=name
         commonUser.save()
     except:
         group=Groups.objects.get(groupID=1)
-        commonUser=CommonUser.objects.create(commonUserID=user_info['openid'],commonUserName=name,group=group)
+        commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
         Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
         commonUser.session_key = request.session.session_key
-    return JsonResponse({"OpenID":user_info['openid'],"Name":name})
+    return JsonResponse({"OpenID":user_info['openId'],"Name":name})
 
 
 @csrf_exempt
