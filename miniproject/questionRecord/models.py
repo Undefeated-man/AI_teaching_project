@@ -150,7 +150,7 @@ class Groups(models.Model):
 class CommonUser(models.Model):
     commonUserID = models.CharField(max_length=225, primary_key=True)
     commonUserName = models.CharField(max_length=25)
-    group = models.ForeignKey(Groups, related_name="CommonUser", on_delete=models.CASCADE)
+    group = models.OneToOneField(Groups, related_name="CommonUser", on_delete=models.CASCADE)
     level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
         , (3,"Level3"),(4,"Level4")],
                              default="Level1")
