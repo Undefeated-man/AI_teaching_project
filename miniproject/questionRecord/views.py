@@ -28,6 +28,8 @@ def userinfo(request):
     user_info = get_user_info(code)
     try:
         commonUser=CommonUser.objects.get(commonUserID=user_info['openid'])
+        commonUser.commonUserName=name
+        commonUser.save()
     except:
         commonUser=CommonUser.objects.create(commonUserID=user_info['openid'],commonUserName=name)
         Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
