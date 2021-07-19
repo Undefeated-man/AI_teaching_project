@@ -1,5 +1,6 @@
 import random
 
+import requests
 from wechatpy.oauth import WeChatOAuth
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
@@ -13,50 +14,20 @@ AppID = "wxd27ea3eb3d649f0d"
 AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 
 
-
-# 定义授权装饰器
-def getWeChatOAuth(redirect_url):
-    return WeChatOAuth(AppID, AppSecret, redirect_url, 'snsapi_userinfo')
-
-
-def oauth(method):
-    def warpper(request):
-        if request.session.get('user_info', None) is None:
-            code = request.POST.get('code', None)
-            wechat_oauth = getWeChatOAuth(request.get_raw_uri())
-            url = wechat_oauth.authorize_url
-            if code:
-                try:
-                    wechat_oauth.fetch_access_token(code)
-                    user_info = wechat_oauth.get_user_info()
-                except Exception as e:
-                    print(str(e))
-                    # 这里需要处理请求里包含的 code 无效的情况
-                    # abort(403)
-                else:
-                    # 建议存储在用户表
-                    request.session['user_info'] = user_info
-                    request.session.set_expiry(None)
-            else:
-                return redirect(url)
-
-        return method(request)
-
-    return warpper
-
-
 # 获取用户信息UserInfo
-
-@oauth
 def userinfo(request):
+    code = request.POST.get('code', None)
+    url = 'https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={code}&grant_type=authorization_code'.format(appid=AppID,secret=AppSecret,code=code)
+    res = requests.get(url)
+    openid = res.json().get('openid')
     user_info = request.session.get('user_info')
     try:
         commonUser=CommonUser.objects.get(commonUserID=user_info.openid)
     except:
-        commonUser=CommonUser.objects.create(commonUserID=user_info.openid,commonUserName=user_info.nickname)
+        commonUser=CommonUser.objects.create(commonUserID=openid,commonUserName=user_info.nickname)
         Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
     commonUser.session_key = request.session.session_key
-    return JsonResponse({"OpenID":user_info.openid})
+    return JsonResponse({"OpenID":openid,"Name":user_info})
 
 
 @csrf_exempt
