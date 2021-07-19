@@ -24,14 +24,15 @@ def get_user_info(js_code):
 # 获取用户信息UserInfo
 def userinfo(request):
     code = request.POST.get('code', None)
+    name = request.POST.get('name', None)
     user_info = get_user_info(code)
     try:
-        commonUser=CommonUser.objects.get(commonUserID=user_info.openid)
+        commonUser=CommonUser.objects.get(commonUserID=user_info['openid'])
     except:
-        commonUser=CommonUser.objects.create(commonUserID=user_info.openid,commonUserName=user_info.nickname)
+        commonUser=CommonUser.objects.create(commonUserID=user_info['openid'],commonUserName=name)
         Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
     commonUser.session_key = request.session.session_key
-    return JsonResponse({"OpenID":user_info.openid,"Name":user_info})
+    return JsonResponse({"OpenID":user_info['openid'],"Name":name})
 
 
 @csrf_exempt
