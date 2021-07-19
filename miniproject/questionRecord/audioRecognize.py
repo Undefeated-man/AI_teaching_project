@@ -39,30 +39,44 @@ def recognize(request):
             os.remove(change)
         # language="cmn-Hans-CN"
         result = r.recognize_google(audio, language="en-US", show_all=True)
-        # Can't record
-        # if len(result.get("alternative","")):
-        #     userAnswer = result['alternative'][0]['transcript']
-        #     checkResult = {"result":judge(qnum,userAnswer)}
-        # else:
-        #     userAnswer = "Nothing"
-        #     checkResult = {"result":False}
-        # if checkResult.get("Error","")!="":
-        #     return JsonResponse({'state': 'fail', "error": checkResult["Error"]})
-        # if checkResult["result"]:
-        #     return JsonResponse({'state': 'success', "result": True})
-        # else:
-        #     addUserWrong(userID,qnum)
-        #     return JsonResponse({'state': 'success', "result": False})
         judgeResult = judge(result['alternative'][0]['transcript'], answer)
-        if judgeResult.get("Error", "") != "":
-            return JsonResponse({'state': 'fail', 'error': judgeResult.get("Error", "")})
-        return JsonResponse({'state': 'success', 'result': judgeResult.get("result"),
-                             "Your Answer": result['alternative'][0]['transcript'],
-                             "True Answer": answer})
+        return JsonResponse(
+            {'state': 'success', "result": judgeResult, "yourAnswer": result['alternative'][0]['transcript'],
+             "trueAnswer": answer})
 
     except Exception as e:
         print(e)
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+@csrf_exempt
+def recognizeAudio(audiofile, answer):
+    change = os.path.join("Audio", audiofile.name)
+    if not os.path.exists("Audio"):
+        os.mkdir("Audio")
+        os.chmod(os.path.join("Audio", audiofile.name), 0o777)
+    with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
+        os.chmod(os.path.join(os.getcwd(), "Audio", audiofile.name), 0o777)
+        for chunck in audiofile.chunks():
+            fw.write(chunck)
+    if (audiofile.name.split('.')[-1] != "wav"):
+        output = os.path.join("Audio", "".join(audiofile.name.split('.')[:-1]) + ".wav")
+        ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192k -f wav'})
+        ff.cmd
+        ff.run()
+    else:
+        output = os.path.join("Audio", audiofile.name)
+    r = sr.Recognizer()
+    test = sr.AudioFile(output)
+    with test as source:
+        audio = r.record(source)
+    os.remove(output)
+    if (audiofile.name.split('.')[-1] != "wav"):
+        os.remove(change)
+    # language="cmn-Hans-CN"
+    result = r.recognize_google(audio, language="en-US", show_all=True)
+    judgeResult = judge(result['alternative'][0]['transcript'], answer)
+    return {"result":judgeResult,"yourAnswer":result['alternative'][0]['transcript']}
 
 
 # import logging, os
@@ -122,19 +136,16 @@ class CheckRight:
 
 @csrf_exempt
 def judge(result, answer):
-    try:
-        sentences = [result, answer]
-        processedSentences = processPunctuation(sentences)
-        tokens = getTokens(processedSentences)
-        wordVector1, wordVector2 = word2vec(tokens)
-        dist = cosDistance(wordVector1, wordVector2)
-        if dist > 0.75:
-            compareResult = True
-        else:
-            compareResult = False
-        return {"result": compareResult}
-    except Exception as e:
-        return {"Error": e.__str__()}
+    sentences = [result, answer]
+    processedSentences = processPunctuation(sentences)
+    tokens = getTokens(processedSentences)
+    wordVector1, wordVector2 = word2vec(tokens)
+    dist = cosDistance(wordVector1, wordVector2)
+    if dist > 0.75:
+        compareResult = True
+    else:
+        compareResult = False
+    return compareResult
 
 
 def processPunctuation(sentences):
@@ -217,7 +228,7 @@ def toDataBase(dataframe, dataFrameName):
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
                 continue
-            if len(isHave)!=0:
+            if len(isHave) != 0:
                 if pd.isna(row["Sub-Concept 1"]):
                     subConcept = None
                 elif row["Sub-Concept 1"] in allSubConceptName:
@@ -239,7 +250,8 @@ def toDataBase(dataframe, dataFrameName):
                 subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
             else:
                 subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
-            example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept, subConcept2=subConcept2,
+            example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept,
+                                             subConcept2=subConcept2,
                                              exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
                                              translation=row["Meaning（中文）"],
                                              level2Mode=int(row["level_2"]),

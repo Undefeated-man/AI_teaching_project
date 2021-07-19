@@ -174,7 +174,7 @@ class NotesCollection(models.Model):
     questionID = models.CharField(max_length=25, blank=False, null=False)
 
     def __str__(self):
-        return "NotesCollection:" + str(self.commonUser.commonUserID) + str(self.example.exampleID)
+        return "NotesCollection:" + str(self.commonUser.commonUserID) +" Question:"+str(self.questionID)
 
     class Meta:
         db_table = "NotesCollection"
@@ -189,7 +189,7 @@ class DailyTask(models.Model):
     dailyGoalNum = models.IntegerField()
 
     def __str__(self):
-        return "DailyTask:" + str(self.commonUserID) + str(self.dailyGoalNum)
+        return "DailyTask:" + str(self.commonUserID) +" DailyTask:"+str(self.dailyGoalNum)
 
     class Meta:
         db_table = "DailyTask"
@@ -206,7 +206,7 @@ class History(models.Model):
     questionID = models.CharField(max_length=25, blank=False, null=False)
 
     def __str__(self):
-        return "History:" + str(self.commonUser.commonUserID) + " " + str(self.example.exampleID)
+        return "History:" + str(self.commonUser.commonUserID) + " Question:" + str(self.questionID)
 
     class Meta:
         db_table = "History"
@@ -221,7 +221,7 @@ class Progress(models.Model):
     cumScore = models.IntegerField()
 
     def __str__(self):
-        return "Progress:" + str(self.commonUser.commonUserID) + str(self.qstNum) + str(self.cumScore)
+        return "Progress:" + str(self.commonUser.commonUserID)
 
     class Meta:
         db_table = "Progress"
@@ -241,8 +241,8 @@ class Wrong(models.Model):
     count = models.CharField(max_length=100, default='0')  # error times can be null
 
     def __str__(self):
-        return "User:" + str(self.commonUser.commonUserID) + " Example:" + str(
-            self.example.exampleID)  # return primary key
+        return "User:" + str(self.commonUser.commonUserID) + " Question:" + str(
+            self.questionID)  # return primary key
 
     class Meta:
         db_table = "Wrong"

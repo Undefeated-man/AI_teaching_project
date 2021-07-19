@@ -5,7 +5,9 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
+from . import audioRecognize
 # Create your views here.
+
 
 AppID = "wxd27ea3eb3d649f0d"
 AppSecret = "da1e11486e57ebb44c7753180e3285a5"
@@ -52,6 +54,7 @@ def userinfo(request):
         commonUser=CommonUser.objects.get(commonUserID=user_info.openid)
     except:
         commonUser=CommonUser.objects.create(commonUserID=user_info.openid,commonUserName=user_info.nickname)
+        Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
     commonUser.session_key = request.session.session_key
     return JsonResponse({"OpenID":user_info.openid})
 
@@ -239,6 +242,39 @@ def toCancelCollect(request):
         questionID=request.POST.get("questionID")
         NotesCollection.objects.get(commonUser=commonUser,level=level,questionID=questionID).delete()
         return JsonResponse({"state": "success"})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def judgeAnswer(request):
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        level = request.POST.get("level")
+        questionID = request.POST.get("questionID")
+        example=eval(level).objects.get(questionID=questionID).example
+        if level=="Level4":
+            audiofile = request.FILES.get('file', '')
+            trueAnswer=example.meaning
+            result=audioRecognize.recognizeAudio(audiofile,trueAnswer)
+            yourAnswer=result["yourAnswer"]
+            result=result["result"]
+        else:
+            trueAnswer=example.meaning
+            yourAnswer=request.POST.get("answer")
+            result =(yourAnswer==trueAnswer)
+        if result:
+            commonUser.Progress.qstNum+=1
+        else:
+            if(commonUser.Progress.qstNum>1):
+                commonUser.Progress.qstNum -= 1
+            try:
+                Wrong.objects.get(commonUser=commonUser, level=level, questionID=questionID).count+=1
+            except:
+                Wrong.objects.create(commonUser=commonUser,level=level,questionID=questionID,count=1)
+        History.objects.create(commonUser=commonUser,questionID=questionID,level=level)
+        commonUser.Progress.cumScore += 1
+        return JsonResponse({'state': 'success', "result": result,"trueAnswer":trueAnswer,"yourAnswer":yourAnswer})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
