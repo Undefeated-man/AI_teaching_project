@@ -19,5 +19,7 @@ urlpatterns = [
     url(r"^getWrongQuestion/$", views.getWrongQuestion),
     url(r"^getNotesCollection/$", views.getNotesCollection),
     url(r"^getHistory/$", views.getHistory),
+    url(r"^toCollect/$", views.toCollect),
+    url(r"^toCancelCollect/$", views.toCancelCollect),
     url(r"^recognize$", audioRecognize.recognize, name="recognize"),
 ]

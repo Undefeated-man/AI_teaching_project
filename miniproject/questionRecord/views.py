@@ -73,10 +73,10 @@ def getUserInformation(request):
         for i in History.objects.filter(commonUser=commonUser):
             level=i.level
             example=eval(level).objects.get(questionID=i.questionID).example
-            doneQuestion.append(serializationQuestion(example,i.level))
+            doneQuestion.append(serializationQuestion(example,i.level,commonUser))
         for i in Wrong.objects.filter(commonUser=commonUser):
             example = i.example
-            wrongQuestion.append(serializationQuestion(example,i.level))
+            wrongQuestion.append(serializationQuestion(example,i.level,commonUser))
         return JsonResponse({"state":"success","commonUserID":commonUserID,"score":score,"level":level,"doneQuestion":doneQuestion,
                              "wrongQuestion":wrongQuestion})
     except Exception as e:
@@ -120,15 +120,15 @@ def getNewQuestion(request):
         if level=="Level2":
             alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
             allLevelQuestion=Level3.objects.exclude(question__in=alreadyDoneID).example
-            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level3")}
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level3",commonUser)}
         if level=="Level3":
             alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
             allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).example
-            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4")}
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4",commonUser)}
         if level=="Level4":
             alreadyDoneID=History.objects.get(commonUser=commonUser).questionID
             allLevelQuestion=Level4.objects.exclude(question__in=alreadyDoneID).example
-            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4")}
+            return {"state":"success","question":serializationQuestion(random.choice(allLevelQuestion),"Level4",commonUser)}
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -137,15 +137,17 @@ def getOneQuesiton(request):
     try:
         level = request.POST.get("level")
         questionID = request.POST.get("questionID")
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         example=eval(level).objects.get(questionID=questionID).example
         if level == "Level3":
             if example.level3Mode:
-                exampleDict = serializationQuestion(example,level)
+                exampleDict = serializationQuestion(example,level,commonUser)
         elif level == "Level4":
             if example.level4Mode:
-                exampleDict = serializationQuestion(example,level)
+                exampleDict = serializationQuestion(example,level,commonUser)
         else:
-            exampleDict = serializationQuestion(example,level)
+            exampleDict = serializationQuestion(example,level,commonUser)
         return JsonResponse({"state":"success","question":exampleDict})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -190,7 +192,8 @@ def getHistory(request):
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
-def serializationQuestion(example,level):
+
+def serializationQuestion(example,level,commonUser):
     exampleDict = {}
     exampleDict["unit"] = example.unit.unitName
     exampleDict["example"] = example.example
@@ -200,16 +203,51 @@ def serializationQuestion(example,level):
         if example.level3Mode:
             level3Question = example.Level3
             exampleDict["question"] = {"level":level,"questionID":level3Question.questionID,"question": level3Question.question, "op1": level3Question.op1,
-                                            "op2": level3Question.op2, "op3": level3Question.op3}
+                                            "op2": level3Question.op2, "op3": level3Question.op3,
+                                       "whetherCollect":judgeCollect(commonUser,level,level3Question.questionID)}
     elif level=="Level4":
         if example.level4Mode:
             level4Question = example.Level4
-            exampleDict["question"] = {"level": level, "questionID": level4Question.questionID,"question": level4Question.question}
+            exampleDict["question"] = {"level": level, "questionID": level4Question.questionID,"question": level4Question.question,
+                                       "whetherCollect":judgeCollect(commonUser,level,level4Question.questionID)}
     else:
         level2Question = example.Level2
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,"question": level2Question.question, "op1": level2Question.op1,
-                                         "op2": level2Question.op2, "op3": level2Question.op3}
+                                         "op2": level2Question.op2, "op3": level2Question.op3,
+                                   "whetherCollect":judgeCollect(commonUser,level,level2Question.questionID)}
 
     return exampleDict
 
 
+def toCollect(request):
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        level = request.POST.get("level")
+        questionID=request.POST.get("questionID")
+        NotesCollection.objects.create(commonUser=commonUser,level=level,questionID=questionID)
+        return JsonResponse({"state": "success"})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def toCancelCollect(request):
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        level = request.POST.get("level")
+        questionID=request.POST.get("questionID")
+        NotesCollection.objects.get(commonUser=commonUser,level=level,questionID=questionID).delete()
+        return JsonResponse({"state": "success"})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def judgeCollect(commonUser,level,questionID):
+    result=False
+    try:
+        NotesCollection.objects.get(commonUser=commonUser,level=level,questionID=questionID)
+        result=True
+    except Exception as e:
+        result=False
+    return result
