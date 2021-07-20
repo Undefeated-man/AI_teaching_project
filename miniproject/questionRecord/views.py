@@ -124,7 +124,7 @@ def getNewQuestion(request):
             number=10
         else:
             number=len(allLevelQuestion)
-        for i in allLevelQuestion[0:number-1]:
+        for i in allLevelQuestion[0:number]:
             question.append(serializationQuestion(i.example,level,commonUser))
         return JsonResponse({"state":"success","question":question})
     except Exception as e:
