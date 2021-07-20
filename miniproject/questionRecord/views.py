@@ -154,7 +154,7 @@ def getWrongQuestion(request):
         wrongQuestion = []
         for i in Wrong.objects.filter(commonUser=commonUser,level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            wrongQuestion.append(serializationQuestion(example,level))
+            wrongQuestion.append(serializationQuestion(example,level,commonUser))
         return JsonResponse({"state":"success","wrongQuestion":wrongQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -167,7 +167,7 @@ def getNotesCollection(request):
         collectedQuestion = []
         for i in NotesCollection.objects.filter(commonUser=commonUser):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            collectedQuestion.append(serializationQuestion(example,i.level))
+            collectedQuestion.append(serializationQuestion(example,i.level,commonUser))
         return JsonResponse({"state":"success","collectedQuestion":collectedQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -180,7 +180,7 @@ def getHistory(request):
         historyQuestion = []
         for i in History.objects.filter(commonUser=commonUser):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            historyQuestion.append(serializationQuestion(example, i.level))
+            historyQuestion.append(serializationQuestion(example, i.level,commonUser))
         return JsonResponse({"state": "success", "historyQuestion": historyQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
