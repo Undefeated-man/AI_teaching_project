@@ -142,14 +142,15 @@ def getNewQuestion(request):
         if level=="Level1":
             level="Level2"
         alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID).filter(example__unit__unitName=lecture)
+        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID)
         question=[]
-        if len(allLevelQuestion)>10:
-            number=10
-        else:
-            number=len(allLevelQuestion)
-        for i in allLevelQuestion[0:number]:
-            question.append(serializationQuestion(i.example,level,commonUser))
+        number=0
+        for i in allLevelQuestion:
+            if i.example.unit.unitName==lecture:
+                question.append(serializationQuestion(i.example,level,commonUser))
+                number+=1
+            if number==10:
+                break
         return JsonResponse({"state":"success","question":question})
     # except Exception as e:
     #     return JsonResponse({'state': 'fail', "error": e.__str__()})
