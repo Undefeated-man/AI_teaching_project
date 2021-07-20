@@ -303,7 +303,11 @@ def getUserRank(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         score=commonUser.Progress.cumScore
         allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
-        rank=(allCommonUser.index(commonUser)+1)/len(allCommonUser)
-        return JsonResponse({"state": "success","score":score,"rank":rank})
+        rank=1
+        for i in allCommonUser:
+            if i==commonUser:
+                break
+            rank+=1
+        return JsonResponse({"state": "success","score":score,"rank":rank*100/len(allCommonUser)})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
