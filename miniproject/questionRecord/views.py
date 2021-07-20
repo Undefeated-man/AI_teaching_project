@@ -45,6 +45,7 @@ def userinfo(request):
         iv=request.POST.get("iv","")
         user_info = get_user_info(code,userinfo,iv)
         photo = request.FILES.get("photo", "")  # get the photo
+        photoName=None
         try:
             commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
             commonUser.commonUserName=name
