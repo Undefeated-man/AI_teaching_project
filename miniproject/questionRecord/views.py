@@ -256,16 +256,16 @@ def judgeAnswer(request):
             yourAnswer=request.POST.get("answer")
             result =(yourAnswer==trueAnswer)
         if result:
-            commonUser.Progress.qstNum+=1
+            commonUser.Progress.cumScore+=1
         else:
-            if(commonUser.Progress.qstNum>1):
-                commonUser.Progress.qstNum -= 1
+            if(commonUser.Progress.cumScore>1):
+                commonUser.Progress.cumScore -= 1
             try:
                 Wrong.objects.get(commonUser=commonUser, level=level, questionID=questionID).count+=1
             except:
                 Wrong.objects.create(commonUser=commonUser,level=level,questionID=questionID,count=1)
         History.objects.create(commonUser=commonUser,questionID=questionID,level=level)
-        commonUser.Progress.cumScore += 1
+        commonUser.Progress.qstNum += 1
         commonUser.Progress.save()
         commonUser.save()
         return JsonResponse({'state': 'success', "result": result,"trueAnswer":trueAnswer,"yourAnswer":yourAnswer})
