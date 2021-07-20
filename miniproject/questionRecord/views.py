@@ -50,27 +50,29 @@ def userinfo(request):
             commonUser.commonUserName=name
             commonUser.save()
             phototype = photo.name.split(".")[-1]  # the format
-            try:
-                photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
-            except:
-                photoName = "1." + phototype
-            photoLocation = os.path.join(".", ".", os.getcwd(), "media",
+            if len(photo)!=0:
+                try:
+                    photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
+                except:
+                    photoName = "1." + phototype
+                photoLocation = os.path.join(".", ".", os.getcwd(), "media",
                                          photoName)  # the corresponding location
-            with open(photoLocation,"wb") as fw:
-                fw.write(photo.read())
+                with open(photoLocation,"wb") as fw:
+                    fw.write(photo.read())
         except:
             group=Groups.objects.get(groupID=1)
             commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
             Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
             phototype = photo.name.split(".")[-1]  # the format
-            try:
-                photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
-            except:
-                photoName = "1." + phototype
-            photoLocation = os.path.join(".", ".", os.getcwd(), "media",
+            if len(photo)!=0:
+                try:
+                    photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
+                except:
+                    photoName = "1." + phototype
+                photoLocation = os.path.join(".", ".", os.getcwd(), "media",
                                          photoName)  # the corresponding location
-            with open(photoLocation,"wb") as fw:
-                fw.write(photo.read())
+                with open(photoLocation,"wb") as fw:
+                    fw.write(photo.read())
             commonUser.session_key = request.session.session_key
             commonUser.imageLocation=photoName
             commonUser.save()
