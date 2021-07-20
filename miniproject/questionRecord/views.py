@@ -114,12 +114,19 @@ def getNewQuestion(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
+        lecture=request.POST.get("lecture")
         if level=="Level1":
             level="Level2"
         alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID)
-        example=allLevelQuestion[0].example
-        return JsonResponse({"state":"success","question":serializationQuestion(example,level,commonUser)})
+        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID,example__unit=lecture)
+        question=[]
+        if len(allLevelQuestion)>10:
+            number=10
+        else:
+            number=len(allLevelQuestion)
+        for i in allLevelQuestion[0:number-1]:
+            question.append(serializationQuestion(i.example,level,commonUser))
+        return JsonResponse({"state":"success","question":question})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -151,10 +158,14 @@ def getWrongQuestion(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
+        lecture = request.POST.get("lecture")
         wrongQuestion = []
         for i in Wrong.objects.filter(commonUser=commonUser,level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            wrongQuestion.append(serializationQuestion(example,level,commonUser))
+            if example.unit==lecture:
+                wrongQuestion.append(serializationQuestion(example,level,commonUser))
+            if len(wrongQuestion)==10:
+                break
         return JsonResponse({"state":"success","wrongQuestion":wrongQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -177,10 +188,13 @@ def getHistory(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        level = request.POST.get("level")
+        lecture = request.POST.get("lecture")
         historyQuestion = []
-        for i in History.objects.filter(commonUser=commonUser):
+        for i in History.objects.filter(commonUser=commonUser,level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            historyQuestion.append(serializationQuestion(example, i.level,commonUser))
+            if example.unit==lecture:
+                historyQuestion.append(serializationQuestion(example, i.level,commonUser))
         return JsonResponse({"state": "success", "historyQuestion": historyQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -281,3 +295,15 @@ def judgeCollect(commonUser,level,questionID):
     except Exception as e:
         result=False
     return result
+
+
+def getUserRank(request):
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        score=commonUser.Progress.cumScore
+        allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
+        rank=(allCommonUser.index(commonUser)+1)/len(allCommonUser)
+        return JsonResponse({"state": "success","score":score,"rank":rank})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})

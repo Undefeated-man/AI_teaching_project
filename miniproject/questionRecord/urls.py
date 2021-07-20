@@ -22,5 +22,6 @@ urlpatterns = [
     url(r"^toCollect/$", views.toCollect),
     url(r"^toCancelCollect/$", views.toCancelCollect),
     url(r"^judgeAnswer/$", views.judgeAnswer),
+    url(r"^getUserRank/$", views.getUserRank),
     url(r"^recognize$", audioRecognize.recognize, name="recognize"),
 ]
