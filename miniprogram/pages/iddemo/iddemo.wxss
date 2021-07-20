@@ -1,9 +1,0 @@
-/* miniprogram/pages/iddemo/iddemo.wxss */
-button{  
-  margin: 10px;  
-  color: white;  
-  background: green;  
-}  
-view{  
-  margin: 10px;  
-} 

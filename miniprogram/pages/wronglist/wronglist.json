@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "WeChatTest",
-  "usingComponents": {
-    "wrong-modal": "../review/review"
-  }
-}

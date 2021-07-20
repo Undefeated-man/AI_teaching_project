@@ -1,3 +1,0 @@
-<!--miniprogram/pages/iddemo/iddemo.wxml-->
-<button bindtap="getOpenIdTap">获取用户唯一标识openid</button>  
-openid:{{openid}}session_key:{{session_key}}
