@@ -154,7 +154,7 @@ def getNewQuestion(request):
                 number+=1
             if number==10:
                 break
-        return JsonResponse({"state":"success","question":lecture})
+        return JsonResponse({"state":"success","question":question})
     # except Exception as e:
     #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
