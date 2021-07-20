@@ -5,11 +5,8 @@
     <base href="/">
 </head>
 <body>
-    <form action="/questionRecord/getNotesCollection/" method="post" enctype="multipart/form-data">
+    <form action="/questionRecord/getHistory/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <p>
-            Level:<input type="test" name="level">
-        </p>
         <p>
             commonUserID:<input type="test" name="commonUserID">
         </p>
