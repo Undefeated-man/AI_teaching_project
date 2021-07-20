@@ -5,10 +5,10 @@
     <base href="/">
 </head>
 <body>
-    <form action="/questionRecord/getUserInformation/" method="post" enctype="multipart/form-data">
+    <form action="/questionRecord/getRankWithLevel/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>
-            commonUserID:<input type="test" name="commonUserID">
+            Level:<input type="test" name="level">
         </p>
         <button type="submit">Click</button>
     </form>
