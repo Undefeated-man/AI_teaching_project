@@ -145,7 +145,7 @@ def getNewQuestion(request):
         if level=="Level1":
             level="Level2"
         alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID)
+        allLevelQuestion=eval(level).objects.exclude(question__questionID__in=alreadyDoneID)
         question=[]
         number=0
         for i in allLevelQuestion:
