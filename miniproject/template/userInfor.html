@@ -5,7 +5,7 @@
     <base href="/">
 </head>
 <body>
-    <form action="/questionRecord/getNotesCollection/" method="post" enctype="multipart/form-data">
+    <form action="/questionRecord/judgeAnswer/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>
             commonUserID:<input type="test" name="commonUserID">
@@ -15,6 +15,9 @@
         </p>
         <p>
             questionID:<input type="test" name="questionID">
+        </p>
+        <p>
+            answer:<input type="test" name="answer">
         </p>
         <button type="submit">Click</button>
     </form>
