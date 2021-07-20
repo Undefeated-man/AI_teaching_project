@@ -44,40 +44,20 @@ def userinfo(request):
         name=request.POST.get("name","")
         iv=request.POST.get("iv","")
         user_info = get_user_info(code,userinfo,iv)
-        photo = request.FILES.get("photo", "")  # get the photo
-        photoName=None
+        photo = request.POST.get("photo", "")  # get the photo
         try:
             commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
             commonUser.commonUserName=name
+            commonUser.imageLocation = photo
             commonUser.save()
-            phototype = photo.name.split(".")[-1]  # the format
-            if len(photo)!=0:
-                try:
-                    photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
-                except:
-                    photoName = "1." + phototype
-                photoLocation = os.path.join(".", ".", os.getcwd(), "media",
-                                         photoName)  # the corresponding location
-                with open(photoLocation,"wb") as fw:
-                    fw.write(photo.read())
         except:
             group=Groups.objects.get(groupID=1)
             commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
             Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
-            phototype = photo.name.split(".")[-1]  # the format
-            if len(photo)!=0:
-                try:
-                    photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
-                except:
-                    photoName = "1." + phototype
-                photoLocation = os.path.join(".", ".", os.getcwd(), "media",
-                                         photoName)  # the corresponding location
-                with open(photoLocation,"wb") as fw:
-                    fw.write(photo.read())
             commonUser.session_key = request.session.session_key
-            commonUser.imageLocation=photoName
+            commonUser.imageLocation=photo
             commonUser.save()
-        return JsonResponse({"state":"success","OpenID":user_info['openId'],"Name":name})
+        return JsonResponse({"state":"success","OpenID":user_info['openId'],"Name":name,"Photo":commonUser.imageLocation})
     except Exception as e:
         return JsonResponse({"state":"fail","error":e.__str__()})
 
