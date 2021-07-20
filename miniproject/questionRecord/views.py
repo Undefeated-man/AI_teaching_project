@@ -1,3 +1,4 @@
+import os
 import random
 
 import requests
@@ -43,15 +44,36 @@ def userinfo(request):
         name=request.POST.get("name","")
         iv=request.POST.get("iv","")
         user_info = get_user_info(code,userinfo,iv)
+        photo = request.FILES.get("photo", "")  # get the photo
         try:
             commonUser=CommonUser.objects.get(commonUserID=user_info['openId'])
             commonUser.commonUserName=name
             commonUser.save()
+            phototype = photo.name.split(".")[-1]  # the format
+            try:
+                photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
+            except:
+                photoName = "1." + phototype
+            photoLocation = os.path.join(".", ".", os.getcwd(), "media",
+                                         photoName)  # the corresponding location
+            with open(photoLocation,"wb") as fw:
+                fw.write(photo.read())
         except:
             group=Groups.objects.get(groupID=1)
             commonUser=CommonUser.objects.create(commonUserID=user_info['openId'],commonUserName=name,group=group)
             Progress.objects.create(commonUser=commonUser,qstNum=0,cumScore=0)
+            phototype = photo.name.split(".")[-1]  # the format
+            try:
+                photoName = str(CommonUser.objects.last().commonUserID + 1) + "." + phototype  # rename
+            except:
+                photoName = "1." + phototype
+            photoLocation = os.path.join(".", ".", os.getcwd(), "media",
+                                         photoName)  # the corresponding location
+            with open(photoLocation,"wb") as fw:
+                fw.write(photo.read())
             commonUser.session_key = request.session.session_key
+            commonUser.imageLocation=photoName
+            commonUser.save()
         return JsonResponse({"state":"success","OpenID":user_info['openId'],"Name":name})
     except Exception as e:
         return JsonResponse({"state":"fail","error":e.__str__()})
@@ -78,7 +100,9 @@ def getUserInformation(request):
         for i in Wrong.objects.filter(commonUser=commonUser):
             example = i.example
             wrongQuestion.append(serializationQuestion(example,i.level,commonUser))
-        return JsonResponse({"state":"success","commonUserID":commonUserID,"score":score,"level":level,"doneQuestion":doneQuestion,
+        return JsonResponse({"state":"success","commonUserID":commonUserID,"score":score,"level":level,
+                             "imageURL":"questionRecord/media/"+commonUser.imageLocation,
+                             "doneQuestion":doneQuestion,
                              "wrongQuestion":wrongQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -91,7 +115,7 @@ def getRankWithLevel(request):
         result=[]
         for i in allCommonUser:
             result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
-                           "score":i.Progress.cumScore})
+                           "score":i.Progress.cumScore,"imageURL":"questionRecord/media/"+i.imageLocation})
         return JsonResponse({"state":"success","result":result})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -103,7 +127,7 @@ def getRankWithoutLevel(request):
         result=[]
         for i in allCommonUser:
             result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
-                           "score":i.Progress.cumScore,"level":i.level})
+                           "score":i.Progress.cumScore,"level":i.level,"imageURL":"questionRecord/media/"+i.imageLocation})
         return JsonResponse({"state":"success","result":result})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})

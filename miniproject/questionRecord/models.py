@@ -104,6 +104,7 @@ class Level3(models.Model):
     questionID = models.CharField(max_length=20, primary_key=True)  # L3...
     example = models.OneToOneField(Example, related_name="Level3", null=False, blank=False, on_delete=models.CASCADE)
     question = models.TextField(null=False, blank=False)
+    imageLocation=models.CharField(max_length=25)
     # three misleading choices
     op1 = models.TextField(null=False, blank=False)
     op2 = models.TextField(null=False, blank=False)

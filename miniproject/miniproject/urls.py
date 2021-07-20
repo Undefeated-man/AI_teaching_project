@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from . import views
-# from . import questionRecord
+from django.views.static import serve
+
+from .settings import MEDIA_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^questionRecord/',include(('questionRecord.urls','questionRecord'))),
+    url(r'^media/(?P<path>.*)', serve, {'document_root': MEDIA_ROOT}),
 ]
