@@ -266,6 +266,8 @@ def judgeAnswer(request):
                 Wrong.objects.create(commonUser=commonUser,level=level,questionID=questionID,count=1)
         History.objects.create(commonUser=commonUser,questionID=questionID,level=level)
         commonUser.Progress.cumScore += 1
+        commonUser.Progress.save()
+        commonUser.save()
         return JsonResponse({'state': 'success', "result": result,"trueAnswer":trueAnswer,"yourAnswer":yourAnswer})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
