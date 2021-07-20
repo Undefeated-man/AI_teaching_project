@@ -65,7 +65,7 @@ def upload(request):
 @csrf_exempt
 def getUserInformation(request):
     try:
-        commonUserID=request.POST.get("openID")
+        commonUserID=request.POST.get("commonUserID")
         commonUser=CommonUser.objects.get(commonUserID=commonUserID)
         score=Progress.objects.get(commonUser=commonUser).cumScore
         level=commonUser.level
@@ -87,7 +87,7 @@ def getUserInformation(request):
 def getRankWithLevel(request):
     try:
         level=request.POST.get("level")
-        allCommonUser=CommonUser.objects.filter(level=level,).order_by("Progress__cumScore")
+        allCommonUser=CommonUser.objects.filter(level=level,).order_by("-Progress__cumScore")
         result=[]
         for i in allCommonUser:
             result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
@@ -99,7 +99,7 @@ def getRankWithLevel(request):
 
 def getRankWithoutLevel(request):
     try:
-        allCommonUser=CommonUser.objects.order_by("Progress__cumScore")
+        allCommonUser=CommonUser.objects.order_by("-Progress__cumScore")
         result=[]
         for i in allCommonUser:
             result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
