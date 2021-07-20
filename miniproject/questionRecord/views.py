@@ -84,7 +84,7 @@ def getUserInformation(request):
             example = i.example
             wrongQuestion.append(serializationQuestion(example,i.level,commonUser))
         return JsonResponse({"state":"success","commonUserID":commonUserID,"score":score,"level":level,
-                             "imageURL":"questionRecord/media/"+commonUser.imageLocation,
+                             "imageURL":commonUser.imageLocation,
                              "doneQuestion":doneQuestion,
                              "wrongQuestion":wrongQuestion})
     except Exception as e:
@@ -98,7 +98,7 @@ def getRankWithLevel(request):
         result=[]
         for i in allCommonUser:
             result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
-                           "score":i.Progress.cumScore,"imageURL":"questionRecord/media/"+i.imageLocation})
+                           "score":i.Progress.cumScore,"imageURL":i.imageLocation})
         return JsonResponse({"state":"success","result":result})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -110,7 +110,7 @@ def getRankWithoutLevel(request):
         result=[]
         for i in allCommonUser:
             result.append({"commonUserID":i.commonUserID,"commonUserName":i.commonUserName,
-                           "score":i.Progress.cumScore,"level":i.level,"imageURL":"questionRecord/media/"+i.imageLocation})
+                           "score":i.Progress.cumScore,"level":i.level,"imageURL":i.imageLocation})
         return JsonResponse({"state":"success","result":result})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
