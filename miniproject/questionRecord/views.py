@@ -118,7 +118,7 @@ def getNewQuestion(request):
         if level=="Level1":
             level="Level2"
         alreadyDoneID=History.objects.filter(commonUser=commonUser).values_list("questionID")
-        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID,example__unit=lecture)
+        allLevelQuestion=eval(level).objects.exclude(question__in=alreadyDoneID,example__unit__unitID=lecture)
         question=[]
         if len(allLevelQuestion)>10:
             number=10
@@ -162,7 +162,7 @@ def getWrongQuestion(request):
         wrongQuestion = []
         for i in Wrong.objects.filter(commonUser=commonUser,level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            if example.unit==lecture:
+            if example.unit.unitName==lecture:
                 wrongQuestion.append(serializationQuestion(example,level,commonUser))
             if len(wrongQuestion)==10:
                 break
@@ -193,7 +193,7 @@ def getHistory(request):
         historyQuestion = []
         for i in History.objects.filter(commonUser=commonUser,level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            if example.unit==lecture:
+            if example.unit.unitName==lecture:
                 historyQuestion.append(serializationQuestion(example, i.level,commonUser))
         return JsonResponse({"state": "success", "historyQuestion": historyQuestion})
     except Exception as e:
