@@ -23,5 +23,6 @@ urlpatterns = [
     url(r"^toCancelCollect/$", views.toCancelCollect),
     url(r"^judgeAnswer/$", views.judgeAnswer),
     url(r"^getUserRank/$", views.getUserRank),
+    url(r"^textToSpeechCN/$", views.textToSpeechCN),
     url(r"^recognize$", audioRecognize.recognize, name="recognize"),
 ]
