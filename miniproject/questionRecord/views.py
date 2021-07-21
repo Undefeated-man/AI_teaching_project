@@ -259,7 +259,7 @@ def toCancelCollect(request):
 
 
 def judgeAnswer(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
@@ -291,8 +291,8 @@ def judgeAnswer(request):
         commonUser.Progress.save()
         commonUser.save()
         return JsonResponse({'state': 'success', "result": result,"trueAnswer":trueAnswer,"yourAnswer":yourAnswer})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def judgeCollect(commonUser,level,questionID):
