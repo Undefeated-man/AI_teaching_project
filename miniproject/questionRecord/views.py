@@ -331,7 +331,7 @@ def textToSpeechCN(request):
     try:
         # Instantiates a client
         client = texttospeech.TextToSpeechClient()
-
+        print(request.POST['text'])
         # Set the text input to be synthesized
         synthesis_input = texttospeech.SynthesisInput(text=request.POST['text'])
 
