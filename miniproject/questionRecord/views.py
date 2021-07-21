@@ -356,7 +356,7 @@ def textToSpeechCN(request):
         #     # Write the response to the output file.
         #     out.write(response.audio_content)
         #     print('Audio content written to file "output.mp3"')
-        return JsonResponse({"state": "success", "audio": response.audio_content})
+        return JsonResponse({"state": "success", "audio": response})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
