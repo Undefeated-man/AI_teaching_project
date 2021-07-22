@@ -12,3 +12,4 @@ __pycache__/
 .idea/deployment.xml
 .idea/AI_teaching_project-main.iml
 /miniproject/key/
+/.idea/
