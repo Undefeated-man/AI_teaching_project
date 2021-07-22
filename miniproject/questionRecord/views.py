@@ -302,8 +302,6 @@ def judgeCollect(commonUser, level, questionID):
 
 def getUserRank(request):
     try:
-        print(request)
-        print(request.POST.get("commonUserID"))
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         score = commonUser.Progress.cumScore
@@ -429,7 +427,7 @@ def getWrongNum(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         wrongQuestionNum = {}
         for level in ["Level2","Level3","Level4"]:
-             wrongQuestionNum[level]=Wrong.objects.filter(commonUser=commonUser, level=level)
+             wrongQuestionNum[level]=len(Wrong.objects.filter(commonUser=commonUser, level=level))
         wrongQuestionNum["total"]=wrongQuestionNum["Level2"]+wrongQuestionNum["Level3"]+wrongQuestionNum["Level4"]
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum})
     except Exception as e:
