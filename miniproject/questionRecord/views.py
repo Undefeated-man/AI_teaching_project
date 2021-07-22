@@ -429,7 +429,7 @@ def getWrongNum(request):
         for level in ["Level2","Level3","Level4"]:
              wrongQuestionNum[level]=len(Wrong.objects.filter(commonUser=commonUser, level=level))
         wrongQuestionNum["total"]=wrongQuestionNum["Level2"]+wrongQuestionNum["Level3"]+wrongQuestionNum["Level4"]
-        return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum})
+        return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum,"level":commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
