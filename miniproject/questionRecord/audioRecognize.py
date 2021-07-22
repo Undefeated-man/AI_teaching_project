@@ -202,7 +202,7 @@ def welcome(request):
     lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
     lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
     lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
-    toDataBase(lectureExcel_2, "Lecture  1")
+    toDataBase(lectureExcel_1, "Lecture  1")
     toDataBase(lectureExcel_2, "Lecture  2")
     toDataBase(lectureExcel_3, "Lecture  3")
     toDataBase(lectureExcel_4, "Lecture  4")
