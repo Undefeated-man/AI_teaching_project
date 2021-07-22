@@ -219,6 +219,7 @@ def welcome(request):
 
 @csrf_exempt
 def toDataBase(dataframe, dataFrameName):
+    Groups.objects.create(groupName="Default")
     if len(Unit.objects.filter(unitName=dataFrameName)) == 0:
         unit = Unit.objects.create(unitName=dataFrameName)
     else:
