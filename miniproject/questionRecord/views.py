@@ -311,7 +311,7 @@ def getUserRank(request):
             if i == commonUser:
                 break
             rank += 1
-        return JsonResponse({"state": "success", "score": score, "rank": rank * 100 / len(allCommonUser),
+        return JsonResponse({"state": "success", "score": score, "rank": rank/ len(allCommonUser),
                              "commonUserName": commonUser.commonUserName,
                              "level": commonUser.level, "imageURL": commonUser.imageLocation})
     except Exception as e:
