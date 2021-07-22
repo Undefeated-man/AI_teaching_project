@@ -155,7 +155,7 @@ class CommonUser(models.Model):
         , (3,"Level3"),(4,"Level4")],
                              default="Level1")
     imageLocation=models.TextField()
-    session_key = models.CharField(max_length=225, verbose_name="session_key", default="")
+    session_key = models.CharField(max_length=225, verbose_name="session_key", null=True)
 
     def __str__(self):
         return "User:" + str(self.commonUserID)
