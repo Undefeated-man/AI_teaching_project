@@ -191,6 +191,7 @@ def cosDistance(vec1, vec2):
 
 @csrf_exempt
 def welcome(request):
+    lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
     lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
@@ -201,6 +202,7 @@ def welcome(request):
     lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
     lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
     lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
+    toDataBase(lectureExcel_2, "Lecture  1")
     toDataBase(lectureExcel_2, "Lecture  2")
     toDataBase(lectureExcel_3, "Lecture  3")
     toDataBase(lectureExcel_4, "Lecture  4")

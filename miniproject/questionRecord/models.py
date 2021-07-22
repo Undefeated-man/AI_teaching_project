@@ -239,7 +239,7 @@ class Wrong(models.Model):
     questionID = models.CharField(max_length=25, blank=False, null=False)
     createTime = models.DateTimeField(default=timezone.now)  # 首次错误时间
     updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
-    count = models.CharField(max_length=100, default='0')  # error times can be null
+    count = models.IntegerField(null=False,default=1)  # error times can be null
 
     def __str__(self):
         return "User:" + str(self.commonUser.commonUserID) + " Question:" + str(
