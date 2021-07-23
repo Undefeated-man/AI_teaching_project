@@ -268,7 +268,7 @@ def judgeAnswer(request):
     # try:
         commonUserID = request.POST["commonUserID"]
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        level = request.POST.get("level")
+        level = request.POST["level"]
         questionID = request.POST.get("questionID")
         if level == "Level1":
             level = "Level2"
