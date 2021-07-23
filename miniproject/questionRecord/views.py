@@ -468,3 +468,5 @@ def correctAnswer(request):
         return JsonResponse({'state': 'success',"score":commonUser.Progress.cumScore,"level":commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+#sudo chmod 777 /media
