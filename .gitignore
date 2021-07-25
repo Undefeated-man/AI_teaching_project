@@ -5,3 +5,8 @@ __pycache__/
 /miniproject/key/
 .idea/
 /miniproject/.idea/
+.idea/AI_teaching_project-main.iml
+.idea/deployment.xml
+.idea/misc.xml
+.idea/sshConfigs.xml
+.idea/webServers.xml
