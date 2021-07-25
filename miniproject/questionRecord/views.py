@@ -265,10 +265,10 @@ def toCancelCollect(request):
 
 
 def judgeAnswer(request):
-    try:
+    # try:
         commonUserID = request.POST["commonUserID"]
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        level = request.POST.get("level")
+        level = request.POST["level"]
         questionID = request.POST.get("questionID")
         if level == "Level1":
             level = "Level2"
@@ -286,8 +286,8 @@ def judgeAnswer(request):
         History.objects.create(commonUser=commonUser, questionID=questionID, level=level)
         commonUser.save()
         return JsonResponse({'state': 'success', "result": result, "trueAnswer": trueAnswer, "yourAnswer": yourAnswer})
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def judgeCollect(commonUser, level, questionID):
@@ -468,3 +468,5 @@ def correctAnswer(request):
         return JsonResponse({'state': 'success',"score":commonUser.Progress.cumScore,"level":commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+#sudo chmod 777 /media
