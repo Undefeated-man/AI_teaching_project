@@ -10,3 +10,4 @@ __pycache__/
 .idea/misc.xml
 .idea/sshConfigs.xml
 .idea/webServers.xml
+.idea/deployment.xml
