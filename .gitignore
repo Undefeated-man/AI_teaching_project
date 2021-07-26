@@ -12,3 +12,5 @@ __pycache__/
 .idea/webServers.xml
 .idea/deployment.xml
 .idea/dataSources.xml
+.idea/misc.xml
+.idea/AI_teaching_project-main.iml

@@ -12,7 +12,8 @@ from . import audioRecognize
 from weixin.lib.wxcrypt import WXBizDataCrypt
 from weixin import WXAPPAPI
 from google.cloud import texttospeech
-
+import random
+from random import shuffle
 # Create your views here.
 
 
@@ -219,13 +220,14 @@ def serializationQuestion(example, level, commonUser):
     if level == "Level3":
         if example.level3Mode:
             level3Question = example.Level3
-            exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
-                                       "question": level3Question.question, "options": {
+            options = {
                     "A": level3Question.op1,
                     "B": level3Question.op2,
                     "C": level3Question.op3,
                     "D": example.meaning
-                },
+                }
+            exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
+                                       "question": level3Question.question, "options": random_options(options),
                                        "true": "D",
                                        "whetherCollect": judgeCollect(commonUser, level, level3Question.questionID)}
     elif level == "Level4":
@@ -235,15 +237,16 @@ def serializationQuestion(example, level, commonUser):
                                        "question": level4Question.question,
                                        "whetherCollect": judgeCollect(commonUser, level, level4Question.questionID)}
     else:
-        level2Question = example.Level2
-        exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
-                                   "question": level2Question.question, "options": {
+        level2Question = example.Level2;
+        options = {
                     "A": level2Question.op1,
                     "B": level2Question.op2,
                     "C": level2Question.op3,
                     "D": "example.concept" # 无法调用
                     # "D": example.concept
-                },
+                }
+        exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
+                                   "question": level2Question.question, "options": random_options(options),
                                        "true": "D",
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
 
@@ -479,5 +482,13 @@ def correctAnswer(request):
         return JsonResponse({'state': 'success',"score":commonUser.Progress.cumScore,"level":commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+def random_options(dicts):
+    dict_key_ls = list(dicts.keys())
+    random.shuffle(dict_key_ls)
+    new_dic = {}
+    for key in dict_key_ls:
+        new_dic[key] = dicts.get(key)
+    return new_dic
 
 #sudo chmod 777 /media
