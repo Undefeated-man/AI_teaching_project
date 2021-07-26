@@ -241,6 +241,7 @@ def serializationQuestion(example, level, commonUser):
                     "A": level2Question.op1,
                     "B": level2Question.op2,
                     "C": level2Question.op3,
+                    "D": "example.concept" # 无法调用
                     # "D": example.concept
                 },
                                        "true": "D",
