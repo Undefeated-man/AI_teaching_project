@@ -14,6 +14,7 @@ from weixin import WXAPPAPI
 from google.cloud import texttospeech
 import random
 from random import shuffle
+
 # Create your views here.
 
 
@@ -221,11 +222,11 @@ def serializationQuestion(example, level, commonUser):
         if example.level3Mode:
             level3Question = example.Level3
             options = {
-                    "A": level3Question.op1,
-                    "B": level3Question.op2,
-                    "C": level3Question.op3,
-                    "D": example.meaning
-                }
+                "A": level3Question.op1,
+                "B": level3Question.op2,
+                "C": level3Question.op3,
+                "D": example.meaning
+            }
             exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
                                        "question": level3Question.question, "options": random_options(options),
                                        "true": "D",
@@ -239,15 +240,15 @@ def serializationQuestion(example, level, commonUser):
     else:
         level2Question = example.Level2;
         options = {
-                    "A": level2Question.op1,
-                    "B": level2Question.op2,
-                    "C": level2Question.op3,
-                    "D": "example.concept" # 无法调用
-                    # "D": example.concept
-                }
+            "A": level2Question.op1,
+            "B": level2Question.op2,
+            "C": level2Question.op3,
+            "D": "example.concept"  # 无法调用
+            # "D": example.concept
+        }
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
                                    "question": level2Question.question, "options": random_options(options),
-                                       "true": "D",
+                                   "true": "D",
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
 
     return exampleDict
@@ -280,28 +281,30 @@ def toCancelCollect(request):
 
 def judgeAnswer(request):
     # try:
-        commonUserID = request.POST["commonUserID"]
-        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        level = request.POST["level"]
-        questionID = request.POST.get("questionID")
-        if level == "Level1":
-            level = "Level2"
-        example = eval(level).objects.get(questionID=questionID).example
-        if level == "Level4":
-            audiofile = request.FILES.get('file', '')
-            trueAnswer = example.meaning
-            result = audioRecognize.recognizeAudio(audiofile, trueAnswer)
-            yourAnswer = result["yourAnswer"]
-            result = result["result"]
-        else:
-            trueAnswer = example.meaning
-            yourAnswer = request.POST.get("answer")
-            result = (yourAnswer == trueAnswer)
-        History.objects.create(commonUser=commonUser, questionID=questionID, level=level)
-        commonUser.save()
-        return JsonResponse({'state': 'success', "result": result, "trueAnswer": trueAnswer, "yourAnswer": yourAnswer})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    commonUserID = request.POST["commonUserID"]
+    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+    level = request.POST["level"]
+    questionID = request.POST.get("questionID")
+    if level == "Level1":
+        level = "Level2"
+    example = eval(level).objects.get(questionID=questionID).example
+    if level == "Level4":
+        audiofile = request.FILES.get('file', '')
+        trueAnswer = example.meaning
+        result = audioRecognize.recognizeAudio(audiofile, trueAnswer)
+        yourAnswer = result["yourAnswer"]
+        result = result["result"]
+    else:
+        trueAnswer = example.meaning
+        yourAnswer = request.POST.get("answer")
+        result = (yourAnswer == trueAnswer)
+    History.objects.create(commonUser=commonUser, questionID=questionID, level=level)
+    commonUser.save()
+    return JsonResponse({'state': 'success', "result": result, "trueAnswer": trueAnswer, "yourAnswer": yourAnswer})
+
+
+# except Exception as e:
+#     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def judgeCollect(commonUser, level, questionID):
@@ -325,7 +328,7 @@ def getUserRank(request):
             if i == commonUser:
                 break
             rank += 1
-        return JsonResponse({"state": "success", "score": score, "rank": rank/ len(allCommonUser),
+        return JsonResponse({"state": "success", "score": score, "rank": rank / len(allCommonUser),
                              "commonUserName": commonUser.commonUserName,
                              "level": commonUser.level, "imageURL": commonUser.imageLocation})
     except Exception as e:
@@ -411,26 +414,26 @@ def recordAnswer(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        right=request.POST.get("right")
-        wrong=request.POST.get("wrong")
-        score=request.POST.get("score")
-        commonUser.Progress.qstNum+=len(right)+len(wrong)
-        commonUser.Progress.cumScore+=score
+        right = request.POST.get("right")
+        wrong = request.POST.get("wrong")
+        score = request.POST.get("score")
+        commonUser.Progress.qstNum += len(right) + len(wrong)
+        commonUser.Progress.cumScore += score
         for i in wrong:
             try:
-                wrongObject=Wrong.objects.get(commonUser=commonUser,level=level,questionID=i)
-                wrongObject.count+=1
+                wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
+                wrongObject.count += 1
             except:
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
         commonUser.Progress.save()
-        if commonUser.Progress.cumScore>=10:
-            commonUser.level="Level2"
-        if commonUser.Progress.cumScore>=20:
-            commonUser.level="Level3"
-        if commonUser.Progress.cumScore>=30:
-            commonUser.level="Level4"
+        if commonUser.Progress.cumScore >= 10:
+            commonUser.level = "Level2"
+        if commonUser.Progress.cumScore >= 20:
+            commonUser.level = "Level3"
+        if commonUser.Progress.cumScore >= 30:
+            commonUser.level = "Level4"
         commonUser.save()
-        return JsonResponse({'state': 'success',"score":commonUser.Progress.cumScore,"level":commonUser.level})
+        return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -440,10 +443,10 @@ def getWrongNum(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         wrongQuestionNum = {}
-        for level in ["Level2","Level3","Level4"]:
-             wrongQuestionNum[level]=len(Wrong.objects.filter(commonUser=commonUser, level=level))
-        wrongQuestionNum["total"]=wrongQuestionNum["Level2"]+wrongQuestionNum["Level3"]+wrongQuestionNum["Level4"]
-        return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum,"level":commonUser.level})
+        for level in ["Level2", "Level3", "Level4"]:
+            wrongQuestionNum[level] = len(Wrong.objects.filter(commonUser=commonUser, level=level))
+        wrongQuestionNum["total"] = wrongQuestionNum["Level2"] + wrongQuestionNum["Level3"] + wrongQuestionNum["Level4"]
+        return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -463,25 +466,26 @@ def correctAnswer(request):
             rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
             rightObject.count -= 1
             rightObject.save()
-            if rightObject.count==0:
+            if rightObject.count == 0:
                 rightObject.delete()
         for i in wrong:
             try:
-                wrongObject=Wrong.objects.get(commonUser=commonUser,level=level,questionID=i)
-                wrongObject.count+=1
+                wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
+                wrongObject.count += 1
                 wrongObject.save()
             except:
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
-        if commonUser.Progress.cumScore>=10:
-            commonUser.level="Level2"
-        if commonUser.Progress.cumScore>=20:
-            commonUser.level="Level3"
-        if commonUser.Progress.cumScore>=30:
-            commonUser.level="Level4"
+        if commonUser.Progress.cumScore >= 10:
+            commonUser.level = "Level2"
+        if commonUser.Progress.cumScore >= 20:
+            commonUser.level = "Level3"
+        if commonUser.Progress.cumScore >= 30:
+            commonUser.level = "Level4"
         commonUser.save()
-        return JsonResponse({'state': 'success',"score":commonUser.Progress.cumScore,"level":commonUser.level})
+        return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
 
 def random_options(dicts):
     dict_key_ls = list(dicts.keys())
@@ -491,4 +495,4 @@ def random_options(dicts):
         new_dic[key] = dicts.get(key)
     return new_dic
 
-#sudo chmod 777 /media
+# sudo chmod 777 /media
