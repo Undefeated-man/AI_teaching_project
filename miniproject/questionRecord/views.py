@@ -220,8 +220,13 @@ def serializationQuestion(example, level, commonUser):
         if example.level3Mode:
             level3Question = example.Level3
             exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
-                                       "question": level3Question.question, "op1": level3Question.op1,
-                                       "op2": level3Question.op2, "op3": level3Question.op3,
+                                       "question": level3Question.question, "options": {
+                    "A": level3Question.op1,
+                    "B": level3Question.op2,
+                    "C": level3Question.op3,
+                    "D": example.meaning
+                },
+                                       "true": "D",
                                        "whetherCollect": judgeCollect(commonUser, level, level3Question.questionID)}
     elif level == "Level4":
         if example.level4Mode:
@@ -232,8 +237,13 @@ def serializationQuestion(example, level, commonUser):
     else:
         level2Question = example.Level2
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
-                                   "question": level2Question.question, "op1": level2Question.op1,
-                                   "op2": level2Question.op2, "op3": level2Question.op3,
+                                   "question": level2Question.question, "options": {
+                    "A": level2Question.op1,
+                    "B": level2Question.op2,
+                    "C": level2Question.op3,
+                    "D": example.concept
+                },
+                                       "true": "D",
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
 
     return exampleDict
