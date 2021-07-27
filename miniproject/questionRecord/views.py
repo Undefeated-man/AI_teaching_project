@@ -174,12 +174,12 @@ def getWrongQuestion(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        lecture = request.POST.get("lecture")
+        # lecture = request.POST.get("lecture")
         wrongQuestion = []
         for i in Wrong.objects.filter(commonUser=commonUser, level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            if example.unit.unitName == lecture:
-                wrongQuestion.append(serializationQuestion(example, level, commonUser))
+            # if example.unit.unitName == lecture:
+            wrongQuestion.append(serializationQuestion(example, level, commonUser))
         return JsonResponse({"state": "success", "wrongQuestion": wrongQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
