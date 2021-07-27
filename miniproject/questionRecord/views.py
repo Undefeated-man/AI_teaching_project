@@ -2,6 +2,7 @@ import json
 import os
 import random
 
+import demjson as demjson
 import requests
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
@@ -411,12 +412,14 @@ def textToSpeechEN(request):
 
 
 def recordAnswer(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        right = demjson.decode(request.POST.get("right"))
-        wrong = demjson.decode(request.POST.get("wrong"))
+        right = json.loads(request.POST.get("right"))
+
+        wrong = json.loads(request.POST.get("wrong"))
+        print(right, wrong)
         score = request.POST.get("score")
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += score
@@ -435,8 +438,8 @@ def recordAnswer(request):
             commonUser.level = "Level4"
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getWrongNum(request):
