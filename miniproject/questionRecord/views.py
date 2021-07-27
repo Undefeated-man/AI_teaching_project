@@ -412,35 +412,32 @@ def textToSpeechEN(request):
 
 
 def recordAnswer(request):
-    # try:
-    commonUserID = request.POST.get("commonUserID")
-    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-    level = request.POST.get("level")
-    right = int(json.loads(request.POST.get("right")), base=10)
-    wrong = int(json.loads(request.POST.get("wrong")), base=10)
-    print(len(right), len(wrong))
-    score = request.POST.get("score")
-    commonUser.Progress.qstNum += len(right) + len(wrong)
-    commonUser.Progress.cumScore += score
-    for i in wrong:
-        try:
-            wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
-            wrongObject.count += 1
-        except:
-            Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
-    commonUser.Progress.save()
-    if commonUser.Progress.cumScore >= 10:
-        commonUser.level = "Level2"
-    if commonUser.Progress.cumScore >= 20:
-        commonUser.level = "Level3"
-    if commonUser.Progress.cumScore >= 30:
-        commonUser.level = "Level4"
-    commonUser.save()
-    return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
-
-
-# except Exception as e:
-#     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        level = request.POST.get("level")
+        right = int(json.loads(request.POST.get("right")), base=10)
+        wrong = int(json.loads(request.POST.get("wrong")), base=10)
+        score = request.POST.get("score")
+        commonUser.Progress.qstNum += len(right) + len(wrong)
+        commonUser.Progress.cumScore += int(score, base=10)
+        for i in wrong:
+            try:
+                wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
+                wrongObject.count += 1
+            except:
+                Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
+        commonUser.Progress.save()
+        if commonUser.Progress.cumScore >= 10:
+            commonUser.level = "Level2"
+        if commonUser.Progress.cumScore >= 20:
+            commonUser.level = "Level3"
+        if commonUser.Progress.cumScore >= 30:
+            commonUser.level = "Level4"
+        commonUser.save()
+        return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getWrongNum(request):
