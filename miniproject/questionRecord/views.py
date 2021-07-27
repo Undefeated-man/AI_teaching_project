@@ -458,11 +458,11 @@ def correctAnswer(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        right = request.POST.get("right")
-        wrong = request.POST.get("wrong")
+        right = json.loads(request.POST.get("right"))
+        wrong = json.loads(request.POST.get("wrong"))
         score = request.POST.get("score")
         commonUser.Progress.qstNum += len(right) + len(wrong)
-        commonUser.Progress.cumScore += score
+        commonUser.Progress.cumScore += int(score, base=10)
         commonUser.Progress.save()
         for i in right:
             rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
