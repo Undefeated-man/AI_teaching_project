@@ -419,7 +419,7 @@ def recordAnswer(request):
         right = json.loads(request.POST.get("right"))
 
         wrong = json.loads(request.POST.get("wrong"))
-        print(right, wrong)
+        print(len(right), len(wrong))
         score = request.POST.get("score")
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += score
