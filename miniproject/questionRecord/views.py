@@ -1,3 +1,4 @@
+import json
 import os
 import random
 
@@ -414,8 +415,8 @@ def recordAnswer(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        right = request.POST.get("right")
-        wrong = request.POST.get("wrong")
+        right = json.loads(request.POST.get("right"))
+        wrong = json.loads(request.POST.get("wrong"))
         score = request.POST.get("score")
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += score
@@ -485,7 +486,6 @@ def correctAnswer(request):
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
-
 
 def random_options(dicts):
     dict_key_ls = list(dicts.keys())
