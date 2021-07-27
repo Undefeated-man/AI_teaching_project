@@ -415,8 +415,8 @@ def recordAnswer(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
-        right = json.loads(request.POST.get("right"))
-        wrong = json.loads(request.POST.get("wrong"))
+        right = demjson.decode(request.POST.get("right"))
+        wrong = demjson.decode(request.POST.get("wrong"))
         score = request.POST.get("score")
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += score
