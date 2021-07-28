@@ -513,7 +513,7 @@ def signAddScore(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        whetherAdd=request.POST.get("whetherAdd")
+        whetherAdd=int(request.POST.get("whetherAdd"))
         if whetherAdd:
             commonUser.conSign+=1
             commonUser.Progress.cumScore+=10
