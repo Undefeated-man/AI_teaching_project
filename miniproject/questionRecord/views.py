@@ -169,7 +169,7 @@ def getWrongQuestion(request):
 
 
 def getNotesCollection(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         collectedDict = {}
@@ -183,12 +183,12 @@ def getNotesCollection(request):
                 answer=example.concept.conceptName
             else:
                 answer=example.meaning
-            lect = str(example.unit.unitName).replace('Lecture  ', 'LECT')
+            lect = example.unit.unitName[-1:]
             collectedDict[lect][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
                                                                   "Answer":answer})
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getHistoryNum(request):
