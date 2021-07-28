@@ -183,7 +183,8 @@ def getNotesCollection(request):
                 answer=example.concept.conceptName
             else:
                 answer=example.meaning
-            collectedDict[example.unit.unitName][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
+            lect = example.unit.unitName
+            collectedDict[lect.replace('Lecture  ', 'LECT')][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
                                                                   "Answer":answer})
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
     except Exception as e:
