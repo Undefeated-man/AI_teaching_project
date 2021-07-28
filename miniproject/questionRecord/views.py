@@ -170,26 +170,29 @@ def getWrongQuestion(request):
 
 def getNotesCollection(request):
     # try:
-        commonUserID = request.POST.get("commonUserID")
-        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        collectedDict = {}
-        for i in NotesCollection.objects.filter(commonUser=commonUser):
-            example = eval(i.level).objects.get(questionID=i.questionID).example
-            if collectedDict.get(example.unit.unitName,None) is None:
-                collectedDict[example.unit.unitName]={}
-            if collectedDict[example.unit.unitName].get(i.level,None) is None:
-                collectedDict[example.unit.unitName][i.level]=[]
-            if i.level=="Level3":
-                answer=example.concept.conceptName
-            else:
-                answer=example.meaning
-            lect = str(example.unit.unitName).replace('Lecture  ', 'LECT')
-            print(lect)
-            collectedDict[lect][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
-                                                                  "Answer":answer})
-        return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    commonUserID = request.POST.get("commonUserID")
+    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+    collectedDict = {}
+    for i in NotesCollection.objects.filter(commonUser=commonUser):
+        example = eval(i.level).objects.get(questionID=i.questionID).example
+        if collectedDict.get(example.unit.unitName, None) is None:
+            collectedDict[example.unit.unitName] = {}
+        if collectedDict[example.unit.unitName].get(i.level, None) is None:
+            collectedDict[example.unit.unitName][i.level] = []
+        if i.level == "Level3":
+            answer = example.concept.conceptName
+        else:
+            answer = example.meaning
+        lect = str(example.unit.unitName).replace('Lecture  ', 'LECT')
+        print(lect)
+        collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
+                                             "Answer": answer})
+        print(collectedDict)
+    return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
+
+
+# except Exception as e:
+#     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getHistoryNum(request):
@@ -203,8 +206,8 @@ def getHistoryNum(request):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             if example.unit.unitName == lecture:
                 historyQuestion.append(serializationQuestion(example, i.level, commonUser))
-        allNum=len(eval(i.level).objects.filter(example__unit__unitName=lecture))
-        return JsonResponse({"state": "success", "allDoneNum": len(historyQuestion),"allNum":allNum})
+        allNum = len(eval(i.level).objects.filter(example__unit__unitName=lecture))
+        return JsonResponse({"state": "success", "allDoneNum": len(historyQuestion), "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -226,8 +229,9 @@ def serializationQuestion(example, level, commonUser):
             }
             optionsDict = random_options(options)
             exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
-                                       "question": level3Question.question,"options": optionsDict,
-                                       "true": list(optionsDict.keys())[list(optionsDict.values()).index(example.meaning)],
+                                       "question": level3Question.question, "options": optionsDict,
+                                       "true": list(optionsDict.keys())[
+                                           list(optionsDict.values()).index(example.meaning)],
                                        "whetherCollect": judgeCollect(commonUser, level, level3Question.questionID)}
     elif level == "Level4":
         if example.level4Mode:
@@ -243,10 +247,11 @@ def serializationQuestion(example, level, commonUser):
             "C": level2Question.op3,
             "D": example.concept.conceptName,
         }
-        optionsDict=random_options(options)
+        optionsDict = random_options(options)
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
                                    "question": level2Question.question, "options": optionsDict,
-                                   "true":  list(optionsDict.keys())[list(optionsDict.values()).index(example.concept.conceptName)],
+                                   "true": list(optionsDict.keys())[
+                                       list(optionsDict.values()).index(example.concept.conceptName)],
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
 
     return exampleDict
@@ -258,8 +263,8 @@ def toCollect(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         questionID = request.POST.get("questionID")
-        if level=="Level1":
-            level="Level2"
+        if level == "Level1":
+            level = "Level2"
         NotesCollection.objects.create(commonUser=commonUser, level=level, questionID=questionID)
         return JsonResponse({"state": "success"})
     except Exception as e:
@@ -327,18 +332,18 @@ def getUserRank(request):
             if i == commonUser:
                 break
             rank += 1
-        if commonUser.level=="Level1":
-            toNext=500-score
-        elif commonUser.level=="Level2":
+        if commonUser.level == "Level1":
+            toNext = 500 - score
+        elif commonUser.level == "Level2":
             toNext = 1000 - score
         elif commonUser.level == "Level3":
             toNext = 2000 - score
         else:
-            toNext =0
-        userRank=(rank / len(allCommonUser))*100
-        if userRank==int(userRank):
-            userRank=int(userRank)
-        return JsonResponse({"state": "success", "score": score, "rank":userRank ,"toNext":toNext,
+            toNext = 0
+        userRank = (rank / len(allCommonUser)) * 100
+        if userRank == int(userRank):
+            userRank = int(userRank)
+        return JsonResponse({"state": "success", "score": score, "rank": userRank, "toNext": toNext,
                              "commonUserName": commonUser.commonUserName,
                              "level": commonUser.level, "imageURL": commonUser.imageLocation})
     except Exception as e:
@@ -459,7 +464,7 @@ def getWrongNum(request):
         wrongQuestionNum = {}
         for level in ["Level2", "Level3", "Level4"]:
             wrongQuestionNum[level] = len(Wrong.objects.filter(commonUser=commonUser, level=level))
-        wrongQuestionNum["total"]=len(Wrong.objects.filter(commonUser=commonUser))
+        wrongQuestionNum["total"] = len(Wrong.objects.filter(commonUser=commonUser))
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -515,7 +520,7 @@ def signAddScore(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        whetherAdd=int(request.POST.get("whetherAdd"))
+        whetherAdd = int(request.POST.get("whetherAdd"))
         if whetherAdd:
             commonUser.conSign += 1
             commonUser.Progress.cumScore += 10
