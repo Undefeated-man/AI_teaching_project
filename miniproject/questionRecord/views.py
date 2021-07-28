@@ -222,9 +222,10 @@ def serializationQuestion(example, level, commonUser):
                 "C": level3Question.op3,
                 "D": example.meaning
             }
+            optionsDict = random_options(options)
             exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
-                                       "question": level3Question.question, "options": random_options(options),
-                                       "true": "D",
+                                       "question": level3Question.question,"options": optionsDict,
+                                       "true": list(optionsDict.keys())[list(optionsDict.values()).index(example.concept)],
                                        "whetherCollect": judgeCollect(commonUser, level, level3Question.questionID)}
     elif level == "Level4":
         if example.level4Mode:
@@ -240,9 +241,10 @@ def serializationQuestion(example, level, commonUser):
             "C": level2Question.op3,
             "D": example.concept,
         }
+        optionsDict=random_options(options)
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
-                                   "question": level2Question.question, "options": random_options(options),
-                                   "true": "D",
+                                   "question": level2Question.question, "options": optionsDict,
+                                   "true":  list(optionsDict.keys())[list(optionsDict.values()).index(example.concept)],
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
 
     return exampleDict
@@ -250,7 +252,6 @@ def serializationQuestion(example, level, commonUser):
 
 def toCollect(request):
     try:
-        print(request)
         commonUserID = request.POST["commonUserID"]
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
