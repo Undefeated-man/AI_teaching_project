@@ -180,7 +180,7 @@ def getNotesCollection(request):
             collectedDict[lect] = {}
         if collectedDict[lect].get(i.level, None) is None:
             collectedDict[lect][i.level] = []
-        if i.level == "Level3":
+        if i.level == "Level2":
             answer = example.concept.conceptName
         else:
             answer = example.meaning
