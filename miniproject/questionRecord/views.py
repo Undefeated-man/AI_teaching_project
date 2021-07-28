@@ -191,7 +191,7 @@ def getNotesCollection(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
-def getHistory(request):
+def getHistoryNum(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
@@ -202,7 +202,8 @@ def getHistory(request):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             if example.unit.unitName == lecture:
                 historyQuestion.append(serializationQuestion(example, i.level, commonUser))
-        return JsonResponse({"state": "success", "historyQuestion": historyQuestion})
+        allNum=len(eval(i.level).objects.filter(example__unit__unitName=lecture))
+        return JsonResponse({"state": "success", "allDoneNum": len(historyQuestion),"allNum":allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 

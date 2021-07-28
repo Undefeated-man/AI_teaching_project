@@ -18,7 +18,7 @@ urlpatterns = [
     url(r"^getOneQuesiton/$", views.getOneQuesiton),
     url(r"^getWrongQuestion/$", views.getWrongQuestion),
     url(r"^getNotesCollection/$", views.getNotesCollection),
-    url(r"^getHistory/$", views.getHistory),
+    url(r"^getHistoryNum/$", views.getHistoryNum),
     url(r"^toCollect/$", views.toCollect),
     url(r"^toCancelCollect/$", views.toCancelCollect),
     url(r"^judgeAnswer/$", views.judgeAnswer),
