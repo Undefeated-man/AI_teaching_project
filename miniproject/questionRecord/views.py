@@ -414,6 +414,8 @@ def recordAnswer(request):
         score = request.POST.get("score")
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += int(score, base=10)
+        for i in right:
+            History.objects.create(commonUser=commonUser, questionID=i, level=level)
         for i in wrong:
             try:
                 wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
@@ -421,6 +423,7 @@ def recordAnswer(request):
                 wrongObject.save()
             except:
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
+            History.objects.create(commonUser=commonUser, questionID=i, level=level)
         commonUser.Progress.save()
         if commonUser.Progress.cumScore >= 10:
             commonUser.level = "Level2"
