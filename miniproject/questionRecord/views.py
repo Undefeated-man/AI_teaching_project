@@ -185,7 +185,7 @@ def getNotesCollection(request):
         else:
             answer = example.meaning
         collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
-                                             "Answer": answer})
+                                             "Answer": answer, "ID": i.questionID})
     return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
 
 
