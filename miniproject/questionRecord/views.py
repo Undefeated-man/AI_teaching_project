@@ -74,19 +74,9 @@ def getUserInformation(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         score = Progress.objects.get(commonUser=commonUser).cumScore
         level = commonUser.level
-        doneQuestion = []
-        wrongQuestion = []
-        for i in History.objects.filter(commonUser=commonUser):
-            levelToDeal = i.level
-            example = eval(levelToDeal).objects.get(questionID=i.questionID).example
-            doneQuestion.append(serializationQuestion(example, i.level, commonUser))
-        for i in Wrong.objects.filter(commonUser=commonUser):
-            example = i.example
-            wrongQuestion.append(serializationQuestion(example, i.level, commonUser))
         return JsonResponse({"state": "success", "commonUserID": commonUserID, "score": score, "level": level,
                              "imageURL": commonUser.imageLocation,
-                             "doneQuestion": doneQuestion,
-                             "wrongQuestion": wrongQuestion})
+                             })
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -335,7 +325,15 @@ def getUserRank(request):
             if i == commonUser:
                 break
             rank += 1
-        return JsonResponse({"state": "success", "score": score, "rank": rank / len(allCommonUser),
+        if commonUser.level=="Level1":
+            toNext=1000-score
+        elif commonUser.level=="Level2":
+            toNext = 2000 - score
+        elif commonUser.level == "Level3":
+            toNext = 3000 - score
+        else:
+            toNext =0
+        return JsonResponse({"state": "success", "score": score, "rank": rank / len(allCommonUser),"toNext":toNext,
                              "commonUserName": commonUser.commonUserName,
                              "level": commonUser.level, "imageURL": commonUser.imageLocation})
     except Exception as e:
