@@ -458,13 +458,9 @@ def correctAnswer(request):
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += int(score, base=10)
         commonUser.Progress.save()
-        countRight={}
         for i in right:
-            countRight[i]=countRight.get(i,0)+1
-            if countRight[i]==2:
-                rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
-                if rightObject.count == 0:
-                    rightObject.delete()
+            rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
+            rightObject.delete()
         for i in wrong:
             try:
                 wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
