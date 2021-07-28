@@ -225,7 +225,7 @@ def serializationQuestion(example, level, commonUser):
             optionsDict = random_options(options)
             exampleDict["question"] = {"level": level, "questionID": level3Question.questionID,
                                        "question": level3Question.question,"options": optionsDict,
-                                       "true": list(optionsDict.keys())[list(optionsDict.values()).index(example.concept)],
+                                       "true": list(optionsDict.keys())[list(optionsDict.values()).index(example.meaning)],
                                        "whetherCollect": judgeCollect(commonUser, level, level3Question.questionID)}
     elif level == "Level4":
         if example.level4Mode:
@@ -244,7 +244,7 @@ def serializationQuestion(example, level, commonUser):
         optionsDict=random_options(options)
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
                                    "question": level2Question.question, "options": optionsDict,
-                                   "true":  list(optionsDict.keys())[list(optionsDict.values()).index(example.concept)],
+                                   "true":  list(optionsDict.keys())[list(optionsDict.values()).index(example.concept.conceptName)],
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
 
     return exampleDict
