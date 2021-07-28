@@ -189,7 +189,12 @@ def getNotesCollection(request):
                 collectedDict[example.unit.unitName]={}
             if collectedDict[example.unit.unitName].get(i.level,None) is None:
                 collectedDict[example.unit.unitName][i.level]=[]
-            collectedDict[example.unit.unitName][i.level].append(serializationQuestion(example=example,level=i.level,commonUser=commonUser))
+            if i.level=="Level3":
+                answer=example.concept.conceptName
+            else:
+                answer=example.meaning
+            collectedDict[example.unit.unitName][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
+                                                                  "Answer":answer})
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
