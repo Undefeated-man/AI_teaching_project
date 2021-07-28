@@ -188,7 +188,7 @@ def getNotesCollection(request):
                                                                   "Answer":answer})
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
     except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+        return JsonResponse({'state': 'fail', "error": e})
 
 
 def getHistoryNum(request):
