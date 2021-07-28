@@ -339,10 +339,10 @@ def getUserRank(request):
             toNext = 2000 - score
         else:
             toNext = 0
-        userRank = (rank / len(allCommonUser)) * 100
-        if userRank == int(userRank):
-            userRank = int(userRank)
-        return JsonResponse({"state": "success", "score": score, "rank": userRank, "toNext": toNext,
+        userPercent = (rank / len(allCommonUser)) * 100
+        if userPercent == int(userPercent):
+            userPercent = int(userPercent)
+        return JsonResponse({"state": "success", "score": score, "rank": rank, "percent": userPercent, "toNext": toNext,
                              "commonUserName": commonUser.commonUserName,
                              "level": commonUser.level, "imageURL": commonUser.imageLocation})
     except Exception as e:
