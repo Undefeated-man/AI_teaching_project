@@ -169,7 +169,7 @@ def getWrongQuestion(request):
         level = request.POST.get("level")
         # lecture = request.POST.get("lecture")
         wrongQuestion = []
-        for i in Wrong.objects.filter(commonUser=commonUser, level=level):
+        for i in Wrong.objects.filter(commonUser=commonUser, level=level)[0:10]:
             example = eval(i.level).objects.get(questionID=i.questionID).example
             # if example.unit.unitName == lecture:
             wrongQuestion.append(serializationQuestion(example, level, commonUser))
