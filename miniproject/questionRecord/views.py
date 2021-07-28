@@ -437,11 +437,11 @@ def recordAnswer(request):
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
             History.objects.create(commonUser=commonUser, questionID=i, level=level)
         commonUser.Progress.save()
-        if commonUser.Progress.cumScore >= 10:
+        if commonUser.Progress.cumScore >= 1000:
             commonUser.level = "Level2"
-        if commonUser.Progress.cumScore >= 20:
+        if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level3"
-        if commonUser.Progress.cumScore >= 30:
+        if commonUser.Progress.cumScore >= 3000:
             commonUser.level = "Level4"
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
