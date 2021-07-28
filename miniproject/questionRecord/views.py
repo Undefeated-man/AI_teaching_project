@@ -175,16 +175,15 @@ def getNotesCollection(request):
     collectedDict = {}
     for i in NotesCollection.objects.filter(commonUser=commonUser):
         example = eval(i.level).objects.get(questionID=i.questionID).example
+        lect = example.unit.unitName.replace('Lecture  ', 'LECT')
         if collectedDict.get(example.unit.unitName, None) is None:
-            collectedDict[example.unit.unitName] = {}
+            collectedDict[lect] = {}
         if collectedDict[example.unit.unitName].get(i.level, None) is None:
             collectedDict[example.unit.unitName][i.level] = []
         if i.level == "Level3":
             answer = example.concept.conceptName
         else:
             answer = example.meaning
-        lect = str(example.unit.unitName).replace('Lecture  ', 'LECT')
-        print(lect)
         collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
                                              "Answer": answer})
         print(collectedDict)
