@@ -172,7 +172,6 @@ def getNotesCollection(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        lect = 0
         collectedDict = {}
         for i in NotesCollection.objects.filter(commonUser=commonUser):
             example = eval(i.level).objects.get(questionID=i.questionID).example
@@ -184,11 +183,11 @@ def getNotesCollection(request):
                 answer=example.concept.conceptName
             else:
                 answer=example.meaning
-            lect = example.unit.unitName[-1:]
+            lect = str(example.unit.unitName).replace('Lecture  ', 'LECT')
             print(lect)
-            # collectedDict[lect][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
-            #                                                       "Answer":answer})
-        return JsonResponse({"state": "success", "collectedQuestion": lect})
+            collectedDict[lect][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
+                                                                  "Answer":answer})
+        return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
