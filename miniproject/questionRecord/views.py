@@ -204,7 +204,7 @@ def getHistoryNum(request):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             if example.unit.unitName == lecture:
                 historyQuestion.append(serializationQuestion(example, i.level, commonUser))
-        allNum = len(eval(level).objects.filter(example__unit__unitName=lecture))
+            allNum = len(eval(i.level).objects.filter(example__unit__unitName=lecture))
         return JsonResponse({"state": "success", "allDoneNum": len(historyQuestion), "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
