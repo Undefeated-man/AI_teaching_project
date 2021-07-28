@@ -172,6 +172,7 @@ def getNotesCollection(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        lect = 0
         collectedDict = {}
         for i in NotesCollection.objects.filter(commonUser=commonUser):
             example = eval(i.level).objects.get(questionID=i.questionID).example
