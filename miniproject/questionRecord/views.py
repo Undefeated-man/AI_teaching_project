@@ -488,11 +488,13 @@ def correctAnswer(request):
 
 
 def random_options(dicts):
-    dict_key_ls = list(dicts.keys())
-    random.shuffle(dict_key_ls)
+    dict_value_ls = list(dicts.value())
+    random.shuffle(dict_value_ls)
     new_dic = {}
-    for key in dict_key_ls:
-        new_dic[key] = dicts.get(key)
+    new_dic["A"] = dict_value_ls[0]
+    new_dic["B"] = dict_value_ls[1]
+    new_dic["C"] = dict_value_ls[2]
+    new_dic["D"] = dict_value_ls[3]
     return new_dic
 
 # sudo chmod 777 /media
