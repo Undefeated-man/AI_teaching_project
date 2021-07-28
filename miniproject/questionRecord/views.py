@@ -515,12 +515,14 @@ def signAddScore(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         whetherAdd=int(request.POST.get("whetherAdd"))
         if whetherAdd:
-            commonUser.conSign+=1
-            commonUser.Progress.cumScore+=10
+            commonUser.conSign += 1
+            commonUser.Progress.cumScore += 10
             commonUser.Progress.save()
             commonUser.save()
         else:
             commonUser.conSign = 0
+            commonUser.Progress.cumScore += 5
+            commonUser.Progress.save()
             commonUser.save()
         if commonUser.Progress.cumScore >= 500:
             commonUser.level = "Level2"
