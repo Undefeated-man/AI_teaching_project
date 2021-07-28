@@ -2,7 +2,6 @@ import json
 import os
 import random
 
-import demjson as demjson
 import requests
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
@@ -447,7 +446,9 @@ def getWrongNum(request):
         wrongQuestionNum = {}
         for level in ["Level2", "Level3", "Level4"]:
             wrongQuestionNum[level] = len(Wrong.objects.filter(commonUser=commonUser, level=level))
-        wrongQuestionNum["total"] = wrongQuestionNum["Level2"] + wrongQuestionNum["Level3"] + wrongQuestionNum["Level4"]
+            if wrongQuestionNum[level]>10:
+                wrongQuestionNum[level]=10
+        wrongQuestionNum["total"]=len(Wrong.objects.filter(commonUser=commonUser))
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -464,12 +465,15 @@ def correctAnswer(request):
         commonUser.Progress.qstNum += len(right) + len(wrong)
         commonUser.Progress.cumScore += int(score, base=10)
         commonUser.Progress.save()
+        countRight={}
         for i in right:
-            rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
-            rightObject.count -= 1
-            rightObject.save()
-            if rightObject.count == 0:
-                rightObject.delete()
+            countRight[i]=countRight.get(i,0)+1
+            if countRight[i]==2:
+                rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
+                rightObject.count -= 1
+                rightObject.save()
+                if rightObject.count == 0:
+                    rightObject.delete()
         for i in wrong:
             try:
                 wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
