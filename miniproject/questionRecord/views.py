@@ -463,8 +463,6 @@ def correctAnswer(request):
             countRight[i]=countRight.get(i,0)+1
             if countRight[i]==2:
                 rightObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
-                rightObject.count -= 1
-                rightObject.save()
                 if rightObject.count == 0:
                     rightObject.delete()
         for i in wrong:
