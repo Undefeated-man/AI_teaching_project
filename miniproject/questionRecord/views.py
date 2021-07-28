@@ -488,7 +488,7 @@ def correctAnswer(request):
 
 
 def random_options(dicts):
-    dict_value_ls = list(dicts.value())
+    dict_value_ls = list(dicts.values())
     random.shuffle(dict_value_ls)
     new_dic = {}
     new_dic["A"] = dict_value_ls[0]
