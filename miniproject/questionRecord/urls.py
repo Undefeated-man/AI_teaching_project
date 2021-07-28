@@ -26,6 +26,7 @@ urlpatterns = [
     url(r"^recordAnswer/$", views.recordAnswer),
     url(r"^getWrongNum/$", views.getWrongNum),
     url(r"^correctAnswer/$", views.correctAnswer),
+    url(r"^signAddScore/$", views.signAddScore),
     url(r"^textToSpeechEN_CN/$", views.textToSpeechEN_CN),
     url(r"^textToSpeechEN/$", views.textToSpeechEN),
     url(r"^recognize$", audioRecognize.recognize, name="recognize"),

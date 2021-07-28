@@ -326,11 +326,11 @@ def getUserRank(request):
                 break
             rank += 1
         if commonUser.level=="Level1":
-            toNext=1000-score
+            toNext=500-score
         elif commonUser.level=="Level2":
-            toNext = 2000 - score
+            toNext = 1000 - score
         elif commonUser.level == "Level3":
-            toNext = 3000 - score
+            toNext = 2000 - score
         else:
             toNext =0
         userRank=(rank / len(allCommonUser))*100
@@ -438,11 +438,11 @@ def recordAnswer(request):
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
             History.objects.create(commonUser=commonUser, questionID=i, level=level)
         commonUser.Progress.save()
-        if commonUser.Progress.cumScore >= 1000:
+        if commonUser.Progress.cumScore >= 500:
             commonUser.level = "Level2"
-        if commonUser.Progress.cumScore >= 2000:
+        if commonUser.Progress.cumScore >= 1000:
             commonUser.level = "Level3"
-        if commonUser.Progress.cumScore >= 3000:
+        if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
@@ -484,11 +484,11 @@ def correctAnswer(request):
                 wrongObject.save()
             except:
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
-        if commonUser.Progress.cumScore >= 10:
+        if commonUser.Progress.cumScore >= 500:
             commonUser.level = "Level2"
-        if commonUser.Progress.cumScore >= 20:
+        if commonUser.Progress.cumScore >= 1000:
             commonUser.level = "Level3"
-        if commonUser.Progress.cumScore >= 30:
+        if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
@@ -506,4 +506,29 @@ def random_options(dicts):
     new_dic["D"] = dict_value_ls[3]
     return new_dic
 
+
 # sudo chmod 777 /media
+
+def signAddScore(request):
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        whetherAdd=request.POST.get("whetherAdd")
+        if whetherAdd:
+            commonUser.conSign+=1
+            commonUser.Progress.cumScore+=10
+            commonUser.Progress.save()
+            commonUser.save()
+        else:
+            commonUser.conSign = 0
+            commonUser.save()
+        if commonUser.Progress.cumScore >= 500:
+            commonUser.level = "Level2"
+        if commonUser.Progress.cumScore >= 1000:
+            commonUser.level = "Level3"
+        if commonUser.Progress.cumScore >= 2000:
+            commonUser.level = "Level4"
+        commonUser.save()
+        return JsonResponse({"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
