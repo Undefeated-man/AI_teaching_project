@@ -185,9 +185,9 @@ def getNotesCollection(request):
         collectedDict = {}
         for i in NotesCollection.objects.filter(commonUser=commonUser):
             example = eval(i.level).objects.get(questionID=i.questionID).example
-            if collectedDict.get(example.unit.unitName,None) is None:
+            if collectedDict.get(example.unit.unitName,"")=="":
                 collectedDict[example.unit.unitName]={}
-            if collectedDict.get(i.level,None) is None:
+            if collectedDict.get(i.level,"")=="":
                 collectedDict[example.unit.unitName][i.level]=[]
             collectedDict[example.unit.unitName][i.level].append(i.questionID)
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
