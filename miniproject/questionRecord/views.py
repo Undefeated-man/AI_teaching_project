@@ -29,13 +29,7 @@ AppSecret = "da1e11486e57ebb44c7753180e3285a5"
 def get_user_info(js_code, userinfo, iv):
     api = WXAPPAPI(AppID, AppSecret)
     session_info = api.exchange_code_for_session_key(js_code)
-    # print(api);
-
-    # 获取session_info 后
-
     session_key = session_info.get('session_key')
-    print("session_key", session_key)
-    # print()
     crypt = WXBizDataCrypt(AppID, session_key)
     user_info = crypt.decrypt(userinfo, iv)
     return user_info
@@ -244,8 +238,7 @@ def serializationQuestion(example, level, commonUser):
             "A": level2Question.op1,
             "B": level2Question.op2,
             "C": level2Question.op3,
-            "D": "example.concept"  # 无法调用
-            # "D": example.concept
+            "D": example.concept,
         }
         exampleDict["question"] = {"level": level, "questionID": level2Question.questionID,
                                    "question": level2Question.question, "options": random_options(options),
