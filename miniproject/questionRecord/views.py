@@ -257,6 +257,8 @@ def toCollect(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         questionID = request.POST.get("questionID")
+        if level=="Level1":
+            level="Level2"
         NotesCollection.objects.create(commonUser=commonUser, level=level, questionID=questionID)
         return JsonResponse({"state": "success"})
     except Exception as e:
