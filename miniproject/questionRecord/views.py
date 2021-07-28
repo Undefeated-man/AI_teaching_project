@@ -418,6 +418,7 @@ def recordAnswer(request):
             try:
                 wrongObject = Wrong.objects.get(commonUser=commonUser, level=level, questionID=i)
                 wrongObject.count += 1
+                wrongObject.save()
             except:
                 Wrong.objects.create(commonUser=commonUser, level=level, questionID=i)
         commonUser.Progress.save()
