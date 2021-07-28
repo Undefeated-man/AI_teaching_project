@@ -186,9 +186,7 @@ def getNotesCollection(request):
             answer = example.meaning
         collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
                                              "Answer": answer})
-        print(collectedDict)
-    return JsonResponse({"state": "success",
-                         "collectedQuestion": sorted(collectedDict.items(), key=lambda dict1: dict1[0][4:])})
+    return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
 
 
 # except Exception as e:
