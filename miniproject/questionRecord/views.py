@@ -184,11 +184,12 @@ def getNotesCollection(request):
             else:
                 answer=example.meaning
             lect = example.unit.unitName[-1:]
-            collectedDict[lect][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
-                                                                  "Answer":answer})
-        return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
+            print(lect)
+            # collectedDict[lect][i.level].append({"Question":eval(i.level).objects.get(questionID=i.questionID).question,
+            #                                                       "Answer":answer})
+        return JsonResponse({"state": "success", "collectedQuestion": lect})
     except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.with_traceback()})
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getHistoryNum(request):
