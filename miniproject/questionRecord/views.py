@@ -199,13 +199,22 @@ def getHistoryNum(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         lecture = request.POST.get("lecture")
-        historyQuestion = []
+        historyQuestion = {"Level2":{},"Level3":{},"Level4":{}}
         for i in History.objects.filter(commonUser=commonUser, level=level):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             if example.unit.unitName == lecture:
-                historyQuestion.append(serializationQuestion(example, i.level, commonUser))
+                if historyQuestion[i.level].get("doneNum",None) is None:
+                    historyQuestion[i.level]["doneNum"]=1
+                else:
+                    historyQuestion[i.level]["doneNum"]+=1
+        for i in ["Level2", "Level3", "Level4"]:
+            historyQuestion[i]["allLevelNum"]=len(eval(i).objects.filter(example__unit__unitName=lecture))
+            if i=="Level2":
+                historyQuestion[i]["whetherLock"] = 0
+            else:
+                historyQuestion[i]["whetherLock"] = eval("commonUser.l"+level[1:]+"Lock")
         allNum = len(eval(level).objects.filter(example__unit__unitName=lecture))
-        return JsonResponse({"state": "success", "allDoneNum": len(historyQuestion), "allNum": allNum})
+        return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -544,3 +553,5 @@ def signAddScore(request):
         return JsonResponse({"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
