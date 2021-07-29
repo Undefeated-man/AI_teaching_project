@@ -169,28 +169,28 @@ def getWrongQuestion(request):
 
 
 def getNotesCollection(request):
-    # try:
-    commonUserID = request.POST.get("commonUserID")
-    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-    collectedDict = {}
-    for i in NotesCollection.objects.filter(commonUser=commonUser):
-        example = eval(i.level).objects.get(questionID=i.questionID).example
-        lect = example.unit.unitName.replace('Lecture  ', 'LECT')
-        if collectedDict.get(lect, None) is None:
-            collectedDict[lect] = {}
-        if collectedDict[lect].get(i.level, None) is None:
-            collectedDict[lect][i.level] = []
-        if i.level == "Level2":
-            answer = example.concept.conceptName
-        else:
-            answer = example.meaning
-        collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
-                                             "Answer": answer, "ID": i.questionID})
-    return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        collectedDict = {}
+        for i in NotesCollection.objects.filter(commonUser=commonUser):
+            example = eval(i.level).objects.get(questionID=i.questionID).example
+            lect = example.unit.unitName.replace('Lecture  ', 'LECT')
+            if collectedDict.get(lect, None) is None:
+                collectedDict[lect] = {}
+            if collectedDict[lect].get(i.level, None) is None:
+                collectedDict[lect][i.level] = []
+            if i.level == "Level2":
+                answer = example.concept.conceptName
+            else:
+                answer = example.meaning
+            collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
+                                                 "Answer": answer, "ID": i.questionID})
+        collectedDict=sorted(collectedDict.items(),key= lambda i:i[0])
+        return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
 
-
-# except Exception as e:
-#     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getHistoryNum(request):
@@ -204,7 +204,7 @@ def getHistoryNum(request):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             if example.unit.unitName == lecture:
                 historyQuestion.append(serializationQuestion(example, i.level, commonUser))
-        allNum = len(eval(i.level).objects.filter(example__unit__unitName=lecture))
+            allNum = len(eval(i.level).objects.filter(example__unit__unitName=lecture))
         return JsonResponse({"state": "success", "allDoneNum": len(historyQuestion), "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
