@@ -236,7 +236,7 @@ def getHistoryNum(request):
             else:
                 historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
         historyQuestion["Level1"]["doneNum"] = historyQuestion["Level1"].get("doneNum", 0)
-        historyQuestion["Level1"]["allLevelNum"] = Example.objects.aggregate(latest=Count('*'))["latest"]
+        historyQuestion["Level1"]["allLevelNum"] = Example.objects.filter(unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
         allNum = historyQuestion["Level1"]["allLevelNum"]+historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
     except Exception as e:
