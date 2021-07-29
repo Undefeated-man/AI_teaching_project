@@ -108,7 +108,7 @@ def getRankWithoutLevel(request):
 
 
 def getNewQuestion(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
@@ -130,16 +130,16 @@ def getNewQuestion(request):
             question = []
             number = 0
             for i in allExample:
-                if i.example.unit.unitName == lecture:
-                    question.append({"Example":i.example.example,"Meaning":i.example.meaning,"translation":i.example.translation,
+                if i.unit.unitName == lecture:
+                    question.append({"Example":i.example,"Meaning":i.meaning,"translation":i.translation,
                                      "Concept":i.concept.conceptName,"Decription":i.concept.conceptDescription})
                     number += 1
                 if number == 10:
                     break
             return JsonResponse({"state": "success", "question": question})
 
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getOneQuesiton(request):
