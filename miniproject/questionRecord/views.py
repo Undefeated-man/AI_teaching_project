@@ -132,7 +132,8 @@ def getNewQuestion(request):
             for i in allExample:
                 if i.unit.unitName == lecture:
                     question.append({"Example":i.example,"Meaning":i.meaning,"translation":i.translation,
-                                     "Concept":i.concept.conceptName,"Decription":i.concept.conceptDescription})
+                                     "Concept":i.concept.conceptName,"Decription":i.concept.conceptDescription,
+                                     "ExampleID":i.exampleID})
                     number += 1
                 if number == 10:
                     break
@@ -143,7 +144,7 @@ def getNewQuestion(request):
 
 
 def getOneQuesiton(request):
-    try:
+    # try:
         level = request.POST.get("level")
         questionID = request.POST.get("questionID")
         commonUserID = request.POST.get("commonUserID")
@@ -163,8 +164,8 @@ def getOneQuesiton(request):
             example=Example.objects.get(exampleID=questionID)
             return JsonResponse({"state": "success", "question": {"Example":example.example,"Meaning":example.meaning,"translation":example.translation,
                                      "Concept":example.concept.conceptName,"Decription":example.concept.conceptDescription}})
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getWrongQuestion(request):
