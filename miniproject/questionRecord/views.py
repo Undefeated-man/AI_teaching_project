@@ -108,7 +108,7 @@ def getRankWithoutLevel(request):
 
 
 def getNewQuestion(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
@@ -138,8 +138,8 @@ def getNewQuestion(request):
                     break
             return JsonResponse({"state": "success", "question": question})
 
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getOneQuesiton(request):
