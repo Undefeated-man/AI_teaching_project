@@ -213,7 +213,7 @@ def getNotesCollection(request):
 
 
 def getHistoryNum(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         lecture = request.POST.get("lecture")
@@ -239,8 +239,8 @@ def getHistoryNum(request):
         historyQuestion["Level1"]["allLevelNum"] = Example.objects.filter(unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
         allNum = historyQuestion["Level1"]["allLevelNum"]+historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def serializationQuestion(example, level, commonUser):
