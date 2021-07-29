@@ -112,19 +112,30 @@ def getNewQuestion(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         lecture = request.POST.get("lecture")
-        if level == "Level1":
-            level = "Level2"
         alreadyDone = History.objects.filter(commonUser=commonUser, level=level).values_list("questionID", flat=True)
-        allLevelQuestion = eval(level).objects.exclude(questionID__in=alreadyDone)
-        question = []
-        number = 0
-        for i in allLevelQuestion:
-            if i.example.unit.unitName == lecture:
-                question.append(serializationQuestion(i.example, level, commonUser))
-                number += 1
-            if number == 10:
-                break
-        return JsonResponse({"state": "success", "question": question})
+        if level != "Level1":
+            allLevelQuestion = eval(level).objects.exclude(questionID__in=alreadyDone)
+            question = []
+            number = 0
+            for i in allLevelQuestion:
+                if i.example.unit.unitName == lecture:
+                    question.append(serializationQuestion(i.example, level, commonUser))
+                    number += 1
+                if number == 10:
+                    break
+            return JsonResponse({"state": "success", "question": question})
+        else:
+            allExample=Example.objects.exclude(exampleID__in=alreadyDone)
+            question = []
+            number = 0
+            for i in allExample:
+                if i.example.unit.unitName == lecture:
+                    question.append({"Example":i.example.example,"Meaning":i.example.meaning,"translation":i.example.translation
+                                     "Concept":i.concept.conceptName,"Decription":i.concept.conceptDescription})
+                    number += 1
+                if number == 10:
+                    break
+            return JsonResponse({"state": "success", "question": question})
 
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -136,18 +147,21 @@ def getOneQuesiton(request):
         questionID = request.POST.get("questionID")
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        if level == "Level1":
-            level = "Level2"
-        example = eval(level).objects.get(questionID=questionID).example
-        if level == "Level3":
-            if example.level3Mode:
+        if level != "Level1":
+            example = eval(level).objects.get(questionID=questionID).example
+            if level == "Level3":
+                if example.level3Mode:
+                    exampleDict = serializationQuestion(example, level, commonUser)
+            elif level == "Level4":
+                if example.level4Mode:
+                    exampleDict = serializationQuestion(example, level, commonUser)
+            else:
                 exampleDict = serializationQuestion(example, level, commonUser)
-        elif level == "Level4":
-            if example.level4Mode:
-                exampleDict = serializationQuestion(example, level, commonUser)
+            return JsonResponse({"state": "success", "question": exampleDict})
         else:
-            exampleDict = serializationQuestion(example, level, commonUser)
-        return JsonResponse({"state": "success", "question": exampleDict})
+            example=Example.objects.get(exampleID=questionID)
+            return JsonResponse({"state": "success", "question": {"Example":example.example,"Meaning":example.meaning,"translation":example.translation
+                                     "Concept":example.concept.conceptName,"Decription":example.concept.conceptDescription}})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -210,7 +224,7 @@ def getHistoryNum(request):
             historyQuestion[i]["doneNum"]=historyQuestion[i].get("doneNum",0)
             historyQuestion[i]["allLevelNum"]=len(eval(i).objects.filter(example__unit__unitName=lecture))
             if i=="Level2":
-                historyQuestion[i]["whetherLock"] = 0
+                historyQuestion[i]["whetherLock"] = False
             else:
                 historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
         allNum = historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
