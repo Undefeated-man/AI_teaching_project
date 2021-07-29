@@ -130,7 +130,7 @@ def getNewQuestion(request):
             number = 0
             for i in allExample:
                 if i.example.unit.unitName == lecture:
-                    question.append({"Example":i.example.example,"Meaning":i.example.meaning,"translation":i.example.translation
+                    question.append({"Example":i.example.example,"Meaning":i.example.meaning,"translation":i.example.translation,
                                      "Concept":i.concept.conceptName,"Decription":i.concept.conceptDescription})
                     number += 1
                 if number == 10:
@@ -160,7 +160,7 @@ def getOneQuesiton(request):
             return JsonResponse({"state": "success", "question": exampleDict})
         else:
             example=Example.objects.get(exampleID=questionID)
-            return JsonResponse({"state": "success", "question": {"Example":example.example,"Meaning":example.meaning,"translation":example.translation
+            return JsonResponse({"state": "success", "question": {"Example":example.example,"Meaning":example.meaning,"translation":example.translation,
                                      "Concept":example.concept.conceptName,"Decription":example.concept.conceptDescription}})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
