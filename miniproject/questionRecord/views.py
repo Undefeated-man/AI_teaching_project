@@ -207,7 +207,7 @@ def getHistoryNum(request):
                 else:
                     historyQuestion[i.level]["doneNum"]+=1
         for i in ["Level2", "Level3", "Level4"]:
-            historyQuestion[i]["allLevelNum"]=historyQuestion[i].get("allLevelNum",0)
+            historyQuestion[i]["doneNum"]=historyQuestion[i].get("doneNum",0)
             historyQuestion[i]["allLevelNum"]=len(eval(i).objects.filter(example__unit__unitName=lecture))
             if i=="Level2":
                 historyQuestion[i]["whetherLock"] = 0
