@@ -458,6 +458,14 @@ def recordAnswer(request):
             commonUser.level = "Level3"
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
+        donePro=len(History.objects.filter(level=level,commonUser=commonUser))/len(eval(level).objects.all())
+        if level=="Level2":
+            if donePro==1:
+                commonUser.level3Lock=0
+        else:
+            if donePro>=0.85:
+                commonUser.level3Lock = 0
+                commonUser.level4Lock = 0
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
