@@ -197,10 +197,9 @@ def getHistoryNum(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        level = request.POST.get("level")
         lecture = request.POST.get("lecture")
         historyQuestion = {"Level2":{},"Level3":{},"Level4":{}}
-        for i in History.objects.filter(commonUser=commonUser, level=level):
+        for i in History.objects.filter(commonUser=commonUser):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             if example.unit.unitName == lecture:
                 if historyQuestion[i.level].get("doneNum",None) is None:
@@ -208,12 +207,13 @@ def getHistoryNum(request):
                 else:
                     historyQuestion[i.level]["doneNum"]+=1
         for i in ["Level2", "Level3", "Level4"]:
+            historyQuestion[i]["allLevelNum"]=historyQuestion[i].get("allLevelNum",0)
             historyQuestion[i]["allLevelNum"]=len(eval(i).objects.filter(example__unit__unitName=lecture))
             if i=="Level2":
                 historyQuestion[i]["whetherLock"] = 0
             else:
                 historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
-        allNum = len(eval(level).objects.filter(example__unit__unitName=lecture))
+        allNum = historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
