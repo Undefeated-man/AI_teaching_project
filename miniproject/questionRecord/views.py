@@ -466,7 +466,7 @@ def getWrongNum(request):
             if level=="Level2":
                 wrongQuestionNum[level]["whetherLock"] = 0
             else:
-                wrongQuestionNum[level]["whetherLock"] = eval("commonUser."+level+"Lock")
+                wrongQuestionNum[level]["whetherLock"] = eval("commonUser.L"+level[1:]+"Lock")
         wrongQuestionNum["total"] = len(Wrong.objects.filter(commonUser=commonUser))
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
