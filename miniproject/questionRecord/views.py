@@ -213,7 +213,7 @@ def getHistoryNum(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         lecture = request.POST.get("lecture")
-        historyQuestion = {"Level2":{},"Level3":{},"Level4":{}}
+        historyQuestion = {"Level1":{},"Level2":{},"Level3":{},"Level4":{}}
         for i in History.objects.filter(commonUser=commonUser):
             if i.level!= "Level1":
                 example = eval(i.level).objects.get(questionID=i.questionID).example
