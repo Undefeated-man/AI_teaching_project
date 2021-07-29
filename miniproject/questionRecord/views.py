@@ -189,18 +189,22 @@ def getNotesCollection(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         collectedDict = {}
         for i in NotesCollection.objects.filter(commonUser=commonUser):
-            example = eval(i.level).objects.get(questionID=i.questionID).example
-            lect = example.unit.unitName.replace('Lecture  ', 'LECT')
-            if collectedDict.get(lect, None) is None:
-                collectedDict[lect] = {}
-            if collectedDict[lect].get(i.level, None) is None:
-                collectedDict[lect][i.level] = []
-            if i.level == "Level2":
-                answer = example.concept.conceptName
+            if i.level!="Level1":
+                example = eval(i.level).objects.get(questionID=i.questionID).example
+                lect = example.unit.unitName.replace('Lecture  ', 'LECT')
+                if collectedDict.get(lect, None) is None:
+                    collectedDict[lect] = {}
+                if collectedDict[lect].get(i.level, None) is None:
+                    collectedDict[lect][i.level] = []
+                if i.level == "Level2":
+                    answer = example.concept.conceptName
+                else:
+                    answer = example.meaning
+                collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
+                                                     "Answer": answer, "ID": i.questionID})
             else:
-                answer = example.meaning
-            collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
-                                                 "Answer": answer, "ID": i.questionID})
+                collectedDict[i.level].append({"Example":example.example,"Meaning":example.meaning,"translation":example.translation,
+                                     "Concept":example.concept.conceptName,"Decription":example.concept.conceptDescription})
         collectedDict=sorted(collectedDict.items(),key= lambda i:int(i[0][i[0].rfind("T")+1:]))
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
 
@@ -209,7 +213,7 @@ def getNotesCollection(request):
 
 
 def getHistoryNum(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         lecture = request.POST.get("lecture")
@@ -235,8 +239,8 @@ def getHistoryNum(request):
         historyQuestion["Level1"]["allLevelNum"] = Example.objects.aggregate(latest=Count('*'))["latest"]
         allNum = historyQuestion["Level1"]["allLevelNum"]+historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def serializationQuestion(example, level, commonUser):
@@ -290,8 +294,6 @@ def toCollect(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         questionID = request.POST.get("questionID")
-        if level == "Level1":
-            level = "Level2"
         NotesCollection.objects.create(commonUser=commonUser, level=level, questionID=questionID)
         return JsonResponse({"state": "success"})
     except Exception as e:
