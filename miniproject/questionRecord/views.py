@@ -209,7 +209,7 @@ def getNotesCollection(request):
 
 
 def getHistoryNum(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         lecture = request.POST.get("lecture")
@@ -226,17 +226,17 @@ def getHistoryNum(request):
                     historyQuestion[i.level]["doneNum"] += 1
         for i in ["Level2", "Level3", "Level4"]:
             historyQuestion[i]["doneNum"]=historyQuestion[i].get("doneNum",0)
-            historyQuestion[i]["allLevelNum"] = eval(i).objects.filter(example__unit__unitName=lecture).aggregate(latest=Count('*')).values()[0]
+            historyQuestion[i]["allLevelNum"] = eval(i).objects.filter(example__unit__unitName=lecture).aggregate(latest=Count('*'))
             if i=="Level2":
                 historyQuestion[i]["whetherLock"] = False
             else:
                 historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
         historyQuestion["Level1"]["doneNum"] = historyQuestion["Level1"].get("doneNum", 0)
-        historyQuestion["Level1"]["allLevelNum"] = Example.objects.aggregate(latest=Count('*')).values()[0]
+        historyQuestion["Level1"]["allLevelNum"] = Example.objects.aggregate(latest=Count('*'))
         allNum = historyQuestion["Level1"]["allLevelNum"]+historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def serializationQuestion(example, level, commonUser):
@@ -479,7 +479,7 @@ def recordAnswer(request):
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
         if level!="Level1":
-            donePro=History.objects.filter(level=level,commonUser=commonUser).aggregate(latest=Count('*')).values()[0]/eval(level).objects.all().aggregate(latest=Count('*')).values()[0]
+            donePro=History.objects.filter(level=level,commonUser=commonUser).aggregate(latest=Count('*'))/eval(level).objects.all().aggregate(latest=Count('*'))
             if level=="Level2":
                 if donePro>=0.85:
                     commonUser.level3Lock = False
@@ -488,7 +488,7 @@ def recordAnswer(request):
                     commonUser.level3Lock = False
                     commonUser.level4Lock = False
         else:
-            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*')).values()[0]/ Example.objects.all().aggregate(latest=Count('*')).values()[0]
+            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))/ Example.objects.all().aggregate(latest=Count('*'))
             if donePro==1:
                 commonUser.level2Lock = False
         commonUser.save()
@@ -504,12 +504,12 @@ def getWrongNum(request):
         wrongQuestionNum = {}
         for level in ["Level2", "Level3", "Level4"]:
             wrongQuestionNum[level] = {}
-            wrongQuestionNum[level]["wrongNum"]=Wrong.objects.filter(commonUser=commonUser, level=level).aggregate(latest=Count('*')).values()[0]
+            wrongQuestionNum[level]["wrongNum"]=Wrong.objects.filter(commonUser=commonUser, level=level).aggregate(latest=Count('*'))
             if level=="Level2":
                 wrongQuestionNum[level]["whetherLock"] = 0
             else:
                 wrongQuestionNum[level]["whetherLock"] = eval("commonUser.l"+level[1:]+"Lock")
-        wrongQuestionNum["total"] = Wrong.objects.filter(commonUser=commonUser).aggregate(latest=Count('*')).values()[0]
+        wrongQuestionNum["total"] = Wrong.objects.filter(commonUser=commonUser).aggregate(latest=Count('*'))
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
