@@ -157,6 +157,8 @@ class CommonUser(models.Model):
     imageLocation=models.TextField()
     session_key = models.CharField(max_length=225, verbose_name="session_key", null=True)
     conSign=models.IntegerField(null=False, blank=False,default=0)
+    level3Lock = models.BooleanField(null=False,default=False)
+    level4Lock = models.BooleanField(null=False, default=False)
 
     def __str__(self):
         return "User:" + str(self.commonUserID)
