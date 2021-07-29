@@ -212,7 +212,7 @@ def getHistoryNum(request):
             if i=="Level2":
                 historyQuestion[i]["whetherLock"] = 0
             else:
-                historyQuestion[i]["whetherLock"] = eval("commonUser.l"+level[1:]+"Lock")
+                historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
         allNum = len(eval(level).objects.filter(example__unit__unitName=lecture))
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
     except Exception as e:
