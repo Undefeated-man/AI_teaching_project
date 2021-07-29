@@ -3,6 +3,7 @@ import os
 import random
 
 import requests
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from requests import Response
@@ -214,20 +215,25 @@ def getHistoryNum(request):
         lecture = request.POST.get("lecture")
         historyQuestion = {"Level2":{},"Level3":{},"Level4":{}}
         for i in History.objects.filter(commonUser=commonUser):
-            example = eval(i.level).objects.get(questionID=i.questionID).example
+            if i.level!= "Level1":
+                example = eval(i.level).objects.get(questionID=i.questionID).example
+            else:
+                example = Example.objects.get(exampleID=i.questionID)
             if example.unit.unitName == lecture:
-                if historyQuestion[i.level].get("doneNum",None) is None:
-                    historyQuestion[i.level]["doneNum"]=1
+                if historyQuestion[i.level].get("doneNum", None) is None:
+                    historyQuestion[i.level]["doneNum"] = 1
                 else:
-                    historyQuestion[i.level]["doneNum"]+=1
+                    historyQuestion[i.level]["doneNum"] += 1
         for i in ["Level2", "Level3", "Level4"]:
             historyQuestion[i]["doneNum"]=historyQuestion[i].get("doneNum",0)
-            historyQuestion[i]["allLevelNum"]=len(eval(i).objects.filter(example__unit__unitName=lecture))
+            historyQuestion[i]["allLevelNum"] = eval(i).objects.filter(example__unit__unitName=lecture).aggregate(Count('*'))
             if i=="Level2":
                 historyQuestion[i]["whetherLock"] = False
             else:
                 historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
-        allNum = historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
+        historyQuestion["Level1"]["doneNum"] = historyQuestion["Level1"].get("doneNum", 0)
+        historyQuestion["Level1"]["allLevelNum"] = Example.objects.aggregate(Count('*'))
+        allNum = historyQuestion["Level1"]["allLevelNum"]+historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -472,14 +478,19 @@ def recordAnswer(request):
             commonUser.level = "Level3"
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
-        donePro=len(History.objects.filter(level=level,commonUser=commonUser))/len(eval(level).objects.all())
-        if level=="Level2":
-            if donePro==1:
-                commonUser.level3Lock=0
+        if level!="Level1":
+            donePro=History.objects.filter(level=level,commonUser=commonUser).aggregate(Count('*'))/eval(level).objects.all().aggregate(Count('*'))
+            if level=="Level2":
+                if donePro>=0.85:
+                    commonUser.level3Lock = False
+            else:
+                if donePro>=0.85:
+                    commonUser.level3Lock = False
+                    commonUser.level4Lock = False
         else:
-            if donePro>=0.85:
-                commonUser.level3Lock = 0
-                commonUser.level4Lock = 0
+            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(Count('*'))/ Example.objects.all().aggregate(Count('*'))
+            if donePro==1:
+                commonUser.level2Lock = False
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
@@ -493,12 +504,12 @@ def getWrongNum(request):
         wrongQuestionNum = {}
         for level in ["Level2", "Level3", "Level4"]:
             wrongQuestionNum[level] = {}
-            wrongQuestionNum[level]["wrongNum"]=len(Wrong.objects.filter(commonUser=commonUser, level=level))
+            wrongQuestionNum[level]["wrongNum"]=Wrong.objects.filter(commonUser=commonUser, level=level).aggregate(Count('*'))
             if level=="Level2":
                 wrongQuestionNum[level]["whetherLock"] = 0
             else:
                 wrongQuestionNum[level]["whetherLock"] = eval("commonUser.l"+level[1:]+"Lock")
-        wrongQuestionNum["total"] = len(Wrong.objects.filter(commonUser=commonUser))
+        wrongQuestionNum["total"] = Wrong.objects.filter(commonUser=commonUser).aggregate(Count('*'))
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
