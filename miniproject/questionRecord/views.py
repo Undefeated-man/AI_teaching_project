@@ -578,6 +578,7 @@ def signAddScore(request):
             commonUser.continueCheckDays = 0
         else:
             commonUser.continueCheckDays += 1
+        commonUser.lastCheckDate = datetime.now()
         commonUser.save()
 
         days = commonUser.continueCheckDays
