@@ -591,7 +591,7 @@ def signAddScore(request):
         if commonUser.lastCheckDate != datetime.now():
             if commonUser.lastCheckDate is None or now != commonUser.lastCheckDate + timedelta(days=1):
                 # 未连续签到
-                print("未连续", (commonUser.lastCheckDate + timedelta(days=1)))
+                print("未连续", (commonUser.lastCheckDate + timedelta(days=1)), now)
                 commonUser.continueCheckDays = 0
             else:
                 print("已连续", (commonUser.lastCheckDate + timedelta(days=1)))
