@@ -587,7 +587,7 @@ def signAddScore(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         # whetherAdd = int(request.POST.get("whetherAdd"))
-        now = datetime.now()  # .strftime("%Y-%m-%d")
+        now = datetime.now().strftime("%Y-%m-%d")
         if commonUser.lastCheckDate != datetime.now():
             if commonUser.lastCheckDate is None or now != commonUser.lastCheckDate + timedelta(days=1):
                 # 未连续签到
