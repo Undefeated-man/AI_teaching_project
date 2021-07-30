@@ -128,14 +128,14 @@ def getNewQuestion(request):
                     break
             return JsonResponse({"state": "success", "question": question})
         else:
-            allExample=Example.objects.exclude(exampleID__in=alreadyDone)
+            allExample = Example.objects.exclude(exampleID__in=alreadyDone)
             question = []
             number = 0
             for i in allExample:
                 if i.unit.unitName == lecture:
-                    question.append({"Example":i.example,"Meaning":i.meaning,"translation":i.translation,
-                                     "Concept":i.concept.conceptName,"Decription":i.concept.conceptDescription,
-                                     "ExampleID":i.exampleID})
+                    question.append({"Example": i.example, "Meaning": i.meaning, "translation": i.translation,
+                                     "Concept": i.concept.conceptName, "Decription": i.concept.conceptDescription,
+                                     "ExampleID": i.exampleID})
                     number += 1
                 if number == 10:
                     break
@@ -147,27 +147,31 @@ def getNewQuestion(request):
 
 def getOneQuesiton(request):
     # try:
-        level = request.POST.get("level")
-        questionID = request.POST.get("questionID")
-        commonUserID = request.POST.get("commonUserID")
-        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        if level != "Level1":
-            example = eval(level).objects.get(questionID=questionID).example
-            if level == "Level3":
-                if example.level3Mode:
-                    exampleDict = serializationQuestion(example, level, commonUser)
-            elif level == "Level4":
-                if example.level4Mode:
-                    exampleDict = serializationQuestion(example, level, commonUser)
-            else:
+    level = request.POST.get("level")
+    questionID = request.POST.get("questionID")
+    commonUserID = request.POST.get("commonUserID")
+    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+    if level != "Level1":
+        example = eval(level).objects.get(questionID=questionID).example
+        if level == "Level3":
+            if example.level3Mode:
                 exampleDict = serializationQuestion(example, level, commonUser)
-            return JsonResponse({"state": "success", "question": exampleDict})
+        elif level == "Level4":
+            if example.level4Mode:
+                exampleDict = serializationQuestion(example, level, commonUser)
         else:
-            example=Example.objects.get(exampleID=questionID)
-            return JsonResponse({"state": "success", "question": {"Example":example.example,"Meaning":example.meaning,"translation":example.translation,
-                                     "Concept":example.concept.conceptName,"Decription":example.concept.conceptDescription}})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+            exampleDict = serializationQuestion(example, level, commonUser)
+        return JsonResponse({"state": "success", "question": exampleDict})
+    else:
+        example = Example.objects.get(exampleID=questionID)
+        return JsonResponse({"state": "success", "question": {"Example": example.example, "Meaning": example.meaning,
+                                                              "translation": example.translation,
+                                                              "Concept": example.concept.conceptName,
+                                                              "Decription": example.concept.conceptDescription}})
+
+
+# except Exception as e:
+#     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getWrongQuestion(request):
@@ -192,7 +196,7 @@ def getNotesCollection(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         collectedDict = {}
         for i in NotesCollection.objects.filter(commonUser=commonUser):
-            if i.level!="Level1":
+            if i.level != "Level1":
                 example = eval(i.level).objects.get(questionID=i.questionID).example
                 lect = example.unit.unitName.replace('Lecture  ', 'LECT')
                 if collectedDict.get(lect, None) is None:
@@ -203,12 +207,14 @@ def getNotesCollection(request):
                     answer = example.concept.conceptName
                 else:
                     answer = example.meaning
-                collectedDict[lect][i.level].append({"Question": eval(i.level).objects.get(questionID=i.questionID).question,
-                                                     "Answer": answer, "ID": i.questionID})
+                collectedDict[lect][i.level].append(
+                    {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
+                     "Answer": answer, "ID": i.questionID})
             else:
-                collectedDict[i.level].append({"Example":example.example,"Meaning":example.meaning,"translation":example.translation,
-                                     "Concept":example.concept.conceptName,"Decription":example.concept.conceptDescription})
-        collectedDict=sorted(collectedDict.items(),key= lambda i:int(i[0][i[0].rfind("T")+1:]))
+                collectedDict[i.level].append(
+                    {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
+                     "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
+        collectedDict = sorted(collectedDict.items(), key=lambda i: int(i[0][i[0].rfind("T") + 1:]))
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
 
     except Exception as e:
@@ -220,9 +226,9 @@ def getHistoryNum(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         lecture = request.POST.get("lecture")
-        historyQuestion = {"Level1":{},"Level2":{},"Level3":{},"Level4":{}}
+        historyQuestion = {"Level1": {}, "Level2": {}, "Level3": {}, "Level4": {}}
         for i in History.objects.filter(commonUser=commonUser):
-            if i.level!= "Level1":
+            if i.level != "Level1":
                 example = eval(i.level).objects.get(questionID=i.questionID).example
             else:
                 example = Example.objects.get(exampleID=i.questionID)
@@ -232,16 +238,19 @@ def getHistoryNum(request):
                 else:
                     historyQuestion[i.level]["doneNum"] += 1
         for i in ["Level2", "Level3", "Level4"]:
-            historyQuestion[i]["doneNum"]=historyQuestion[i].get("doneNum",0)
-            historyQuestion[i]["allLevelNum"] = eval(i).objects.filter(example__unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
-            if i=="Level2":
+            historyQuestion[i]["doneNum"] = historyQuestion[i].get("doneNum", 0)
+            historyQuestion[i]["allLevelNum"] = \
+                eval(i).objects.filter(example__unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
+            if i == "Level2":
                 historyQuestion[i]["whetherLock"] = False
             else:
-                historyQuestion[i]["whetherLock"] = eval("commonUser.l"+i[1:]+"Lock")
+                historyQuestion[i]["whetherLock"] = eval("commonUser.l" + i[1:] + "Lock")
         historyQuestion["Level1"]["doneNum"] = historyQuestion["Level1"].get("doneNum", 0)
-        historyQuestion["Level1"]["allLevelNum"] = Example.objects.filter(unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
-        allNum = historyQuestion["Level1"]["allLevelNum"]+historyQuestion["Level2"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]+historyQuestion["Level3"]["allLevelNum"]
-        return JsonResponse({"state": "success", "allDone":historyQuestion, "allNum": allNum})
+        historyQuestion["Level1"]["allLevelNum"] = \
+            Example.objects.filter(unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
+        allNum = historyQuestion["Level1"]["allLevelNum"] + historyQuestion["Level2"]["allLevelNum"] + \
+                 historyQuestion["Level3"]["allLevelNum"] + historyQuestion["Level3"]["allLevelNum"]
+        return JsonResponse({"state": "success", "allDone": historyQuestion, "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -359,6 +368,7 @@ def getUserRank(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         score = commonUser.Progress.cumScore
         allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
+        check = 'false'
         rank = 1
         for i in allCommonUser:
             if i == commonUser:
@@ -375,9 +385,12 @@ def getUserRank(request):
         userPercent = (rank / len(allCommonUser)) * 100
         if userPercent == int(userPercent):
             userPercent = int(userPercent)
+
+        if commonUser.lastCheckDate is datetime.now():
+            check = 'true'
         return JsonResponse({"state": "success", "score": score, "rank": rank, "percent": userPercent, "toNext": toNext,
                              "commonUserName": commonUser.commonUserName,
-                             "level": commonUser.level, "imageURL": commonUser.imageLocation})
+                             "level": commonUser.level, "imageURL": commonUser.imageLocation, 'checked': check})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -483,18 +496,20 @@ def recordAnswer(request):
             commonUser.level = "Level3"
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
-        if level!="Level1":
-            donePro=History.objects.filter(level=level,commonUser=commonUser).aggregate(latest=Count('*'))["latest"]/eval(level).objects.all().aggregate(latest=Count('*'))["latest"]
-            if level=="Level2":
-                if donePro>=0.85:
+        if level != "Level1":
+            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
+                          "latest"] / eval(level).objects.all().aggregate(latest=Count('*'))["latest"]
+            if level == "Level2":
+                if donePro >= 0.85:
                     commonUser.level3Lock = False
             else:
-                if donePro>=0.85:
+                if donePro >= 0.85:
                     commonUser.level3Lock = False
                     commonUser.level4Lock = False
         else:
-            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))["latest"]/ Example.objects.all().aggregate(latest=Count('*'))["latest"]
-            if donePro==1:
+            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
+                          "latest"] / Example.objects.all().aggregate(latest=Count('*'))["latest"]
+            if donePro == 1:
                 commonUser.level2Lock = False
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
@@ -509,11 +524,12 @@ def getWrongNum(request):
         wrongQuestionNum = {}
         for level in ["Level2", "Level3", "Level4"]:
             wrongQuestionNum[level] = {}
-            wrongQuestionNum[level]["wrongNum"]=Wrong.objects.filter(commonUser=commonUser, level=level).aggregate(latest=Count('*'))["latest"]
-            if level=="Level2":
+            wrongQuestionNum[level]["wrongNum"] = \
+                Wrong.objects.filter(commonUser=commonUser, level=level).aggregate(latest=Count('*'))["latest"]
+            if level == "Level2":
                 wrongQuestionNum[level]["whetherLock"] = 0
             else:
-                wrongQuestionNum[level]["whetherLock"] = eval("commonUser.l"+level[1:]+"Lock")
+                wrongQuestionNum[level]["whetherLock"] = eval("commonUser.l" + level[1:] + "Lock")
         wrongQuestionNum["total"] = Wrong.objects.filter(commonUser=commonUser).aggregate(latest=Count('*'))["latest"]
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
@@ -571,36 +587,41 @@ def signAddScore(request):
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         # whetherAdd = int(request.POST.get("whetherAdd"))
-        now = datetime.now()  #.strftime("%Y-%m-%d")
-        if commonUser.lastCheckDate == None or now != commonUser.lastCheckDate + timedelta(days=1) :
-            #未连续签到
-            commonUser.continueCheckDays = 0
-        else:
-            commonUser.continueCheckDays += 1
-        commonUser.lastCheckDate = datetime.now()
-        commonUser.save()
-
-        days = commonUser.continueCheckDays
-        score = commonUser.Progress.cumScore
-        bonus = 0
-        if isinstance(score / 7, int):
-            if days >= 91:
-                bonus = 70
+        now = datetime.now()  # .strftime("%Y-%m-%d")
+        if commonUser.lastCheckDate != datetime.now():
+            if commonUser.lastCheckDate is None or now != commonUser.lastCheckDate + timedelta(days=1):
+                # 未连续签到
+                commonUser.continueCheckDays = 0
             else:
-                bonus = 5 + 5 * score / 7
-                
-        commonUser.Progress.cumScore += 5 + bonus
-        commonUser.Progress.save()
-      
-        if commonUser.Progress.cumScore >= 500:
-            commonUser.level = "Level2"
-        if commonUser.Progress.cumScore >= 1000:
-            commonUser.level = "Level3"
-        if commonUser.Progress.cumScore >= 2000:
-            commonUser.level = "Level4"
-        commonUser.save()
-        return JsonResponse({"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "days": days, "bonus": bonus})
+                commonUser.continueCheckDays += 1
+            commonUser.lastCheckDate = datetime.now()
+            commonUser.save()
+
+            days = commonUser.continueCheckDays
+            score = commonUser.Progress.cumScore
+            bonus = 0
+            if isinstance(score / 7, int):
+                if days >= 91:
+                    bonus = 70
+                else:
+                    bonus = 5 + 5 * score / 7
+
+            commonUser.Progress.cumScore += 5 + bonus
+            commonUser.Progress.save()
+
+            if commonUser.Progress.cumScore >= 500:
+                commonUser.level = "Level2"
+            if commonUser.Progress.cumScore >= 1000:
+                commonUser.level = "Level3"
+            if commonUser.Progress.cumScore >= 2000:
+                commonUser.level = "Level4"
+            commonUser.save()
+
+            return JsonResponse(
+                {"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "days": days,
+                 "bonus": bonus})
+        else:
+            return JsonResponse(
+                {"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "checked": 'true'})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
-
-
