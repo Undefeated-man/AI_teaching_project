@@ -17,7 +17,6 @@ from django.template.defaultfilters import join
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -29,11 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['34.92.251.246']
 
-
 # Application definition
-STATIC_URL='/static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
+    os.path.join(BASE_DIR, 'static')
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,7 +57,7 @@ ROOT_URLCONF = 'miniproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'template')],
+        'DIRS': [os.path.join(BASE_DIR, 'template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,21 +72,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'miniproject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':"AI_Teaching_Project",#AI_Teaching_Project
-        'USER':"root",
-        "PASSWORD":"89sW@;ll5J",#89sW@;ll5J
-        "HOST":"localhost",
-        "PORT":"3306"
+        'NAME': "AI_Teaching_Project",  # AI_Teaching_Project
+        'USER': "root",
+        "PASSWORD": "89sW@;ll5J",  # 89sW@;ll5J
+        "HOST": "localhost",
+        "PORT": "3306"
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -108,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -122,16 +117,15 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
 # 图片储存根路径
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 图片访问url
 MEDIA_URL = '/media/'
 
-#日期格式
+# 日期格式
 DATE_INPUT_FORMATS = ['%Y-%m-%d']
