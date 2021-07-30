@@ -604,11 +604,11 @@ def signAddScore(request):
             days = commonUser.continueCheckDays
             score = commonUser.Progress.cumScore
             bonus = 0
-            if isinstance(score / 7, int):
+            if isinstance(days / 7, int):
                 if days >= 91:
                     bonus = 70
                 else:
-                    bonus = 5 + 5 * score / 7
+                    bonus = 5 + 5 * days / 7
                     print(bonus)
             commonUser.Progress.cumScore += 5 + bonus
             commonUser.Progress.save()
