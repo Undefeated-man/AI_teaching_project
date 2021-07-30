@@ -386,7 +386,7 @@ def getUserRank(request):
         if userPercent == int(userPercent):
             userPercent = int(userPercent)
 
-        if commonUser.lastCheckDate is datetime.now():
+        if commonUser.lastCheckDate.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
             check = 'true'
         return JsonResponse({"state": "success", "score": score, "rank": rank, "percent": userPercent, "toNext": toNext,
                              "commonUserName": commonUser.commonUserName,
@@ -588,7 +588,7 @@ def signAddScore(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         # whetherAdd = int(request.POST.get("whetherAdd"))
         now = datetime.now().strftime("%Y-%m-%d")
-        if commonUser.lastCheckDate != datetime.now():
+        if commonUser.lastCheckDate.strftime("%Y-%m-%d") != now:
             if commonUser.lastCheckDate is None or \
                     now != (commonUser.lastCheckDate + timedelta(days=1)).strftime("%Y-%m-%d"):
                 # 未连续签到
