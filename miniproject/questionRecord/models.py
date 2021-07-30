@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
-from miniproject.miniproject import settings
-
 # Create your models here.
 
 ###one concept belongs to exactly one unit
 ##单元里包含概念
+from django.conf import settings
+
 
 class Unit(models.Model):
     unitID = models.AutoField(primary_key=True)
