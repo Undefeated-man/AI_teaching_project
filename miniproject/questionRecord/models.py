@@ -155,12 +155,8 @@ class CommonUser(models.Model):
         , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     imageLocation = models.TextField()
-    lastCheckDate = models.DateField()
     continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
-    level2Lock = models.BooleanField(null=False, default=True)
-    level3Lock = models.BooleanField(null=False, default=True)
-    level4Lock = models.BooleanField(null=False, default=True)
-
+    lastCheckDate = models.DateField()
     def __str__(self):
         return "User:" + str(self.commonUserID)
 
