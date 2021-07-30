@@ -159,6 +159,7 @@ class CommonUser(models.Model):
     level2Lock = models.BooleanField(null=False, default=True)
     level3Lock = models.BooleanField(null=False,default=True)
     level4Lock = models.BooleanField(null=False, default=True)
+    meta = {'strict': False}
     def __str__(self):
         return "User:" + str(self.commonUserID)
 
