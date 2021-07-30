@@ -20,10 +20,9 @@ class Migration(migrations.Migration):
                 ('commonUserName', models.CharField(max_length=25)),
                 ('level', models.CharField(choices=[(1, 'Level1'), (2, 'Level2'), (3, 'Level3'), (4, 'Level4')], default='Level1', max_length=20)),
                 ('imageLocation', models.TextField()),
-                ('session_key', models.CharField(max_length=225, null=True, verbose_name='session_key')),
                 ('conSign', models.IntegerField(default=0)),
-                ('level3Lock', models.BooleanField(default=False)),
-                ('level4Lock', models.BooleanField(default=False)),
+                ('continueCheckDays', models.IntegerField(null=False, blank=False, default=0)),
+                ('lastCheckDate', models.DateField()),
             ],
             options={
                 'verbose_name': 'CommonUsers',

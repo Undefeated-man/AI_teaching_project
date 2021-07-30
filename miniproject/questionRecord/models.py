@@ -157,7 +157,6 @@ class CommonUser(models.Model):
     imageLocation = models.TextField()
     continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
     lastCheckDate = models.DateField()
-    conSign = models.IntegerField(null=False, blank=False, default=0)
     def __str__(self):
         return "User:" + str(self.commonUserID)
 
