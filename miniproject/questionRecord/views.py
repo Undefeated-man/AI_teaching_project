@@ -389,8 +389,9 @@ def getUserRank(request):
         if commonUser.lastCheckDate.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
             check = True
         return JsonResponse({"state": "success", "score": score, "rank": rank, "percent": userPercent, "toNext": toNext,
-                             "commonUserName": commonUser.commonUserName,
-                             "level": commonUser.level, "imageURL": commonUser.imageLocation, 'checked': check})
+                             "commonUserName": commonUser.commonUserName, "level": commonUser.level,
+                             "imageURL": commonUser.imageLocation, 'checked': check,
+                             'days': commonUser.continueCheckDays})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
