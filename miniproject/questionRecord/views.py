@@ -594,7 +594,6 @@ def signAddScore(request):
             if commonUser.lastCheckDate is None or \
                     now != (commonUser.lastCheckDate + timedelta(days=1)).strftime("%Y-%m-%d"):
                 # 未连续签到
-                print("未连续", (commonUser.lastCheckDate + timedelta(days=1)), now)
                 commonUser.continueCheckDays = 0
             else:
                 print("已连续", (commonUser.lastCheckDate + timedelta(days=1)))
@@ -604,11 +603,12 @@ def signAddScore(request):
 
             days = commonUser.continueCheckDays
             bonus = 0
+            print(math.modf(days / 7.0)[0])
             if math.modf(days / 7.0)[0] == 0:
                 if days >= 91:
                     bonus = 70
                 else:
-                    bonus = 5 + 5 * days / 7
+                    bonus = 5 * days / 7
                     print(bonus)
             commonUser.Progress.cumScore += 5 + bonus
             commonUser.Progress.save()
