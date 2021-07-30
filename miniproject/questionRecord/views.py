@@ -15,6 +15,8 @@ from weixin.lib.wxcrypt import WXBizDataCrypt
 from weixin import WXAPPAPI
 from google.cloud import texttospeech
 import random
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from random import shuffle
 
 # Create your views here.
@@ -568,17 +570,28 @@ def signAddScore(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        whetherAdd = int(request.POST.get("whetherAdd"))
-        if whetherAdd:
-            commonUser.conSign += 1
-            commonUser.Progress.cumScore += 10
-            commonUser.Progress.save()
-            commonUser.save()
+
+        # whetherAdd = int(request.POST.get("whetherAdd"))
+        now = datetime.now()  #.strftime("%Y-%m-%d")
+        if now != commonUser.lastCheckDate + timedelta(days=1):
+            #未连续签到
+            commonUser.continueCheckDays = 0
         else:
-            commonUser.conSign = 0
-            commonUser.Progress.cumScore += 5
-            commonUser.Progress.save()
-            commonUser.save()
+            commonUser.continueCheckDays += 1
+        commonUser.save()
+
+        days = commonUser.continueCheckDays
+        score = commonUser.Progress.cumScore
+        bonus = 0
+        if isinstance(score / 7, int):
+            if days >= 91:
+                bonus = 70
+            else:
+                bonus = 5 + 5 * score / 7
+                
+        commonUser.Progress.cumScore += 5 + bonus
+        commonUser.Progress.save()
+      
         if commonUser.Progress.cumScore >= 500:
             commonUser.level = "Level2"
         if commonUser.Progress.cumScore >= 1000:
@@ -586,7 +599,7 @@ def signAddScore(request):
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
         commonUser.save()
-        return JsonResponse({"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level})
+        return JsonResponse({"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "days": days, "bonus": bonus})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 

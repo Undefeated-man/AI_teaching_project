@@ -7,6 +7,9 @@ from django.contrib.auth.models import AbstractUser
 
 ###one concept belongs to exactly one unit
 ##单元里包含概念
+from miniproject.miniproject import settings
+
+
 class Unit(models.Model):
     unitID = models.AutoField(primary_key=True)
     unitName = models.TextField()
@@ -155,7 +158,8 @@ class CommonUser(models.Model):
         , (3,"Level3"),(4,"Level4")],
                              default="Level1")
     imageLocation=models.TextField()
-    conSign=models.IntegerField(null=False, blank=False,default=0)
+    lastCheckDate=models.DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
     level2Lock = models.BooleanField(null=False, default=True)
     level3Lock = models.BooleanField(null=False,default=True)
     level4Lock = models.BooleanField(null=False, default=True)

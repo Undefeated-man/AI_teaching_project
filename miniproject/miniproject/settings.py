@@ -132,3 +132,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # 图片访问url
 MEDIA_URL = '/media/'
+
+#日期格式
+DATE_INPUT_FORMATS = ['%Y-%m-%d']
