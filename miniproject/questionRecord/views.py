@@ -368,7 +368,7 @@ def getUserRank(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         score = commonUser.Progress.cumScore
         allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
-        check = 'false'
+        check = False
         rank = 1
         for i in allCommonUser:
             if i == commonUser:
@@ -387,7 +387,7 @@ def getUserRank(request):
             userPercent = int(userPercent)
 
         if commonUser.lastCheckDate.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
-            check = 'true'
+            check = True
         return JsonResponse({"state": "success", "score": score, "rank": rank, "percent": userPercent, "toNext": toNext,
                              "commonUserName": commonUser.commonUserName,
                              "level": commonUser.level, "imageURL": commonUser.imageLocation, 'checked': check})
@@ -625,6 +625,6 @@ def signAddScore(request):
                  "bonus": bonus})
         else:
             return JsonResponse(
-                {"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "checked": 'true'})
+                {"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "checked": True})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
