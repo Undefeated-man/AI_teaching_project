@@ -155,7 +155,7 @@ class CommonUser(models.Model):
         , (3,"Level3"),(4,"Level4")],
                              default="Level1")
     imageLocation=models.TextField()
-    lastCheckDate=models.DateField(input_formats=DATE_INPUT_FORMATS)
+    lastCheckDate=models.DateField(input_formats=['%Y-%m-%d'])
     continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
     level2Lock = models.BooleanField(null=False, default=True)
     level3Lock = models.BooleanField(null=False,default=True)
