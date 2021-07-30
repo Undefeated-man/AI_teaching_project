@@ -151,14 +151,14 @@ class CommonUser(models.Model):
     commonUserID = models.CharField(max_length=225, primary_key=True)
     commonUserName = models.CharField(max_length=25)
     group = models.OneToOneField(Groups, related_name="CommonUser", on_delete=models.CASCADE)
-    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
-    imageLocation=models.TextField()
-    lastCheckDate=models.DateField()
+    imageLocation = models.TextField()
+    lastCheckDate = models.DateField()
     continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
     level2Lock = models.BooleanField(null=False, default=True)
-    level3Lock = models.BooleanField(null=False,default=True)
+    level3Lock = models.BooleanField(null=False, default=True)
     level4Lock = models.BooleanField(null=False, default=True)
 
     def __str__(self):
@@ -173,13 +173,13 @@ class CommonUser(models.Model):
 ###收藏夹
 class NotesCollection(models.Model):
     commonUser = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
-    level = models.CharField(max_length=20, null=False, blank=False,choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     questionID = models.CharField(max_length=25, blank=False, null=False)
 
     def __str__(self):
-        return "NotesCollection:" + str(self.commonUser.commonUserID) +" Question:"+str(self.questionID)
+        return "NotesCollection:" + str(self.commonUser.commonUserID) + " Question:" + str(self.questionID)
 
     class Meta:
         db_table = "NotesCollection"
@@ -190,11 +190,11 @@ class NotesCollection(models.Model):
 ##每日任务
 class DailyTask(models.Model):
     commonUserID = models.OneToOneField(CommonUser, related_name='DailyTask', null=False, blank=False,
-                                     on_delete=models.CASCADE)
+                                        on_delete=models.CASCADE)
     dailyGoalNum = models.IntegerField()
 
     def __str__(self):
-        return "DailyTask:" + str(self.commonUserID) +" DailyTask:"+str(self.dailyGoalNum)
+        return "DailyTask:" + str(self.commonUserID) + " DailyTask:" + str(self.dailyGoalNum)
 
     class Meta:
         db_table = "DailyTask"
@@ -205,8 +205,8 @@ class DailyTask(models.Model):
 ##做题历史记录
 class History(models.Model):
     commonUser = models.ForeignKey(CommonUser, related_name='History', on_delete=models.CASCADE)
-    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     questionID = models.CharField(max_length=25, blank=False, null=False)
 
@@ -237,13 +237,13 @@ class Progress(models.Model):
 # 错题
 class Wrong(models.Model):
     commonUser = models.ForeignKey(CommonUser, on_delete=models.CASCADE)  # user id must be unique
-    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     questionID = models.CharField(max_length=25, blank=False, null=False)
     createTime = models.DateTimeField(default=timezone.now)  # 首次错误时间
     updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
-    count = models.IntegerField(null=False,default=1)  # error times can be null
+    count = models.IntegerField(null=False, default=1)  # error times can be null
 
     def __str__(self):
         return "User:" + str(self.commonUser.commonUserID) + " Question:" + str(

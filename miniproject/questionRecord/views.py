@@ -570,7 +570,6 @@ def signAddScore(request):
     try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-
         # whetherAdd = int(request.POST.get("whetherAdd"))
         now = datetime.now()  #.strftime("%Y-%m-%d")
         if now != commonUser.lastCheckDate + timedelta(days=1):
