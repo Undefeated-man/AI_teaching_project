@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import random
 
@@ -602,13 +603,12 @@ def signAddScore(request):
             commonUser.save()
 
             days = commonUser.continueCheckDays
-            score = commonUser.Progress.cumScore
             bonus = 0
-            if isinstance(days / 7, int):
+            if math.modf(days / 7.0)[0] > 0:
                 if days >= 91:
                     bonus = 70
                 else:
-                    bonus = 5 + 5 * days / 7
+                    bonus = 5 + 5 * days / 7.0
                     print(bonus)
             commonUser.Progress.cumScore += 5 + bonus
             commonUser.Progress.save()
