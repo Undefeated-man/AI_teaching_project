@@ -609,10 +609,10 @@ def signAddScore(request):
                     bonus = 70
                 else:
                     bonus = 5 + 5 * score / 7
-
+                    print(bonus)
             commonUser.Progress.cumScore += 5 + bonus
             commonUser.Progress.save()
-
+            print(bonus)
             if commonUser.Progress.cumScore >= 500:
                 commonUser.level = "Level2"
             if commonUser.Progress.cumScore >= 1000:
@@ -620,7 +620,7 @@ def signAddScore(request):
             if commonUser.Progress.cumScore >= 2000:
                 commonUser.level = "Level4"
             commonUser.save()
-
+            print(bonus)
             return JsonResponse(
                 {"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "days": days,
                  "bonus": bonus})
