@@ -572,7 +572,7 @@ def signAddScore(request):
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         # whetherAdd = int(request.POST.get("whetherAdd"))
         now = datetime.now()  #.strftime("%Y-%m-%d")
-        if now != commonUser.lastCheckDate + timedelta(days=1):
+        if commonUser.lastCheckDate == None || now != commonUser.lastCheckDate + timedelta(days=1) :
             #未连续签到
             commonUser.continueCheckDays = 0
         else:
