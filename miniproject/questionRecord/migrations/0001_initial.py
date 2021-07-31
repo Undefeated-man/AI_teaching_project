@@ -239,9 +239,4 @@ class Migration(migrations.Migration):
             name='continueCheckDays',
             field=models.IntegerField(null=False, blank=False, default=0),
         ),
-        migrations.AddField(
-            model_name='commonuser',
-            name='lastCheckDate',
-            field=models.DateField(),
-        ),
     ]
