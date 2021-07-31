@@ -134,7 +134,7 @@ class Level4(models.Model):
 
 ##分组
 class Groups(models.Model):
-    groupID = models.IntegerField(primary_key=True)
+    groupID = models.AutoField(primary_key=True)
     groupName = models.TextField()
 
     def __str__(self):
