@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Groups',
             fields=[
-                ('groupID', models.IntegerField(primary_key=True, serialize=False)),
+                ('groupID', models.AutoField(primary_key=True)),
                 ('groupName', models.TextField()),
             ],
             options={
