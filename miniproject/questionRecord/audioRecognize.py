@@ -191,7 +191,7 @@ def cosDistance(vec1, vec2):
 
 @csrf_exempt
 def welcome(request):
-    Groups.objects.create(groupID=groupName="Default")
+    Groups.objects.create(groupName="Default")
     lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
