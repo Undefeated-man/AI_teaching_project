@@ -21,6 +21,9 @@ class Migration(migrations.Migration):
                 ('level', models.CharField(choices=[(1, 'Level1'), (2, 'Level2'), (3, 'Level3'), (4, 'Level4')], default='Level1', max_length=20)),
                 ('imageLocation', models.TextField()),
                 ('session_key', models.CharField(max_length=225, null=True, verbose_name='session_key')),
+                ('conSign', models.IntegerField(default=0)),
+                ('level3Lock', models.BooleanField(default=False)),
+                ('level4Lock', models.BooleanField(default=False)),
             ],
             options={
                 'verbose_name': 'CommonUsers',
@@ -230,30 +233,5 @@ class Migration(migrations.Migration):
             model_name='commonuser',
             name='group',
             field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='CommonUser', to='questionRecord.groups'),
-        ),
-        migrations.AddField(
-            model_name='commonuser',
-            name='continueCheckDays',
-            field=models.IntegerField(null=False, blank=False, default=0),
-        ),
-        migrations.AddField(
-            model_name='commonuser',
-            name='lastCheckDate',
-            field=models.DateField(),
-        ),
-        migrations.AddField(
-            model_name='commonuser',
-            name='conSign',
-            field=models.IntegerField(default=0)
-        ),
-        migrations.AddField(
-            model_name='commonuser',
-            name='level3Lock',
-            field=models.BooleanField(default=False)
-        ),
-        migrations.AddField(
-            model_name='commonuser',
-            name='level4Lock',
-            field=models.BooleanField(default=False)
         ),
     ]
