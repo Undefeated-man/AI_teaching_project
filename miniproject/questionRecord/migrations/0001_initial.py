@@ -242,6 +242,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='commonuser',
             name='lastCheckDate',
-            field=models.DateField(null=True),
+            field=models.DateField(default='1980-1-1'),
         ),
     ]
