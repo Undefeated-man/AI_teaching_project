@@ -234,4 +234,14 @@ class Migration(migrations.Migration):
             name='group',
             field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='CommonUser', to='questionRecord.groups'),
         ),
+        migrations.AddField(
+            model_name='commonuser',
+            name='continueCheckDays',
+            field=models.IntegerField(null=False, blank=False, default=0),
+        ),
+        migrations.AddField(
+            model_name='commonuser',
+            name='lastCheckDate',
+            field=models.DateField(),
+        ),
     ]
