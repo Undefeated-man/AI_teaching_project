@@ -14,27 +14,27 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='CommonUser',
+            model_name='commonuser',
             name='continueCheckDays',
             field=models.IntegerField(null=False, blank=False, default=0),
         ),
         migrations.AddField(
-            model_name='CommonUser',
+            model_name='commonuser',
             name='lastCheckDate',
             field=models.DateField(),
         ),
         migrations.AddField(
-            model_name='CommonUser',
+            model_name='commonuser',
             name='conSign',
             field=models.IntegerField(default=0)
         ),
         migrations.AddField(
-            model_name='CommonUser',
+            model_name='commonuser',
             name='level3Lock',
             field=models.BooleanField(default=False)
         ),
         migrations.AddField(
-            model_name='CommonUser',
+            model_name='commonuser',
             name='level4Lock',
             field=models.BooleanField(default=False)
         ),
