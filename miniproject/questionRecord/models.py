@@ -22,7 +22,7 @@ class Unit(models.Model):
 
 class Concept(models.Model):
     conceptID = models.AutoField(primary_key=True)
-    conceptName = models.CharField(unique=True, max_length=100, null=False, blank=False)
+    conceptName = models.CharField(unique=False, max_length=100, null=False, blank=False)
     unit = models.ForeignKey(Unit, related_name="concept", null=True, on_delete=models.CASCADE)
     ###new here, add description attribute
     conceptDescription = models.TextField()
