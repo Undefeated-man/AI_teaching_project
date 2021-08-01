@@ -1,13 +1,8 @@
 import json
 import math
-import os
-import random
-
-import requests
 from django.db.models import Count
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from requests import Response
+from django.http import JsonResponse, HttpResponse
 import base64
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
@@ -15,9 +10,7 @@ from . import audioRecognize
 from weixin.lib.wxcrypt import WXBizDataCrypt
 from weixin import WXAPPAPI
 from google.cloud import texttospeech
-import random
 from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
 from random import shuffle
 
 # Create your views here.
@@ -165,10 +158,7 @@ def getOneQuesiton(request):
         return JsonResponse({"state": "success", "question": exampleDict})
     else:
         example = Example.objects.get(exampleID=questionID)
-        return JsonResponse({"state": "success", "question": {"Example": example.example, "Meaning": example.meaning,
-                                                              "translation": example.translation,
-                                                              "Concept": example.concept.conceptName,
-                                                              "Decription": example.concept.conceptDescription}})
+        return JsonResponse({"state": "success", "question": serializationQuestion(example,level,commonUser)})
 
 
 # except Exception as e:
@@ -212,6 +202,7 @@ def getNotesCollection(request):
                     {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
                      "Answer": answer, "ID": i.questionID})
             else:
+                example=Example.objects.get(exampleID=i.questionID)
                 collectedDict[i.level].append(
                     {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
                      "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
@@ -221,6 +212,25 @@ def getNotesCollection(request):
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
+
+def random_options(dicts):
+    dict_value_ls = list(dicts.values())
+    shuffle(dict_value_ls)
+    new_dic = {}
+    new_dic["A"] = dict_value_ls[0]
+    new_dic["B"] = dict_value_ls[1]
+    new_dic["C"] = dict_value_ls[2]
+    new_dic["D"] = dict_value_ls[3]
+    return new_dic
+
+def judgeCollect(commonUser, level, questionID):
+    result = False
+    try:
+        NotesCollection.objects.get(commonUser=commonUser, level=level, questionID=questionID)
+        result = True
+    except Exception as e:
+        result = False
+    return result
 
 def getHistoryNum(request):
     try:
@@ -283,7 +293,7 @@ def serializationQuestion(example, level, commonUser):
             exampleDict["question"] = {"level": level, "questionID": level4Question.questionID,
                                        "question": level4Question.question,
                                        "whetherCollect": judgeCollect(commonUser, level, level4Question.questionID)}
-    else:
+    elif level == "Level2":
         level2Question = example.Level2;
         options = {
             "A": level2Question.op1,
@@ -297,6 +307,22 @@ def serializationQuestion(example, level, commonUser):
                                    "true": list(optionsDict.keys())[
                                        list(optionsDict.values()).index(example.concept.conceptName)],
                                    "whetherCollect": judgeCollect(commonUser, level, level2Question.questionID)}
+
+    else:
+        level1Question = example
+        subConcepts={}
+        try:
+            subConcepts["subConcept1"]=example.subConcept1.subConceptName
+        except:
+            pass
+        try:
+            subConcepts["subConcept2"]=example.subConcept2.subConceptName
+        except:
+            pass
+        exampleDict["question"] ={"level": level, "questionID": level1Question.exampleID,
+                                   "question": level1Question.example, "concept": level1Question.concept.conceptName,
+                                  "subConcept":subConcepts,
+                                   "whetherCollect": judgeCollect(commonUser, level, level1Question.exampleID)}
 
     return exampleDict
 
@@ -351,17 +377,6 @@ def judgeAnswer(request):
 
 # except Exception as e:
 #     return JsonResponse({'state': 'fail', "error": e.__str__()})
-
-
-def judgeCollect(commonUser, level, questionID):
-    result = False
-    try:
-        NotesCollection.objects.get(commonUser=commonUser, level=level, questionID=questionID)
-        result = True
-    except Exception as e:
-        result = False
-    return result
-
 
 def getUserRank(request):
     try:
@@ -569,18 +584,6 @@ def correctAnswer(request):
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
-
-
-def random_options(dicts):
-    dict_value_ls = list(dicts.values())
-    random.shuffle(dict_value_ls)
-    new_dic = {}
-    new_dic["A"] = dict_value_ls[0]
-    new_dic["B"] = dict_value_ls[1]
-    new_dic["C"] = dict_value_ls[2]
-    new_dic["D"] = dict_value_ls[3]
-    return new_dic
-
 
 # sudo chmod 777 /media
 
