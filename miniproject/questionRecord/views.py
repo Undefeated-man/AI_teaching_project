@@ -127,9 +127,7 @@ def getNewQuestion(request):
             number = 0
             for i in allExample:
                 if i.unit.unitName == lecture:
-                    question.append({"Example": i.example, "Meaning": i.meaning, "translation": i.translation,
-                                     "Concept": i.concept.conceptName, "Decription": i.concept.conceptDescription,
-                                     "ExampleID": i.exampleID})
+                    question.append(serializationQuestion(i,level,commonUser))
                     number += 1
                 if number == 10:
                     break
@@ -320,7 +318,10 @@ def serializationQuestion(example, level, commonUser):
         except:
             pass
         exampleDict["question"] ={"level": level, "questionID": level1Question.exampleID,
+                                  "translation":level1Question.translation,
+                                  "meaning":level1Question.meaning,
                                    "question": level1Question.example, "concept": level1Question.concept.conceptName,
+                                  "conceptDescription":level1Question.concept.conceptDescription,
                                   "subConcept":subConcepts,
                                    "whetherCollect": judgeCollect(commonUser, level, level1Question.exampleID)}
 
