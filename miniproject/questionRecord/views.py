@@ -277,6 +277,8 @@ def getHistoryNum(request):
         for i in ["Level1", "Level2", "Level3", "Level4"]:
             if historyQuestion[i]["doneNum"] == historyQuestion[i]["allLevelNum"]:
                 historyQuestion[i]["whetherDone"] = True
+            else:
+                historyQuestion[i]["whetherDone"] = False
             allNum += historyQuestion[i]["allLevelNum"]
 
         return JsonResponse({"state": "success", "allDone": historyQuestion, "allNum": allNum})
