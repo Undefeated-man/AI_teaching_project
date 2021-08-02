@@ -243,6 +243,7 @@ def getHistoryNum(request):
                 example = eval(i.level).objects.get(questionID=i.questionID).example
             else:
                 example = Example.objects.get(exampleID=i.questionID)
+                print(example.unit.unitName)
             if example.unit.unitName == lecture:
                 if historyQuestion[i.level].get("doneNum", None) is None:
                     historyQuestion[i.level]["doneNum"] = 1
