@@ -127,7 +127,7 @@ def getNewQuestion(request):
             number = 0
             for i in allExample:
                 if i.unit.unitName == lecture:
-                    question.append(serializationQuestion(i,level,commonUser))
+                    question.append(serializationQuestion(i, level, commonUser))
                     number += 1
                 if number == 10:
                     break
@@ -156,7 +156,7 @@ def getOneQuesiton(request):
         return JsonResponse({"state": "success", "question": exampleDict})
     else:
         example = Example.objects.get(exampleID=questionID)
-        return JsonResponse({"state": "success", "question": serializationQuestion(example,level,commonUser)})
+        return JsonResponse({"state": "success", "question": serializationQuestion(example, level, commonUser)})
 
 
 # except Exception as e:
@@ -200,7 +200,7 @@ def getNotesCollection(request):
                     {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
                      "Answer": answer, "ID": i.questionID})
             else:
-                example=Example.objects.get(exampleID=i.questionID)
+                example = Example.objects.get(exampleID=i.questionID)
                 collectedDict[i.level].append(
                     {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
                      "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
@@ -221,6 +221,7 @@ def random_options(dicts):
     new_dic["D"] = dict_value_ls[3]
     return new_dic
 
+
 def judgeCollect(commonUser, level, questionID):
     result = False
     try:
@@ -229,6 +230,7 @@ def judgeCollect(commonUser, level, questionID):
     except Exception as e:
         result = False
     return result
+
 
 def getHistoryNum(request):
     try:
@@ -246,17 +248,31 @@ def getHistoryNum(request):
                     historyQuestion[i.level]["doneNum"] = 1
                 else:
                     historyQuestion[i.level]["doneNum"] += 1
+
+        historyQuestion["Level1"]["doneNum"] = historyQuestion["Level1"].get("doneNum", 0)
+        historyQuestion["Level1"]["allLevelNum"] = \
+            Example.objects.filter(unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
+
         for i in ["Level2", "Level3", "Level4"]:
             historyQuestion[i]["doneNum"] = historyQuestion[i].get("doneNum", 0)
             historyQuestion[i]["allLevelNum"] = \
                 eval(i).objects.filter(example__unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
             if i == "Level2":
-                historyQuestion[i]["whetherLock"] = False
-            else:
-                historyQuestion[i]["whetherLock"] = eval("commonUser.l" + i[1:] + "Lock")
-        historyQuestion["Level1"]["doneNum"] = historyQuestion["Level1"].get("doneNum", 0)
-        historyQuestion["Level1"]["allLevelNum"] = \
-            Example.objects.filter(unit__unitName=lecture).aggregate(latest=Count('*'))["latest"]
+                if historyQuestion["Level1"]["doneNum"] < historyQuestion["Level1"]["allLevelNum"]:
+                    historyQuestion[i]["whetherLock"] = True
+                else:
+                    historyQuestion[i]["whetherLock"] = False
+            elif i == "Level3":
+                if historyQuestion["Level2"]["doneNum"] < historyQuestion["Level2"]["allLevelNum"] * 0.85:
+                    historyQuestion[i]["whetherLock"] = True
+                else:
+                    historyQuestion[i]["whetherLock"] = False
+            elif i == "Level4":
+                if historyQuestion["Level3"]["doneNum"] < historyQuestion["Level3"]["allLevelNum"] * 0.85:
+                    historyQuestion[i]["whetherLock"] = True
+                else:
+                    historyQuestion[i]["whetherLock"] = False
+
         allNum = historyQuestion["Level1"]["allLevelNum"] + historyQuestion["Level2"]["allLevelNum"] + \
                  historyQuestion["Level3"]["allLevelNum"] + historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone": historyQuestion, "allNum": allNum})
@@ -308,21 +324,21 @@ def serializationQuestion(example, level, commonUser):
 
     else:
         level1Question = example
-        subConcepts={}
+        subConcepts = {}
         try:
-            subConcepts["subConcept1"]=example.subConcept1.subConceptName
+            subConcepts["subConcept1"] = example.subConcept1.subConceptName
         except:
             pass
         try:
-            subConcepts["subConcept2"]=example.subConcept2.subConceptName
+            subConcepts["subConcept2"] = example.subConcept2.subConceptName
         except:
             pass
-        exampleDict["question"] ={"level": level, "questionID": level1Question.exampleID,
-                                  "translation":level1Question.translation,
-                                  "meaning":level1Question.meaning,
+        exampleDict["question"] = {"level": level, "questionID": level1Question.exampleID,
+                                   "translation": level1Question.translation,
+                                   "meaning": level1Question.meaning,
                                    "question": level1Question.example, "concept": level1Question.concept.conceptName,
-                                  "conceptDescription":level1Question.concept.conceptDescription,
-                                  "subConcept":subConcepts,
+                                   "conceptDescription": level1Question.concept.conceptDescription,
+                                   "subConcept": subConcepts,
                                    "whetherCollect": judgeCollect(commonUser, level, level1Question.exampleID)}
 
     return exampleDict
@@ -460,8 +476,15 @@ def textToSpeechEN(request):
 
         # Build the voice request, select the language code ("en-US") and the ssml
         # voice gender ("neutral")
+        name = request.GET.get('name')
+        if name == 1:
+            name = "en-US-Wavenet-J"
+        elif name == 2:
+            name = "en-US-Wavenet-A"
+        elif name == 3:
+            name = 'en-US-Wavenet-H'
         voice = texttospeech.VoiceSelectionParams(
-            language_code="en-US", name="en-US-Wavenet-J", ssml_gender=texttospeech.SsmlVoiceGender.MALE
+            language_code="en-US", name=name, ssml_gender=texttospeech.SsmlVoiceGender.SSML_VOICE_GENDER_UNSPECIFIED
         )
 
         # Select the type of audio file you want returned
@@ -514,21 +537,21 @@ def recordAnswer(request):
             commonUser.level = "Level3"
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
-        if level != "Level1":
-            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
-                          "latest"] / eval(level).objects.all().aggregate(latest=Count('*'))["latest"]
-            if level == "Level2":
-                if donePro >= 0.85:
-                    commonUser.level3Lock = False
-            else:
-                if donePro >= 0.85:
-                    commonUser.level3Lock = False
-                    commonUser.level4Lock = False
-        else:
-            donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
-                          "latest"] / Example.objects.all().aggregate(latest=Count('*'))["latest"]
-            if donePro == 1:
-                commonUser.level2Lock = False
+        # if level != "Level1":
+        #     donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
+        #                   "latest"] / eval(level).objects.all().aggregate(latest=Count('*'))["latest"]
+        #     if level == "Level2":
+        #         if donePro >= 0.85:
+        #             commonUser.level3Lock = False
+        #     else:
+        #         if donePro >= 0.85:
+        #             commonUser.level3Lock = False
+        #             commonUser.level4Lock = False
+        # else:
+        #     donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
+        #                   "latest"] / Example.objects.all().aggregate(latest=Count('*'))["latest"]
+        #     if donePro == 1:
+        #         commonUser.level2Lock = False
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
@@ -544,10 +567,7 @@ def getWrongNum(request):
             wrongQuestionNum[level] = {}
             wrongQuestionNum[level]["wrongNum"] = \
                 Wrong.objects.filter(commonUser=commonUser, level=level).aggregate(latest=Count('*'))["latest"]
-            if level == "Level2":
-                wrongQuestionNum[level]["whetherLock"] = 0
-            else:
-                wrongQuestionNum[level]["whetherLock"] = eval("commonUser.l" + level[1:] + "Lock")
+
         wrongQuestionNum["total"] = Wrong.objects.filter(commonUser=commonUser).aggregate(latest=Count('*'))["latest"]
         return JsonResponse({"state": "success", "wrongQuestionNum": wrongQuestionNum, "level": commonUser.level})
     except Exception as e:
@@ -585,6 +605,7 @@ def correctAnswer(request):
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
 
 # sudo chmod 777 /media
 
