@@ -273,12 +273,12 @@ def getHistoryNum(request):
                 else:
                     historyQuestion[i]["whetherLock"] = False
 
-            for i in ["Level1", "Level2", "Level3", "Level4"]:
-                if historyQuestion[i]["doneNum"] == historyQuestion[i]["allLevelNum"]:
-                    historyQuestion[i]["whetherDone"] = True
+        allNum = 0
+        for i in ["Level1", "Level2", "Level3", "Level4"]:
+            if historyQuestion[i]["doneNum"] == historyQuestion[i]["allLevelNum"]:
+                historyQuestion[i]["whetherDone"] = True
+            allNum += historyQuestion[i]["allLevelNum"]
 
-                    allNum = historyQuestion["Level1"]["allLevelNum"] + historyQuestion["Level2"]["allLevelNum"] + \
-                 historyQuestion["Level3"]["allLevelNum"] + historyQuestion["Level3"]["allLevelNum"]
         return JsonResponse({"state": "success", "allDone": historyQuestion, "allNum": allNum})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
