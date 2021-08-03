@@ -26,7 +26,7 @@ SECRET_KEY = 'cp7o6_wb&adob$sertr*3mo-r&t^a30yl6p4w)$bduirv=my-('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.92.251.246']
+ALLOWED_HOSTS = ['34.92.251.246', 'uicaitutor.info']
 
 # Application definition
 STATIC_URL = '/static/'
