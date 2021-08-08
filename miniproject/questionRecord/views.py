@@ -484,11 +484,11 @@ def textToSpeechEN(request):
         # Build the voice request, select the language code ("en-US") and the ssml
         # voice gender ("neutral")
         name = request.GET.get('name')
-        if name == 1:
+        if name == '1':
             name = "en-US-Wavenet-J"
-        elif name == 2:
+        elif name == '2':
             name = "en-US-Wavenet-A"
-        elif name == 3:
+        elif name == '3':
             name = 'en-US-Wavenet-H'
         voice = texttospeech.VoiceSelectionParams(
             language_code="en-US", name=name, ssml_gender=texttospeech.SsmlVoiceGender.SSML_VOICE_GENDER_UNSPECIFIED
