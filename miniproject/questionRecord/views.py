@@ -180,7 +180,7 @@ def getWrongQuestion(request):
 
 
 def getNotesCollection(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         collectedDict = {}
@@ -206,9 +206,9 @@ def getNotesCollection(request):
                      "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
         collectedDict = sorted(collectedDict.items(), key=lambda i: int(i[0][i[0].rfind("T") + 1:]))
         return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
-
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    #
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def random_options(dicts):
