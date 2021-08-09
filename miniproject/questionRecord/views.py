@@ -34,7 +34,7 @@ def get_user_info(js_code, userinfo, iv):
 
 # 获取用户信息UserInfo
 def userinfo(request):
-    try:
+    # try:
         code = request.POST.get('code', None)
         userinfo = request.POST.get("userinfo", "")
         name = request.POST.get("name", "")
@@ -55,8 +55,8 @@ def userinfo(request):
             commonUser.save()
         return JsonResponse(
             {"state": "success", "OpenID": user_info['openId'], "Name": name, "Photo": commonUser.imageLocation})
-    except Exception as e:
-        return JsonResponse({"state": "fail", "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({"state": "fail", "error": e.__str__()})
 
 
 @csrf_exempt
@@ -554,21 +554,6 @@ def recordAnswer(request):
             commonUser.level = "Level3"
         if commonUser.Progress.cumScore >= 2000:
             commonUser.level = "Level4"
-        # if level != "Level1":
-        #     donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
-        #                   "latest"] / eval(level).objects.all().aggregate(latest=Count('*'))["latest"]
-        #     if level == "Level2":
-        #         if donePro >= 0.85:
-        #             commonUser.level3Lock = False
-        #     else:
-        #         if donePro >= 0.85:
-        #             commonUser.level3Lock = False
-        #             commonUser.level4Lock = False
-        # else:
-        #     donePro = History.objects.filter(level=level, commonUser=commonUser).aggregate(latest=Count('*'))[
-        #                   "latest"] / Example.objects.all().aggregate(latest=Count('*'))["latest"]
-        #     if donePro == 1:
-        #         commonUser.level2Lock = False
         commonUser.save()
         return JsonResponse({'state': 'success', "score": commonUser.Progress.cumScore, "level": commonUser.level})
     except Exception as e:
