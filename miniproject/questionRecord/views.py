@@ -283,12 +283,12 @@ def getHistoryNum(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
-def conceptTest():
+def conceptTest(request):
     try:
         concepts = []
-        for i in Concept.conceptName:
+        for i in Concept.objects.all():
             # if i != example.concept.conceptName:
-            concepts.append(i)
+            concepts.append(i.conceptName)
         print(concepts)
         return JsonResponse({"state": "success", "allDone": concepts})
     except Exception as e:
