@@ -106,7 +106,7 @@ def getRankWithoutLevel(request):
 def getNewQuestion(request):
     # try:
         commonUserID = request.POST.get("commonUserID")
-        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        commonUser = CommonUser.objects.get(commonUserID='oFngp45JbIpBS6qrGqqgEZWy1F7M')
         level = request.POST.get("level")
         lecture = request.POST.get("lecture")
         alreadyDone = History.objects.filter(commonUser=commonUser, level=level).values_list("questionID", flat=True)
@@ -295,6 +295,7 @@ def serializationQuestion(example, level, commonUser):
     exampleDict["example"] = example.example
     exampleDict["meaning"] = example.meaning
     exampleDict["translation"] = example.translation
+    exampleDict["concepts"] = {}
     if level == "Level3":
         if example.level3Mode:
             level3Question = example.Level3
@@ -318,11 +319,10 @@ def serializationQuestion(example, level, commonUser):
                                        "whetherCollect": judgeCollect(commonUser, level, level4Question.questionID)}
     elif level == "Level2":
         level2Question = example.Level2
-        concepts = []
+
         for i in Concept.conceptName:
             if i != example.concept.conceptName:
-                concepts.append(i)
-        print(concepts)
+                exampleDict["concepts"].append(i)
         options = {
             "A": level2Question.op1,
             "B": level2Question.op2,
