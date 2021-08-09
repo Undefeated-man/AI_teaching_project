@@ -34,7 +34,7 @@ def get_user_info(js_code, userinfo, iv):
 
 # 获取用户信息UserInfo
 def userinfo(request):
-    # try:
+    try:
         code = request.POST.get('code', None)
         userinfo = request.POST.get("userinfo", "")
         name = request.POST.get("name", "")
@@ -55,8 +55,8 @@ def userinfo(request):
             commonUser.save()
         return JsonResponse(
             {"state": "success", "OpenID": user_info['openId'], "Name": name, "Photo": commonUser.imageLocation})
-    # except Exception as e:
-    #     return JsonResponse({"state": "fail", "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({"state": "fail", "error": e.__str__()})
 
 
 @csrf_exempt
@@ -104,9 +104,9 @@ def getRankWithoutLevel(request):
 
 
 def getNewQuestion(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
-        commonUser = CommonUser.objects.get(commonUserID='oFngp45JbIpBS6qrGqqgEZWy1F7M')
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         lecture = request.POST.get("lecture")
         alreadyDone = History.objects.filter(commonUser=commonUser, level=level).values_list("questionID", flat=True)
@@ -132,39 +132,36 @@ def getNewQuestion(request):
                 if number == 10:
                     break
             return JsonResponse({"state": "success", "question": question})
-
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getOneQuesiton(request):
-    # try:
-    level = request.POST.get("level")
-    questionID = request.POST.get("questionID")
-    commonUserID = request.POST.get("commonUserID")
-    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-    if level != "Level1":
-        example = eval(level).objects.get(questionID=questionID).example
-        if level == "Level3":
-            if example.level3Mode:
+    try:
+        level = request.POST.get("level")
+        questionID = request.POST.get("questionID")
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        if level != "Level1":
+            example = eval(level).objects.get(questionID=questionID).example
+            if level == "Level3":
+                if example.level3Mode:
+                    exampleDict = serializationQuestion(example, level, commonUser)
+            elif level == "Level4":
+                if example.level4Mode:
+                    exampleDict = serializationQuestion(example, level, commonUser)
+            else:
                 exampleDict = serializationQuestion(example, level, commonUser)
-        elif level == "Level4":
-            if example.level4Mode:
-                exampleDict = serializationQuestion(example, level, commonUser)
+            return JsonResponse({"state": "success", "question": exampleDict})
         else:
-            exampleDict = serializationQuestion(example, level, commonUser)
-        return JsonResponse({"state": "success", "question": exampleDict})
-    else:
-        example = Example.objects.get(exampleID=questionID)
-        return JsonResponse({"state": "success", "question": serializationQuestion(example, level, commonUser)})
-
-
-# except Exception as e:
-#     return JsonResponse({'state': 'fail', "error": e.__str__()})
+            example = Example.objects.get(exampleID=questionID)
+            return JsonResponse({"state": "success", "question": serializationQuestion(example, level, commonUser)})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getWrongQuestion(request):
-    # try:
+    try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
@@ -175,42 +172,39 @@ def getWrongQuestion(request):
             # if example.unit.unitName == lecture:
             wrongQuestion.append(serializationQuestion(example, level, commonUser))
         return JsonResponse({"state": "success", "wrongQuestion": wrongQuestion})
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getNotesCollection(request):
-    # try:
-    commonUserID = request.POST.get("commonUserID")
-    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-    collectedDict = {}
-    for i in NotesCollection.objects.filter(commonUser=commonUser):
-        if i.level != "Level1":
-            example = eval(i.level).objects.get(questionID=i.questionID).example
-            lect = example.unit.unitName.replace('Lecture  ', 'LECT')
-            if collectedDict.get(lect, None) is None:
-                collectedDict[lect] = {}
-            if collectedDict[lect].get(i.level, None) is None:
-                collectedDict[lect][i.level] = []
-            if i.level == "Level2":
-                answer = example.concept.conceptName
+    try:
+        commonUserID = request.POST.get("commonUserID")
+        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+        collectedDict = {}
+        for i in NotesCollection.objects.filter(commonUser=commonUser):
+            if i.level != "Level1":
+                example = eval(i.level).objects.get(questionID=i.questionID).example
+                lect = example.unit.unitName.replace('Lecture  ', 'LECT')
+                if collectedDict.get(lect, None) is None:
+                    collectedDict[lect] = {}
+                if collectedDict[lect].get(i.level, None) is None:
+                    collectedDict[lect][i.level] = []
+                if i.level == "Level2":
+                    answer = example.concept.conceptName
+                else:
+                    answer = example.meaning
+                collectedDict[lect][i.level].append(
+                    {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
+                     "Answer": answer, "ID": i.questionID})
             else:
-                answer = example.meaning
-            collectedDict[lect][i.level].append(
-                {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
-                 "Answer": answer, "ID": i.questionID})
-        else:
-            example = Example.objects.get(exampleID=i.questionID)
-            collectedDict[i.level].append(
-                {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
-                 "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
-    collectedDict = sorted(collectedDict.items(), key=lambda i: int(i[0][i[0].rfind("T") + 1:]))
-    return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
-
-
-#
-# except Exception as e:
-#     return JsonResponse({'state': 'fail', "error": e.__str__()})
+                example = Example.objects.get(exampleID=i.questionID)
+                collectedDict[i.level].append(
+                    {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
+                     "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
+        collectedDict = sorted(collectedDict.items(), key=lambda i: int(i[0][i[0].rfind("T") + 1:]))
+        return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def random_options(dicts):
@@ -289,13 +283,24 @@ def getHistoryNum(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
+def conceptTest():
+    try:
+        concepts = []
+        for i in Concept.conceptName:
+            # if i != example.concept.conceptName:
+            concepts.append(i)
+        print(concepts)
+        return JsonResponse({"state": "success", "allDone": concepts})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
 def serializationQuestion(example, level, commonUser):
     exampleDict = {}
     exampleDict["unit"] = example.unit.unitName
     exampleDict["example"] = example.example
     exampleDict["meaning"] = example.meaning
     exampleDict["translation"] = example.translation
-    exampleDict["concepts"] = {}
     if level == "Level3":
         if example.level3Mode:
             level3Question = example.Level3
@@ -319,10 +324,6 @@ def serializationQuestion(example, level, commonUser):
                                        "whetherCollect": judgeCollect(commonUser, level, level4Question.questionID)}
     elif level == "Level2":
         level2Question = example.Level2
-
-        for i in Concept.conceptName:
-            if i != example.concept.conceptName:
-                exampleDict["concepts"].append(i)
         options = {
             "A": level2Question.op1,
             "B": level2Question.op2,

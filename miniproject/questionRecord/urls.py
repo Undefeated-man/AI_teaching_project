@@ -30,4 +30,5 @@ urlpatterns = [
     url(r"^textToSpeechEN_CN/$", views.textToSpeechEN_CN),
     url(r"^textToSpeechEN/$", views.textToSpeechEN),
     url(r"^recognize$", audioRecognize.recognize, name="recognize"),
+    url(r"^test/$", views.conceptTest),
 ]
