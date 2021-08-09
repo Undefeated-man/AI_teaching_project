@@ -106,9 +106,6 @@ def getRankWithoutLevel(request):
 def getNewQuestion(request):
     # try:
         commonUserID = request.POST.get("commonUserID")
-        request.session.flush()
-        print(commonUserID)
-        CommonUser.objects
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         lecture = request.POST.get("lecture")

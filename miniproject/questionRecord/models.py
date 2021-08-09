@@ -152,7 +152,7 @@ class Groups(models.Model):
 class CommonUser(models.Model):
     commonUserID = models.CharField(max_length=225, primary_key=True)
     commonUserName = models.CharField(max_length=25)
-    group = models.OneToOneField(Groups, related_name="CommonUser", on_delete=models.CASCADE, null=True, unique=False)
+    group = models.ForeignKey(Groups, to_field='groupID', on_delete=models.CASCADE, null=True)
     level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
         , (3,"Level3"),(4,"Level4")],
                              default="Level1")
@@ -164,6 +164,7 @@ class CommonUser(models.Model):
         return "User:" + str(self.commonUserID)
 
     class Meta:
+        managed = True
         db_table = "CommonUser"
         verbose_name = "CommonUsers"
         verbose_name_plural = verbose_name
