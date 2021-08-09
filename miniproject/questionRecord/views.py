@@ -1,5 +1,7 @@
 import json
 import math
+import random
+
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
@@ -290,7 +292,7 @@ def conceptTest(request):
             # if i != example.concept.conceptName:
             concepts.append(i.conceptName)
         print(concepts)
-        return JsonResponse({"state": "success", "allDone": concepts})
+        return JsonResponse({"state": "success", "allDone": random.choice(concepts)})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
