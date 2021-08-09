@@ -52,6 +52,7 @@ def userinfo(request):
             Progress.objects.create(commonUser=commonUser, qstNum=0, cumScore=0)
             commonUser.session_key = request.session.session_key
             commonUser.imageLocation = photo
+            commonUser.lastCheckDate = datetime.now().strftime("%Y-%m-%d")
             commonUser.save()
         return JsonResponse(
             {"state": "success", "OpenID": user_info['openId'], "Name": name, "Photo": commonUser.imageLocation})
