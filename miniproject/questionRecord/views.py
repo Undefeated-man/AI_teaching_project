@@ -34,7 +34,7 @@ def get_user_info(js_code, userinfo, iv):
 
 # 获取用户信息UserInfo
 def userinfo(request):
-    # try:
+    try:
         code = request.POST.get('code', None)
         userinfo = request.POST.get("userinfo", "")
         name = request.POST.get("name", "")
@@ -55,8 +55,8 @@ def userinfo(request):
             commonUser.save()
         return JsonResponse(
             {"state": "success", "OpenID": user_info['openId'], "Name": name, "Photo": commonUser.imageLocation})
-    # except Exception as e:
-    #     return JsonResponse({"state": "fail", "error": e.__str__()})
+    except Exception as e:
+        return JsonResponse({"state": "fail", "error": e.__str__()})
 
 
 @csrf_exempt
