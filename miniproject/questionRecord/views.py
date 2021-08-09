@@ -284,19 +284,6 @@ def getHistoryNum(request):
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
-
-def conceptTest(request):
-    try:
-        concepts = []
-        for i in Concept.objects.all():
-            # if i != example.concept.conceptName:
-            concepts.append(i.conceptName)
-        print(concepts)
-        return JsonResponse({"state": "success", "allDone": random.choice(concepts)})
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
-
-
 def serializationQuestion(example, level, commonUser):
     exampleDict = {}
     exampleDict["unit"] = example.unit.unitName
@@ -330,8 +317,6 @@ def serializationQuestion(example, level, commonUser):
         for i in Concept.objects.all():
             if i.conceptName != example.concept.conceptName:
                 concepts.append(i.conceptName)
-        random.choice(concepts)
-        exampleDict["concepts"] = concepts
         options = {
             "A": concepts.pop(random.randint(0, len(concepts)-1)),
             "B": concepts.pop(random.randint(0, len(concepts)-1)),
