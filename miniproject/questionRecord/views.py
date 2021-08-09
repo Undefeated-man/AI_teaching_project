@@ -387,7 +387,7 @@ def judgeAnswer(request):
     example = eval(level).objects.get(questionID=questionID).example
     if level == "Level4":
         audiofile = request.FILES.get('file', '')
-        trueAnswer = example.meaning
+        trueAnswer = example.example
         result = audioRecognize.recognizeAudio(audiofile, trueAnswer)
         yourAnswer = result["yourAnswer"]
         result = result["result"]
