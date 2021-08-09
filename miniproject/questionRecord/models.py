@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
@@ -155,12 +157,8 @@ class CommonUser(models.Model):
         , (3,"Level3"),(4,"Level4")],
                              default="Level1")
     imageLocation=models.TextField()
-    # conSign=models.IntegerField(null=False, blank=False,default=0)
     continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
-    lastCheckDate = models.DateField(null=True)
-    # level2Lock = models.BooleanField(null=False, default=True)
-    # level3Lock = models.BooleanField(null=False,default=True)
-    # level4Lock = models.BooleanField(null=False, default=True)
+    lastCheckDate = models.DateField(null=False, default=datetime.strptime('1980-01-01', "%Y-%m-%d"))
     meta = {'strict': False}
     def __str__(self):
         return "User:" + str(self.commonUserID)
