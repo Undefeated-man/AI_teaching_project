@@ -328,7 +328,7 @@ def serializationQuestion(example, level, commonUser):
         level2Question = example.Level2
         concepts = []
         for i in Concept.objects.all():
-            if i != example.concept.conceptName:
+            if i.conceptName != example.concept.conceptName:
                 concepts.append(i.conceptName)
         random.choice(concepts)
         exampleDict["concepts"] = concepts
