@@ -326,10 +326,16 @@ def serializationQuestion(example, level, commonUser):
                                        "whetherCollect": judgeCollect(commonUser, level, level4Question.questionID)}
     elif level == "Level2":
         level2Question = example.Level2
+        concepts = []
+        for i in Concept.objects.all():
+            if i != example.concept.conceptName:
+                concepts.append(i.conceptName)
+        random.choice(concepts)
+        exampleDict["concepts"] = concepts
         options = {
-            "A": level2Question.op1,
-            "B": level2Question.op2,
-            "C": level2Question.op3,
+            "A": concepts.pop(random.randint(0, len(concepts)-1)),
+            "B": concepts.pop(random.randint(0, len(concepts)-1)),
+            "C": concepts.pop(random.randint(0, len(concepts)-1)),
             "D": example.concept.conceptName,
         }
         optionsDict = random_options(options)
