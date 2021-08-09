@@ -104,8 +104,11 @@ def getRankWithoutLevel(request):
 
 
 def getNewQuestion(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
+        request.session.flush()
+        print(commonUserID)
+        CommonUser.objects
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
         lecture = request.POST.get("lecture")
@@ -133,8 +136,8 @@ def getNewQuestion(request):
                     break
             return JsonResponse({"state": "success", "question": question})
 
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getOneQuesiton(request):
@@ -164,7 +167,7 @@ def getOneQuesiton(request):
 
 
 def getWrongQuestion(request):
-    try:
+    # try:
         commonUserID = request.POST.get("commonUserID")
         commonUser = CommonUser.objects.get(commonUserID=commonUserID)
         level = request.POST.get("level")
@@ -175,40 +178,42 @@ def getWrongQuestion(request):
             # if example.unit.unitName == lecture:
             wrongQuestion.append(serializationQuestion(example, level, commonUser))
         return JsonResponse({"state": "success", "wrongQuestion": wrongQuestion})
-    except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getNotesCollection(request):
     # try:
-        commonUserID = request.POST.get("commonUserID")
-        commonUser = CommonUser.objects.get(commonUserID=commonUserID)
-        collectedDict = {}
-        for i in NotesCollection.objects.filter(commonUser=commonUser):
-            if i.level != "Level1":
-                example = eval(i.level).objects.get(questionID=i.questionID).example
-                lect = example.unit.unitName.replace('Lecture  ', 'LECT')
-                if collectedDict.get(lect, None) is None:
-                    collectedDict[lect] = {}
-                if collectedDict[lect].get(i.level, None) is None:
-                    collectedDict[lect][i.level] = []
-                if i.level == "Level2":
-                    answer = example.concept.conceptName
-                else:
-                    answer = example.meaning
-                collectedDict[lect][i.level].append(
-                    {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
-                     "Answer": answer, "ID": i.questionID})
+    commonUserID = request.POST.get("commonUserID")
+    commonUser = CommonUser.objects.get(commonUserID=commonUserID)
+    collectedDict = {}
+    for i in NotesCollection.objects.filter(commonUser=commonUser):
+        if i.level != "Level1":
+            example = eval(i.level).objects.get(questionID=i.questionID).example
+            lect = example.unit.unitName.replace('Lecture  ', 'LECT')
+            if collectedDict.get(lect, None) is None:
+                collectedDict[lect] = {}
+            if collectedDict[lect].get(i.level, None) is None:
+                collectedDict[lect][i.level] = []
+            if i.level == "Level2":
+                answer = example.concept.conceptName
             else:
-                example = Example.objects.get(exampleID=i.questionID)
-                collectedDict[i.level].append(
-                    {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
-                     "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
-        collectedDict = sorted(collectedDict.items(), key=lambda i: int(i[0][i[0].rfind("T") + 1:]))
-        return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
-    #
-    # except Exception as e:
-    #     return JsonResponse({'state': 'fail', "error": e.__str__()})
+                answer = example.meaning
+            collectedDict[lect][i.level].append(
+                {"Question": eval(i.level).objects.get(questionID=i.questionID).question,
+                 "Answer": answer, "ID": i.questionID})
+        else:
+            example = Example.objects.get(exampleID=i.questionID)
+            collectedDict[i.level].append(
+                {"Example": example.example, "Meaning": example.meaning, "translation": example.translation,
+                 "Concept": example.concept.conceptName, "Decription": example.concept.conceptDescription})
+    collectedDict = sorted(collectedDict.items(), key=lambda i: int(i[0][i[0].rfind("T") + 1:]))
+    return JsonResponse({"state": "success", "collectedQuestion": collectedDict})
+
+
+#
+# except Exception as e:
+#     return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def random_options(dicts):
@@ -315,7 +320,12 @@ def serializationQuestion(example, level, commonUser):
                                        "question": level4Question.question,
                                        "whetherCollect": judgeCollect(commonUser, level, level4Question.questionID)}
     elif level == "Level2":
-        level2Question = example.Level2;
+        level2Question = example.Level2
+        concepts = []
+        for i in Concept.conceptName:
+            if i != example.concept.conceptName:
+                concepts.append(i)
+        print(concepts)
         options = {
             "A": level2Question.op1,
             "B": level2Question.op2,
