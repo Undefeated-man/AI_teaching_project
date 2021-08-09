@@ -50,9 +50,8 @@ def userinfo(request):
             group = Groups.objects.get(groupID=1)
             commonUser = CommonUser.objects.create(commonUserID=user_info['openId'], commonUserName=name, group=group)
             Progress.objects.create(commonUser=commonUser, qstNum=0, cumScore=0)
-            commonUser.session_key = request.session.session_key
             commonUser.imageLocation = photo
-            commonUser.lastCheckDate = datetime.now().strftime("%Y-%m-%d")
+            commonUser.lastCheckDate = '1980-1-1'
             commonUser.save()
         return JsonResponse(
             {"state": "success", "OpenID": user_info['openId'], "Name": name, "Photo": commonUser.imageLocation})
