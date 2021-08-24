@@ -190,7 +190,7 @@ def cosDistance(vec1, vec2):
 
 
 @csrf_exempt
-def welcome(request):
+def refreshDatabase(request):
     Groups.objects.create(groupName="Default")
     lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
@@ -272,5 +272,128 @@ def toDataBase(dataframe, dataFrameName):
                                       op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
             if int(row["level_4"]):
                 Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+        except:
+            continue
+
+
+def addNewQuestion(request):
+    lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
+    lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
+    lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
+    lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
+    lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
+    lectureExcel_6 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 6.xlsx"))
+    lectureExcel_7 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 7.xlsx"))
+    lectureExcel_8 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 8.xlsx"))
+    lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
+    lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
+    lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
+    addDataBase(lectureExcel_1, "Lecture  1")
+    addDataBase(lectureExcel_2, "Lecture  2")
+    addDataBase(lectureExcel_3, "Lecture  3")
+    addDataBase(lectureExcel_4, "Lecture  4")
+    addDataBase(lectureExcel_5, "Lecture  5")
+    addDataBase(lectureExcel_6, "Lecture  6")
+    addDataBase(lectureExcel_7, "Lecture  7")
+    addDataBase(lectureExcel_8, "Lecture  8")
+    addDataBase(lectureExcel_9, "Lecture  9")
+    addDataBase(lectureExcel_10, "Lecture  10")
+    addDataBase(lectureExcel_11, "Lecture  11")
+
+    return HttpResponse("Success")
+
+
+@csrf_exempt
+def addDataBase(dataframe, dataFrameName):
+    try:
+        unit = Unit.objects.get(unitName=dataFrameName)
+    except:
+        unit = Unit.objects.create(unitName=dataFrameName)
+
+    for index, row in dataframe.iterrows():
+        try:
+            isHave = Concept.objects.filter(conceptName=row["Concept"])
+            allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
+            if pd.isna(row['Example']):
+                continue
+            if len(isHave) != 0:
+                if pd.isna(row["Sub-Concept 1"]):
+                    subConcept = None
+                elif row["Sub-Concept 1"] in allSubConceptName:
+                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
+                else:
+                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+                concept = Concept.objects.get(conceptName=row["Concept"])
+            else:
+                if pd.isna(row["Sub-Concept 1"]):
+                    subConcept = None
+                elif row["Sub-Concept 1"] in allSubConceptName:
+                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
+                else:
+                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+                concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
+            if pd.isna(row["Sub-Concept 2"]):
+                subConcept2 = None
+            elif row["Sub-Concept 2"] in allSubConceptName:
+                subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+            else:
+                subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
+
+            example = Example.objects.get(unit=unit, concept=concept, subConcept1=subConcept,
+                                             subConcept2=subConcept2,
+                                             exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
+                                             translation=row["Meaning（中文）"],
+                                             level2Mode=int(row["level_2"]),
+                                             level3Mode=int(row["level_3"]),
+                                             level4Mode=int(row["level_4"]),
+                                             level5Mode=int(row["level_5"]),
+                                             level6Mode=int(row["level_6"]), )
+            example.unit=unit
+            example.concept = concept
+            example.subConcept1 = subConcept
+            example.subConcept2 = subConcept2
+            example=row["Example"]
+            example.meaning = row["Meaning"]
+            example.translation = row["Meaning（中文）"]
+            example.level2Mode = int(row["level_2"])
+            example.level3Mode = int(row["level_3"])
+            example.level4Mode = int(row["level_4"])
+            example.level5Mode = int(row["level_5"])
+            example.level6Mode = int(row["level_6"])
+            example.save()
+            if int(row["level_2"]):
+                try:
+                    question = Level2.objects.create(questionID=row["QueationL2ID"])
+                    question.question = row["Question_L2"]
+                    question.op1 = row["wrong concept 1"]
+                    question.op2 = row["wrong concept 2"]
+                    question.op3 = row["wrong concept 3"]
+                    question.example = example
+                    question.save()
+                except:
+                    Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"],
+                                      op1=row["wrong concept 1"],
+                                      op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
+            if int(row["level_3"]):
+                try:
+                    question = Level3.objects.create(questionID=row["QueationL3ID"])
+                    question.question = row["Question_L3"]
+                    question.op1 = row["wrong concept 1"]
+                    question.op2 = row["wrong concept 2"]
+                    question.op3 = row["wrong concept 3"]
+                    question.example = example
+                    question.save()
+                except:
+                    Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                                      op1=row["wrong concept 1"],
+                                      op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
+            if int(row["level_4"]):
+                try:
+                    question = Level4.objects.create(questionID=row["QueationL4ID"])
+                    question.question=row["Queation_L4"]
+                    question.example = example
+                    question.save()
+                except:
+                    Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
         except:
             continue

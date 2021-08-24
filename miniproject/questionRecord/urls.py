@@ -10,7 +10,8 @@ urlpatterns = [
     # 微信登录页面userinfo
     path('userinfo', views.userinfo),
     url(r"^$", views.upload),
-    url(r"^welcome/$", audioRecognize.welcome),
+    url(r"^refreshDatabase/$", audioRecognize.refreshDatabase),
+    url(r"^addNewQuestion/$", audioRecognize.addNewQuestion),
     url(r"^getUserInformation/$",views.getUserInformation),
     url(r"^getRankWithLevel/$", views.getRankWithLevel),
     url(r"^getRankWithoutLevel/$", views.getRankWithoutLevel),
