@@ -350,11 +350,11 @@ def addDataBase(dataframe, dataFrameName):
             example.example = row["Example"]
             example.meaning = row["Meaning"]
             example.translation = row["Translation"]
-            example.level2Mode = int(row["level_2"])
-            example.level3Mode = int(row["level_3"])
-            example.level4Mode = int(row["level_4"])
-            example.level5Mode = int(row["level_5"])
-            example.level6Mode = int(row["level_6"])
+            example.level2Mode = int(row["Level_2"])
+            example.level3Mode = int(row["Level_3"])
+            example.level4Mode = int(row["Level_4"])
+            example.level5Mode = int(row["Level_5"])
+            example.level6Mode = int(row["Level_6"])
             example.save()
             if int(row["level_2"]):
                 try:
