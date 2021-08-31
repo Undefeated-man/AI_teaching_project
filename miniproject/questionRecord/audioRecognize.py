@@ -256,7 +256,7 @@ def toDataBase(dataframe, dataFrameName):
             example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept,
                                              subConcept2=subConcept2,
                                              exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
-                                             translation=row["Meaning（中文）"],
+                                             translation=row["Translation"],
                                              level2Mode=int(row["level_2"]),
                                              level3Mode=int(row["level_3"]),
                                              level4Mode=int(row["level_4"]),
@@ -349,7 +349,7 @@ def addDataBase(dataframe, dataFrameName):
             example.subConcept2 = subConcept2
             example.example = row["Example"]
             example.meaning = row["Meaning"]
-            example.translation = row["Meaning（中文）"]
+            example.translation = row["Translation"]
             example.level2Mode = int(row["level_2"])
             example.level3Mode = int(row["level_3"])
             example.level4Mode = int(row["level_4"])
@@ -373,15 +373,15 @@ def addDataBase(dataframe, dataFrameName):
                 try:
                     question = Level3.objects.get(questionID=row["QueationL3ID"])
                     question.question = row["Question_L3"]
-                    question.op1 = row["wrong concept 1"]
-                    question.op2 = row["wrong concept 2"]
-                    question.op3 = row["wrong concept 3"]
+                    question.op1 = row["wrong option 1"]
+                    question.op2 = row["wrong option 2"]
+                    question.op3 = row["wrong option 3"]
                     question.example = example
                     question.save()
                 except:
                     Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
-                                      op1=row["wrong concept 1"],
-                                      op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
+                                      op1=row["wrong option 1"],
+                                      op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
             if int(row["level_4"]):
                 try:
                     question = Level4.objects.get(questionID=row["QueationL4ID"])
