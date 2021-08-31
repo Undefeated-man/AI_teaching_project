@@ -310,6 +310,8 @@ def addDataBase(dataframe, dataFrameName):
 
     for index, row in dataframe.iterrows():
         try:
+            if pd.isna(row["ExampleID"]):
+                continue
             isHave = Concept.objects.filter(conceptName=row["Concept"])
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
