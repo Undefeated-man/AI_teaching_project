@@ -257,20 +257,20 @@ def toDataBase(dataframe, dataFrameName):
                                              subConcept2=subConcept2,
                                              exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
                                              translation=row["Translation"],
-                                             level2Mode=int(row["level_2"]),
-                                             level3Mode=int(row["level_3"]),
-                                             level4Mode=int(row["level_4"]),
-                                             level5Mode=int(row["level_5"]),
-                                             level6Mode=int(row["level_6"]), )
-            if int(row["level_2"]):
+                                             level2Mode=int(row["Level_2"]),
+                                             level3Mode=int(row["Level_3"]),
+                                             level4Mode=int(row["Level_4"]),
+                                             level5Mode=int(row["Level_5"]),
+                                             level6Mode=int(row["Level_6"]), )
+            if int(row["Level_2"]):
                 Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"],
                                       op1=row["wrong concept 1"],
                                       op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
-            if int(row["level_3"]):
+            if int(row["Level_3"]):
                 Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
                                       op1=row["wrong option 1"],
                                       op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
-            if int(row["level_4"]):
+            if int(row["Level_4"]):
                 Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
         # except:
         #     continue
@@ -356,7 +356,7 @@ def addDataBase(dataframe, dataFrameName):
             example.level5Mode = int(row["Level_5"])
             example.level6Mode = int(row["Level_6"])
             example.save()
-            if int(row["level_2"]):
+            if int(row["Level_2"]):
                 try:
                     question = Level2.objects.get(questionID=row["QueationL2ID"])
                     question.question = row["Question_L2"]
@@ -369,7 +369,7 @@ def addDataBase(dataframe, dataFrameName):
                     Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"],
                                       op1=row["wrong concept 1"],
                                       op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
-            if int(row["level_3"]):
+            if int(row["Level_3"]):
                 try:
                     question = Level3.objects.get(questionID=row["QueationL3ID"])
                     question.question = row["Question_L3"]
@@ -382,7 +382,7 @@ def addDataBase(dataframe, dataFrameName):
                     Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
                                       op1=row["wrong option 1"],
                                       op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
-            if int(row["level_4"]):
+            if int(row["Level_4"]):
                 try:
                     question = Level4.objects.get(questionID=row["QueationL4ID"])
                     question.question=row["Queation_L4"]
