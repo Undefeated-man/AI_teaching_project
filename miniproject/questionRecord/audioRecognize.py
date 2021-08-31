@@ -358,7 +358,7 @@ def addDataBase(dataframe, dataFrameName):
             example.save()
             if int(row["level_2"]):
                 try:
-                    question = Level2.objects.create(questionID=row["QueationL2ID"])
+                    question = Level2.objects.get(questionID=row["QueationL2ID"])
                     question.question = row["Question_L2"]
                     question.op1 = row["wrong concept 1"]
                     question.op2 = row["wrong concept 2"]
@@ -371,7 +371,7 @@ def addDataBase(dataframe, dataFrameName):
                                       op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
             if int(row["level_3"]):
                 try:
-                    question = Level3.objects.create(questionID=row["QueationL3ID"])
+                    question = Level3.objects.get(questionID=row["QueationL3ID"])
                     question.question = row["Question_L3"]
                     question.op1 = row["wrong concept 1"]
                     question.op2 = row["wrong concept 2"]
@@ -384,7 +384,7 @@ def addDataBase(dataframe, dataFrameName):
                                       op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
             if int(row["level_4"]):
                 try:
-                    question = Level4.objects.create(questionID=row["QueationL4ID"])
+                    question = Level4.objects.get(questionID=row["QueationL4ID"])
                     question.question=row["Queation_L4"]
                     question.example = example
                     question.save()
