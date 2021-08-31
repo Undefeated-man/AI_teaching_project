@@ -425,9 +425,6 @@ def getUserRank(request):
         else:
             toNext = 0
         userPercent = format(((len(allCommonUser) - rank) / len(allCommonUser)) * 100, '.2f')
-        if userPercent == int(userPercent):
-            userPercent = int(userPercent)
-
         if commonUser.lastCheckDate.strftime("%Y-%m-%d") == datetime.now().strftime("%Y-%m-%d"):
             check = True
         return JsonResponse({"state": "success", "score": score, "rank": rank, "percent": userPercent, "toNext": toNext,
