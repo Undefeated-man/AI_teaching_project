@@ -256,7 +256,7 @@ def toDataBase(dataframe, dataFrameName):
             example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept,
                                              subConcept2=subConcept2,
                                              exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
-                                             translation=row["Meaning（中文）"],
+                                             translation=row["Translation"],
                                              level2Mode=int(row["level_2"]),
                                              level3Mode=int(row["level_3"]),
                                              level4Mode=int(row["level_4"]),
@@ -349,7 +349,7 @@ def addDataBase(dataframe, dataFrameName):
             example.subConcept2 = subConcept2
             example.example = row["Example"]
             example.meaning = row["Meaning"]
-            example.translation = row["Meaning（中文）"]
+            example.translation = row["Translation"]
             example.level2Mode = int(row["level_2"])
             example.level3Mode = int(row["level_3"])
             example.level4Mode = int(row["level_4"])
