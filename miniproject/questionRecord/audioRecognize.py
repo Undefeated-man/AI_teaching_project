@@ -344,7 +344,7 @@ def addDataBase(dataframe, dataFrameName):
 
             try:
                 example = Example.objects.get( exampleID=row["ExampleID"])
-            except:
+            except Model.DoesNotExist:
                 example = Example.objects.create(exampleID=row["ExampleID"])
             example.unit=unit
             example.concept = concept
@@ -365,7 +365,7 @@ def addDataBase(dataframe, dataFrameName):
                     question.question = row["Question_L2"]
                     question.example = example
                     question.save()
-                except:
+                except Model.DoesNotExist:
                     Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
             if int(row["Level_3"]):
                 try:
@@ -386,7 +386,7 @@ def addDataBase(dataframe, dataFrameName):
                     question.question=row["Queation_L4"]
                     question.example = example
                     question.save()
-                except:
+                except Model.DoesNotExist:
                     Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
         # except:
         #     continue
