@@ -361,12 +361,15 @@ def addDataBase(dataframe, dataFrameName):
             example.save()
             if int(row["Level_2"]):
                 try:
-                    question = Level2.objects.get(questionID=row["QueationL2ID"])
-                    question.question = row["Question_L2"]
-                    question.example = example
-                    question.save()
-                except ObjectDoesNotExist:
-                    Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
+                    try:
+                        question = Level2.objects.get(questionID=row["QueationL2ID"])
+                        question.question = row["Question_L2"]
+                        question.example = example
+                        question.save()
+                    except ObjectDoesNotExist:
+                        Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
+                except IntegrityError:
+                    pass
             if int(row["Level_3"]):
                 try:
                     try:
