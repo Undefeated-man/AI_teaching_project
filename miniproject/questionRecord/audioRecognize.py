@@ -2,7 +2,7 @@ import json
 import os
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import models as model
+from django.db import models as model, IntegrityError
 from .models import *
 import pandas as pd
 import speech_recognition as sr
@@ -369,17 +369,20 @@ def addDataBase(dataframe, dataFrameName):
                     Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
             if int(row["Level_3"]):
                 try:
-                    question = Level3.objects.get(questionID=row["QueationL3ID"])
-                    question.question = row["Question_L3"]
-                    question.op1 = row["Wrong option 1"]
-                    question.op2 = row["Wrong option 2"]
-                    question.op3 = row["Wrong option 3"]
-                    question.example = example
-                    question.save()
-                except ObjectDoesNotExist:
-                    Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
-                                      op1=row["Wrong option 1"],
-                                      op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
+                    try:
+                        question = Level3.objects.get(questionID=row["QueationL3ID"])
+                        question.question = row["Question_L3"]
+                        question.op1 = row["Wrong option 1"]
+                        question.op2 = row["Wrong option 2"]
+                        question.op3 = row["Wrong option 3"]
+                        question.example = example
+                        question.save()
+                    except ObjectDoesNotExist:
+                        Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                                          op1=row["Wrong option 1"],
+                                          op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
+                except IntegrityError:
+                    pass
             if int(row["Level_4"]):
                 try:
                     question = Level4.objects.get(questionID=row["QueationL4ID"])
