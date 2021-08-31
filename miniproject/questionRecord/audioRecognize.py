@@ -226,7 +226,7 @@ def toDataBase(dataframe, dataFrameName):
         unit = Unit.objects.get(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        try:
+        # try:
             isHave = Concept.objects.filter(conceptName=row["Concept"])
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
@@ -272,8 +272,8 @@ def toDataBase(dataframe, dataFrameName):
                                       op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
             if int(row["level_4"]):
                 Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
-        except:
-            continue
+        # except:
+        #     continue
 
 
 def addNewQuestion(request):
