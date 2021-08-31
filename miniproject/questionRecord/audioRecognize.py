@@ -385,11 +385,14 @@ def addDataBase(dataframe, dataFrameName):
                     pass
             if int(row["Level_4"]):
                 try:
-                    question = Level4.objects.get(questionID=row["QueationL4ID"])
-                    question.question=row["Queation_L4"]
-                    question.example = example
-                    question.save()
-                except ObjectDoesNotExist:
-                    Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+                    try:
+                        question = Level4.objects.get(questionID=row["QueationL4ID"])
+                        question.question=row["Queation_L4"]
+                        question.example = example
+                        question.save()
+                    except ObjectDoesNotExist:
+                        Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+                except IntegrityError:
+                    pass
         # except:
         #     continue
