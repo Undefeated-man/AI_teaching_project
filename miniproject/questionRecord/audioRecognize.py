@@ -1,5 +1,8 @@
 import json
 import os
+
+from django.db.models import Model
+
 from .models import *
 import pandas as pd
 import speech_recognition as sr
@@ -373,7 +376,7 @@ def addDataBase(dataframe, dataFrameName):
                     question.op3 = row["Wrong option 3"]
                     question.example = example
                     question.save()
-                except:
+                except Model.DoesNotExist:
                     Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
                                       op1=row["Wrong option 1"],
                                       op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
