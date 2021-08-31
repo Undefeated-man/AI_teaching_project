@@ -86,10 +86,6 @@ class Level2(models.Model):
     example = models.OneToOneField(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
     question = models.TextField(null=False, blank=False)
     # three misleading choices(similar concepts in the same unit?)
-    op1 = models.TextField(null=False, blank=False)
-    op2 = models.TextField(null=False, blank=False)
-    op3 = models.TextField(null=False, blank=False)
-
     def __str__(self):
         return "Level2Question:" + str(self.questionID)
 
