@@ -347,7 +347,7 @@ def addDataBase(dataframe, dataFrameName):
             example.concept = concept
             example.subConcept1 = subConcept
             example.subConcept2 = subConcept2
-            example=row["Example"]
+            example.example = row["Example"]
             example.meaning = row["Meaning"]
             example.translation = row["Meaning（中文）"]
             example.level2Mode = int(row["level_2"])
