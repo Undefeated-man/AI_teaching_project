@@ -226,7 +226,7 @@ def toDataBase(dataframe, dataFrameName):
         unit = Unit.objects.get(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        try:
+        # try:
             isHave = Concept.objects.filter(conceptName=row["Concept"])
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
@@ -272,8 +272,8 @@ def toDataBase(dataframe, dataFrameName):
                                       op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
             if int(row["level_4"]):
                 Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
-        except:
-            continue
+        # except:
+        #     continue
 
 
 def addNewQuestion(request):
@@ -311,7 +311,7 @@ def addDataBase(dataframe, dataFrameName):
         unit = Unit.objects.create(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        try:
+        # try:
             isHave = Concept.objects.filter(conceptName=row["Concept"])
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
@@ -339,20 +339,15 @@ def addDataBase(dataframe, dataFrameName):
             else:
                 subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
 
-            example = Example.objects.get(unit=unit, concept=concept, subConcept1=subConcept,
-                                             subConcept2=subConcept2,
-                                             exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
-                                             translation=row["Meaning（中文）"],
-                                             level2Mode=int(row["level_2"]),
-                                             level3Mode=int(row["level_3"]),
-                                             level4Mode=int(row["level_4"]),
-                                             level5Mode=int(row["level_5"]),
-                                             level6Mode=int(row["level_6"]), )
+            try:
+                example = Example.objects.get( exampleID=row["ExampleID"])
+            except:
+                example = Example.objects.create(exampleID=row["ExampleID"])
             example.unit=unit
             example.concept = concept
             example.subConcept1 = subConcept
             example.subConcept2 = subConcept2
-            example=row["Example"]
+            example.example = row["Example"]
             example.meaning = row["Meaning"]
             example.translation = row["Meaning（中文）"]
             example.level2Mode = int(row["level_2"])
@@ -363,7 +358,7 @@ def addDataBase(dataframe, dataFrameName):
             example.save()
             if int(row["level_2"]):
                 try:
-                    question = Level2.objects.create(questionID=row["QueationL2ID"])
+                    question = Level2.objects.get(questionID=row["QueationL2ID"])
                     question.question = row["Question_L2"]
                     question.op1 = row["wrong concept 1"]
                     question.op2 = row["wrong concept 2"]
@@ -376,7 +371,7 @@ def addDataBase(dataframe, dataFrameName):
                                       op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
             if int(row["level_3"]):
                 try:
-                    question = Level3.objects.create(questionID=row["QueationL3ID"])
+                    question = Level3.objects.get(questionID=row["QueationL3ID"])
                     question.question = row["Question_L3"]
                     question.op1 = row["wrong concept 1"]
                     question.op2 = row["wrong concept 2"]
@@ -389,11 +384,11 @@ def addDataBase(dataframe, dataFrameName):
                                       op2=row["wrong concept 2"], op3=row["wrong concept 3"], example=example)
             if int(row["level_4"]):
                 try:
-                    question = Level4.objects.create(questionID=row["QueationL4ID"])
+                    question = Level4.objects.get(questionID=row["QueationL4ID"])
                     question.question=row["Queation_L4"]
                     question.example = example
                     question.save()
                 except:
                     Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
-        except:
-            continue
+        # except:
+        #     continue
