@@ -423,7 +423,7 @@ def getUserRank(request):
             toNext = 2000 - score
         else:
             toNext = 0
-        userPercent = ((len(allCommonUser) - rank) / len(allCommonUser)) * 100
+        userPercent = format(((len(allCommonUser) - rank) / len(allCommonUser)) * 100, '.2f')
         if userPercent == int(userPercent):
             userPercent = int(userPercent)
 
