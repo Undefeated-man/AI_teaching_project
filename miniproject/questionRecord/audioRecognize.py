@@ -312,7 +312,7 @@ def addDataBase(dataframe, dataFrameName):
         # try:
             if pd.isna(row["ExampleID"]):
                 continue
-            isHave = Concept.objects.filter(conceptName=row["Concept"])
+            isHave = Concept.objects.filter(conceptID=row["ConceptID"])
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
                 continue
@@ -323,7 +323,7 @@ def addDataBase(dataframe, dataFrameName):
                     subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
                 else:
                     subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-                concept = Concept.objects.get(conceptName=row["Concept"])
+                concept = isHave[0]
             else:
                 if pd.isna(row["Sub-Concept 1"]):
                     subConcept = None
