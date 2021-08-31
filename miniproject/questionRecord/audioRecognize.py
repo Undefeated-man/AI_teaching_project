@@ -266,8 +266,8 @@ def toDataBase(dataframe, dataFrameName):
                 Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
             if int(row["Level_3"]):
                 Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
-                                      op1=row["wrong option 1"],
-                                      op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
+                                      op1=row["Wrong option 1"],
+                                      op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
             if int(row["Level_4"]):
                 Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
         # except:
@@ -366,15 +366,15 @@ def addDataBase(dataframe, dataFrameName):
                 try:
                     question = Level3.objects.get(questionID=row["QueationL3ID"])
                     question.question = row["Question_L3"]
-                    question.op1 = row["wrong option 1"]
-                    question.op2 = row["wrong option 2"]
-                    question.op3 = row["wrong option 3"]
+                    question.op1 = row["Wrong option 1"]
+                    question.op2 = row["Wrong option 2"]
+                    question.op3 = row["Wrong option 3"]
                     question.example = example
                     question.save()
                 except:
                     Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
-                                      op1=row["wrong option 1"],
-                                      op2=row["wrong option 2"], op3=row["wrong option 3"], example=example)
+                                      op1=row["Wrong option 1"],
+                                      op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
             if int(row["Level_4"]):
                 try:
                     question = Level4.objects.get(questionID=row["QueationL4ID"])
