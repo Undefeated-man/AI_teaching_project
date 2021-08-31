@@ -339,15 +339,10 @@ def addDataBase(dataframe, dataFrameName):
             else:
                 subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
 
-            example = Example.objects.get(unit=unit, concept=concept, subConcept1=subConcept,
-                                             subConcept2=subConcept2,
-                                             exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
-                                             translation=row["Meaning（中文）"],
-                                             level2Mode=int(row["level_2"]),
-                                             level3Mode=int(row["level_3"]),
-                                             level4Mode=int(row["level_4"]),
-                                             level5Mode=int(row["level_5"]),
-                                             level6Mode=int(row["level_6"]), )
+            try:
+                example = Example.objects.get( exampleID=row["ExampleID"])
+            except:
+                example = Example.objects.create(exampleID=row["ExampleID"])
             example.unit=unit
             example.concept = concept
             example.subConcept1 = subConcept
