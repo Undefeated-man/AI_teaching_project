@@ -284,6 +284,7 @@ def getHistoryNum(request):
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
+
 def serializationQuestion(example, level, commonUser):
     exampleDict = {}
     exampleDict["unit"] = example.unit.unitName
