@@ -311,7 +311,7 @@ def addDataBase(dataframe, dataFrameName):
         unit = Unit.objects.create(unitName=dataFrameName)
 
     for index, row in dataframe.iterrows():
-        try:
+        # try:
             isHave = Concept.objects.filter(conceptName=row["Concept"])
             allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
             if pd.isna(row['Example']):
@@ -395,5 +395,5 @@ def addDataBase(dataframe, dataFrameName):
                     question.save()
                 except:
                     Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
-        except:
-            continue
+        # except:
+        #     continue
