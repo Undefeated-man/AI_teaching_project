@@ -264,7 +264,7 @@ def toDataBase(dataframe, dataFrameName):
                                              level3Mode=int(row["Level_3"]),
                                              level4Mode=int(row["Level_4"]),
                                              level5Mode=int(row["Level_5"]),
-                                             level6Mode=int(row["Level_6"]), )
+                                             level6Mode=int(row["Level_6"]), )[0]
             if int(row["Level_2"]):
                 Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
             if int(row["Level_3"]):
