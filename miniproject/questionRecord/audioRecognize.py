@@ -249,14 +249,14 @@ def toDataBase(dataframe, dataFrameName):
                     subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
                 else:
                     subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-                concept = Concept.objects.update_or_create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
+                concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
             if pd.isna(row["Sub-Concept 2"]):
                 subConcept2 = None
             elif row["Sub-Concept 2"] in allSubConceptName:
                 subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
             else:
                 subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
-            example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept,
+            example = Example.objects.update_or_create(unit=unit, concept=concept, subConcept1=subConcept,
                                              subConcept2=subConcept2,
                                              exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
                                              translation=row["Translation"],
