@@ -197,11 +197,13 @@ def refreshDatabase(request):
     global processed
     try:
         processed = []
-        for index in range(1):
+        while 1:
+            i = 1
             toDataBase(pd.read_excel(
-                os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(index) + ".xlsx")),
-                "Lecture  " + str(index))
-            processed.append("Lecture  " + str(index))
+                os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(i) + ".xlsx")),
+                "Lecture  " + str(i))
+            processed.append("Lecture  " + str(i))
+            i += 1
     # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
@@ -294,11 +296,13 @@ def addNewQuestion(request):
     global processed
     try:
         processed = []
-        for index in range(1):
+        while 1:
+            i = 1
             addDataBase(pd.read_excel(
-                os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(index) + ".xlsx")),
-                        "Lecture  " + str(index))
-            processed.append("Lecture  " + str(index))
+                os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(i) + ".xlsx")),
+                "Lecture  " + str(i))
+            processed.append("Lecture  " + str(i))
+            i += 1
     # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
