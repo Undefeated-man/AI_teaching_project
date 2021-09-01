@@ -266,13 +266,13 @@ def toDataBase(dataframe, dataFrameName):
                                              level5Mode=int(row["Level_5"]),
                                              level6Mode=int(row["Level_6"]), )[0]
             if int(row["Level_2"]):
-                Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
+                Level2.objects.update_or_create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
             if int(row["Level_3"]):
-                Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                Level3.objects.update_or_create(questionID=row["QueationL3ID"], question=row["Question_L3"],
                                       op1=row["Wrong option 1"],
                                       op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
             if int(row["Level_4"]):
-                Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+                Level4.objects.update_or_create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
         # except:
         #     continue
 
