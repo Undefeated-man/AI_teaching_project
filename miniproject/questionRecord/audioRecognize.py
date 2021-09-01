@@ -79,7 +79,7 @@ def recognizeAudio(audiofile, answer):
     # language="cmn-Hans-CN"
     result = r.recognize_google(audio, language="en-US", show_all=True)
     judgeResult = judge(result['alternative'][0]['transcript'], answer)
-    return {"result":judgeResult,"yourAnswer":result['alternative'][0]['transcript']}
+    return {"result": judgeResult, "yourAnswer": result['alternative'][0]['transcript']}
 
 
 # import logging, os
@@ -200,7 +200,7 @@ def refreshDatabase(request):
         for index in range(1):
             toDataBase(pd.read_excel(
                 os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(index) + ".xlsx")),
-                        "Lecture  " + str(index))
+                "Lecture  " + str(index))
             processed.append("Lecture  " + str(index))
     # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
@@ -224,8 +224,8 @@ def refreshDatabase(request):
     # toDataBase(lectureExcel_9, "Lecture  9")
     # toDataBase(lectureExcel_10, "Lecture  10")
     # toDataBase(lectureExcel_11, "Lecture  11")
-    except FileNotFoundError:
-        return JsonResponse({'state': 'success', "processed": processed})
+    except FileNotFoundError as e:
+        return JsonResponse({'state': 'success', "processed": processed, "error": e.__str__()})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
     # Groups.objects.create(groupName="Default")
@@ -240,51 +240,54 @@ def toDataBase(dataframe, dataFrameName):
 
     for index, row in dataframe.iterrows():
         # try:
-            isHave = Concept.objects.filter(conceptName=row["Concept"])
-            allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
-            if pd.isna(row['Example']):
-                continue
-            if len(isHave) != 0:
-                if pd.isna(row["Sub-Concept 1"]):
-                    subConcept = None
-                elif row["Sub-Concept 1"] in allSubConceptName:
-                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-                else:
-                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-                concept = Concept.objects.get(conceptName=row["Concept"])
+        isHave = Concept.objects.filter(conceptName=row["Concept"])
+        allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
+        if pd.isna(row['Example']):
+            continue
+        if len(isHave) != 0:
+            if pd.isna(row["Sub-Concept 1"]):
+                subConcept = None
+            elif row["Sub-Concept 1"] in allSubConceptName:
+                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
             else:
-                if pd.isna(row["Sub-Concept 1"]):
-                    subConcept = None
-                elif row["Sub-Concept 1"] in allSubConceptName:
-                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-                else:
-                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-                concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
-            if pd.isna(row["Sub-Concept 2"]):
-                subConcept2 = None
-            elif row["Sub-Concept 2"] in allSubConceptName:
-                subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+            concept = Concept.objects.get(conceptName=row["Concept"])
+        else:
+            if pd.isna(row["Sub-Concept 1"]):
+                subConcept = None
+            elif row["Sub-Concept 1"] in allSubConceptName:
+                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
             else:
-                subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
-            example = Example.objects.update_or_create(unit=unit, concept=concept, subConcept1=subConcept,
-                                             subConcept2=subConcept2,
-                                             exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
-                                             translation=row["Translation"],
-                                             level2Mode=int(row["Level_2"]),
-                                             level3Mode=int(row["Level_3"]),
-                                             level4Mode=int(row["Level_4"]),
-                                             level5Mode=int(row["Level_5"]),
-                                             level6Mode=int(row["Level_6"]), )[0]
-            if int(row["Level_2"]):
-                Level2.objects.update_or_create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
-            if int(row["Level_3"]):
-                Level3.objects.update_or_create(questionID=row["QueationL3ID"], question=row["Question_L3"],
-                                      op1=row["Wrong option 1"],
-                                      op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
-            if int(row["Level_4"]):
-                Level4.objects.update_or_create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
-        # except:
-        #     continue
+                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+            concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
+        if pd.isna(row["Sub-Concept 2"]):
+            subConcept2 = None
+        elif row["Sub-Concept 2"] in allSubConceptName:
+            subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+        else:
+            subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
+        example = Example.objects.update_or_create(unit=unit, concept=concept, subConcept1=subConcept,
+                                                   subConcept2=subConcept2,
+                                                   exampleID=row["ExampleID"], example=row["Example"],
+                                                   meaning=row["Meaning"],
+                                                   translation=row["Translation"],
+                                                   level2Mode=int(row["Level_2"]),
+                                                   level3Mode=int(row["Level_3"]),
+                                                   level4Mode=int(row["Level_4"]),
+                                                   level5Mode=int(row["Level_5"]),
+                                                   level6Mode=int(row["Level_6"]), )[0]
+        if int(row["Level_2"]):
+            Level2.objects.update_or_create(questionID=row["QueationL2ID"], question=row["Question_L2"],
+                                            example=example)
+        if int(row["Level_3"]):
+            Level3.objects.update_or_create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                                            op1=row["Wrong option 1"],
+                                            op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
+        if int(row["Level_4"]):
+            Level4.objects.update_or_create(questionID=row["QueationL4ID"], question=row["Queation_L4"],
+                                            example=example)
+    # except:
+    #     continue
 
 
 def addNewQuestion(request):
@@ -292,8 +295,10 @@ def addNewQuestion(request):
     try:
         processed = []
         for index in range(1):
-            addDataBase(pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture "+ str(index) +".xlsx")), "Lecture  "+ str(index))
-            processed.append("Lecture  "+ str(index))
+            addDataBase(pd.read_excel(
+                os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(index) + ".xlsx")),
+                        "Lecture  " + str(index))
+            processed.append("Lecture  " + str(index))
     # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
     # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
@@ -316,10 +321,11 @@ def addNewQuestion(request):
     # addDataBase(lectureExcel_9, "Lecture  9")
     # addDataBase(lectureExcel_10, "Lecture  10")
     # addDataBase(lectureExcel_11, "Lecture  11")
-    except FileNotFoundError:
-        return JsonResponse({'state': 'success', "processed": processed})
+    except FileNotFoundError as e:
+        return JsonResponse({'state': 'success', "processed": processed, "error": e.__str__()})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
 
 @csrf_exempt
 def addDataBase(dataframe, dataFrameName):
@@ -330,89 +336,89 @@ def addDataBase(dataframe, dataFrameName):
 
     for index, row in dataframe.iterrows():
         # try:
-            if pd.isna(row["ExampleID"]):
-                continue
-            isHave = Concept.objects.filter(conceptID=row["ConceptID"])
-            allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
-            if pd.isna(row['Example']):
-                continue
-            if len(isHave) != 0:
-                if pd.isna(row["Sub-Concept 1"]):
-                    subConcept = None
-                elif row["Sub-Concept 1"] in allSubConceptName:
-                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-                else:
-                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-                concept = isHave[0]
+        if pd.isna(row["ExampleID"]):
+            continue
+        isHave = Concept.objects.filter(conceptID=row["ConceptID"])
+        allSubConceptName = SubConcept.objects.values_list("subConceptName", flat=True).distinct()
+        if pd.isna(row['Example']):
+            continue
+        if len(isHave) != 0:
+            if pd.isna(row["Sub-Concept 1"]):
+                subConcept = None
+            elif row["Sub-Concept 1"] in allSubConceptName:
+                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
             else:
-                if pd.isna(row["Sub-Concept 1"]):
-                    subConcept = None
-                elif row["Sub-Concept 1"] in allSubConceptName:
-                    subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
-                else:
-                    subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
-                concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
-            if pd.isna(row["Sub-Concept 2"]):
-                subConcept2 = None
-            elif row["Sub-Concept 2"] in allSubConceptName:
-                subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+            concept = isHave[0]
+        else:
+            if pd.isna(row["Sub-Concept 1"]):
+                subConcept = None
+            elif row["Sub-Concept 1"] in allSubConceptName:
+                subConcept = SubConcept.objects.get(subConceptName=row["Sub-Concept 1"])
             else:
-                subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
+                subConcept = SubConcept.objects.create(subConceptName=row["Sub-Concept 1"])
+            concept = Concept.objects.create(conceptName=row["Concept"], conceptID=row["ConceptID"], unit=unit)
+        if pd.isna(row["Sub-Concept 2"]):
+            subConcept2 = None
+        elif row["Sub-Concept 2"] in allSubConceptName:
+            subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
+        else:
+            subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
 
+        try:
+            example = Example.objects.get(exampleID=row["ExampleID"])
+        except ObjectDoesNotExist:
+            example = Example.objects.create(exampleID=row["ExampleID"])
+        example.unit = unit
+        example.concept = concept
+        example.subConcept1 = subConcept
+        example.subConcept2 = subConcept2
+        example.example = row["Example"]
+        example.meaning = row["Meaning"]
+        example.translation = row["Translation"]
+        example.level2Mode = int(row["Level_2"])
+        example.level3Mode = int(row["Level_3"])
+        example.level4Mode = int(row["Level_4"])
+        example.level5Mode = int(row["Level_5"])
+        example.level6Mode = int(row["Level_6"])
+        example.save()
+        if int(row["Level_2"]):
             try:
-                example = Example.objects.get( exampleID=row["ExampleID"])
-            except ObjectDoesNotExist:
-                example = Example.objects.create(exampleID=row["ExampleID"])
-            example.unit=unit
-            example.concept = concept
-            example.subConcept1 = subConcept
-            example.subConcept2 = subConcept2
-            example.example = row["Example"]
-            example.meaning = row["Meaning"]
-            example.translation = row["Translation"]
-            example.level2Mode = int(row["Level_2"])
-            example.level3Mode = int(row["Level_3"])
-            example.level4Mode = int(row["Level_4"])
-            example.level5Mode = int(row["Level_5"])
-            example.level6Mode = int(row["Level_6"])
-            example.save()
-            if int(row["Level_2"]):
                 try:
-                    try:
-                        question = Level2.objects.get(questionID=row["QueationL2ID"])
-                        question.question = row["Question_L2"]
-                        question.example = example
-                        question.save()
-                    except ObjectDoesNotExist:
-                        Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
-                except IntegrityError:
-                    pass
-            if int(row["Level_3"]):
+                    question = Level2.objects.get(questionID=row["QueationL2ID"])
+                    question.question = row["Question_L2"]
+                    question.example = example
+                    question.save()
+                except ObjectDoesNotExist:
+                    Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
+            except IntegrityError:
+                pass
+        if int(row["Level_3"]):
+            try:
                 try:
-                    try:
-                        question = Level3.objects.get(questionID=row["QueationL3ID"])
-                        question.question = row["Question_L3"]
-                        question.op1 = row["Wrong option 1"]
-                        question.op2 = row["Wrong option 2"]
-                        question.op3 = row["Wrong option 3"]
-                        question.example = example
-                        question.save()
-                    except ObjectDoesNotExist:
-                        Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                    question = Level3.objects.get(questionID=row["QueationL3ID"])
+                    question.question = row["Question_L3"]
+                    question.op1 = row["Wrong option 1"]
+                    question.op2 = row["Wrong option 2"]
+                    question.op3 = row["Wrong option 3"]
+                    question.example = example
+                    question.save()
+                except ObjectDoesNotExist:
+                    Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
                                           op1=row["Wrong option 1"],
                                           op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
-                except IntegrityError:
-                    pass
-            if int(row["Level_4"]):
+            except IntegrityError:
+                pass
+        if int(row["Level_4"]):
+            try:
                 try:
-                    try:
-                        question = Level4.objects.get(questionID=row["QueationL4ID"])
-                        question.question=row["Queation_L4"]
-                        question.example = example
-                        question.save()
-                    except ObjectDoesNotExist:
-                        Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
-                except IntegrityError:
-                    pass
-        # except:
-        #     continue
+                    question = Level4.objects.get(questionID=row["QueationL4ID"])
+                    question.question = row["Queation_L4"]
+                    question.example = example
+                    question.save()
+                except ObjectDoesNotExist:
+                    Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+            except IntegrityError:
+                pass
+    # except:
+    #     continue
