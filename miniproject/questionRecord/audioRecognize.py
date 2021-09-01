@@ -256,7 +256,7 @@ def toDataBase(dataframe, dataFrameName):
                 subConcept2 = SubConcept.objects.get(subConceptName=row["Sub-Concept 2"])
             else:
                 subConcept2 = SubConcept.objects.create(subConceptName=row["Sub-Concept 2"])
-            example = Example.objects.update_or_create(unit=unit, concept=concept, subConcept1=subConcept,
+            example = Example.objects.create(unit=unit, concept=concept, subConcept1=subConcept,
                                              subConcept2=subConcept2,
                                              exampleID=row["ExampleID"], example=row["Example"], meaning=row["Meaning"],
                                              translation=row["Translation"],
@@ -264,15 +264,15 @@ def toDataBase(dataframe, dataFrameName):
                                              level3Mode=int(row["Level_3"]),
                                              level4Mode=int(row["Level_4"]),
                                              level5Mode=int(row["Level_5"]),
-                                             level6Mode=int(row["Level_6"]), )[0]
+                                             level6Mode=int(row["Level_6"]), )
             if int(row["Level_2"]):
-                Level2.objects.update_or_create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
+                Level2.objects.create(questionID=row["QueationL2ID"], question=row["Question_L2"], example=example)
             if int(row["Level_3"]):
-                Level3.objects.update_or_create(questionID=row["QueationL3ID"], question=row["Question_L3"],
+                Level3.objects.create(questionID=row["QueationL3ID"], question=row["Question_L3"],
                                       op1=row["Wrong option 1"],
                                       op2=row["Wrong option 2"], op3=row["Wrong option 3"], example=example)
             if int(row["Level_4"]):
-                Level4.objects.update_or_create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
+                Level4.objects.create(questionID=row["QueationL4ID"], question=row["Queation_L4"], example=example)
         # except:
         #     continue
 
