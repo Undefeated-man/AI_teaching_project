@@ -194,31 +194,41 @@ def cosDistance(vec1, vec2):
 
 @csrf_exempt
 def refreshDatabase(request):
-    Groups.objects.create(groupName="Default")
-    lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
-    lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
-    lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
-    lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
-    lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
-    lectureExcel_6 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 6.xlsx"))
-    lectureExcel_7 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 7.xlsx"))
-    lectureExcel_8 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 8.xlsx"))
-    lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
-    lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
-    lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
-    toDataBase(lectureExcel_1, "Lecture  1")
-    toDataBase(lectureExcel_2, "Lecture  2")
-    toDataBase(lectureExcel_3, "Lecture  3")
-    toDataBase(lectureExcel_4, "Lecture  4")
-    toDataBase(lectureExcel_5, "Lecture  5")
-    toDataBase(lectureExcel_6, "Lecture  6")
-    toDataBase(lectureExcel_7, "Lecture  7")
-    toDataBase(lectureExcel_8, "Lecture  8")
-    toDataBase(lectureExcel_9, "Lecture  9")
-    toDataBase(lectureExcel_10, "Lecture  10")
-    toDataBase(lectureExcel_11, "Lecture  11")
-
-    return HttpResponse("Success")
+    global processed
+    try:
+        processed = []
+        for index in range(1):
+            toDataBase(pd.read_excel(
+                os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(index) + ".xlsx")),
+                        "Lecture  " + str(index))
+            processed.append("Lecture  " + str(index))
+    # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
+    # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
+    # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
+    # lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
+    # lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
+    # lectureExcel_6 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 6.xlsx"))
+    # lectureExcel_7 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 7.xlsx"))
+    # lectureExcel_8 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 8.xlsx"))
+    # lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
+    # lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
+    # lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
+    # toDataBase(lectureExcel_1, "Lecture  1")
+    # toDataBase(lectureExcel_2, "Lecture  2")
+    # toDataBase(lectureExcel_3, "Lecture  3")
+    # toDataBase(lectureExcel_4, "Lecture  4")
+    # toDataBase(lectureExcel_5, "Lecture  5")
+    # toDataBase(lectureExcel_6, "Lecture  6")
+    # toDataBase(lectureExcel_7, "Lecture  7")
+    # toDataBase(lectureExcel_8, "Lecture  8")
+    # toDataBase(lectureExcel_9, "Lecture  9")
+    # toDataBase(lectureExcel_10, "Lecture  10")
+    # toDataBase(lectureExcel_11, "Lecture  11")
+    except FileNotFoundError:
+        return JsonResponse({'state': 'success', "processed": processed})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
+    # Groups.objects.create(groupName="Default")
 
 
 @csrf_exempt
@@ -278,31 +288,38 @@ def toDataBase(dataframe, dataFrameName):
 
 
 def addNewQuestion(request):
-    lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
-    lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
-    lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
-    lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
-    lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
-    lectureExcel_6 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 6.xlsx"))
-    lectureExcel_7 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 7.xlsx"))
-    lectureExcel_8 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 8.xlsx"))
-    lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
-    lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
-    lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
-    addDataBase(lectureExcel_1, "Lecture  1")
-    addDataBase(lectureExcel_2, "Lecture  2")
-    addDataBase(lectureExcel_3, "Lecture  3")
-    addDataBase(lectureExcel_4, "Lecture  4")
-    addDataBase(lectureExcel_5, "Lecture  5")
-    addDataBase(lectureExcel_6, "Lecture  6")
-    addDataBase(lectureExcel_7, "Lecture  7")
-    addDataBase(lectureExcel_8, "Lecture  8")
-    addDataBase(lectureExcel_9, "Lecture  9")
-    addDataBase(lectureExcel_10, "Lecture  10")
-    addDataBase(lectureExcel_11, "Lecture  11")
-
-    return HttpResponse("Success")
-
+    global processed
+    try:
+        processed = []
+        for index in range(1):
+            addDataBase(pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture "+ str(index) +".xlsx")), "Lecture  "+ str(index))
+            processed.append("Lecture  "+ str(index))
+    # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
+    # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
+    # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
+    # lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
+    # lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
+    # lectureExcel_6 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 6.xlsx"))
+    # lectureExcel_7 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 7.xlsx"))
+    # lectureExcel_8 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 8.xlsx"))
+    # lectureExcel_9 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 9.xlsx"))
+    # lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
+    # lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
+    # addDataBase(lectureExcel_1, "Lecture  1")
+    # addDataBase(lectureExcel_2, "Lecture  2")
+    # addDataBase(lectureExcel_3, "Lecture  3")
+    # addDataBase(lectureExcel_4, "Lecture  4")
+    # addDataBase(lectureExcel_5, "Lecture  5")
+    # addDataBase(lectureExcel_6, "Lecture  6")
+    # addDataBase(lectureExcel_7, "Lecture  7")
+    # addDataBase(lectureExcel_8, "Lecture  8")
+    # addDataBase(lectureExcel_9, "Lecture  9")
+    # addDataBase(lectureExcel_10, "Lecture  10")
+    # addDataBase(lectureExcel_11, "Lecture  11")
+    except FileNotFoundError:
+        return JsonResponse({'state': 'success', "processed": processed})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 @csrf_exempt
 def addDataBase(dataframe, dataFrameName):
