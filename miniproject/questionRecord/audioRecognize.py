@@ -196,9 +196,9 @@ def cosDistance(vec1, vec2):
 def refreshDatabase(request):
     global processed
     try:
+        i = 1
         processed = []
         while 1:
-            i = 1
             toDataBase(pd.read_excel(
                 os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(i) + ".xlsx")),
                 "Lecture  " + str(i))
@@ -296,8 +296,8 @@ def addNewQuestion(request):
     global processed
     try:
         processed = []
+        i = 1
         while 1:
-            i = 1
             addDataBase(pd.read_excel(
                 os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture " + str(i) + ".xlsx")),
                 "Lecture  " + str(i))
