@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture update</title>
+</head>
+<body>
+    <table border="1">
+        <thead>
+        <tr>
+            <td>用户名</td>
+            <td>密码</td>
+        </tr>
+        </thead>
+        {%for line in form%}
+            <tr>
+                <td>{{line.name}}</td>
+                <td>{{line.password}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</html>

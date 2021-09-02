@@ -319,9 +319,9 @@ def serializationQuestion(example, level, commonUser):
             if i.conceptName != example.concept.conceptName:
                 concepts.append(i.conceptName)
         options = {
-            "A": concepts.pop(random.randint(0, len(concepts)-1)),
-            "B": concepts.pop(random.randint(0, len(concepts)-1)),
-            "C": concepts.pop(random.randint(0, len(concepts)-1)),
+            "A": concepts.pop(random.randint(0, len(concepts) - 1)),
+            "B": concepts.pop(random.randint(0, len(concepts) - 1)),
+            "C": concepts.pop(random.randint(0, len(concepts) - 1)),
             "D": example.concept.conceptName,
         }
         optionsDict = random_options(options)
@@ -645,3 +645,10 @@ def signAddScore(request):
                 {"state": "success", "score": commonUser.Progress.cumScore, "level": commonUser.level, "checked": True})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def LectureUpdate(request):
+    # 先定义一个数据列表，当然后面熟了可以从数据库里取出来
+    listA = [{"name": 'good', 'password': 'python'}, {'name': 'learning', 'password': 'django'}]
+    return render(request, 'lectureUpdate.html',{'form': listA})
+    # 通过render模块把index.html这个文件返回到前端，并且返回给了前端一个变量form，在写html时可以调用这个form来展示list里的内容
