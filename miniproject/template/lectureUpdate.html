@@ -10,10 +10,15 @@
 <body>
 <div class="main-box">
     <div class="left-block">
-    fhjgdbhfd
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>{{ form }}</label>
+            <input type="submit" class="btn btn-primary" value="批量上传"/>
+
     </div>
     <div class="right-block">
-fhjgdbhfd
+        fhjgdbhfd
     </div>
 </div>
 </body>

@@ -1,5 +1,6 @@
 import json
 import math
+import os
 import random
 
 from django.db.models import Count
@@ -14,7 +15,8 @@ from weixin import WXAPPAPI
 from google.cloud import texttospeech
 from datetime import datetime, timedelta
 from random import shuffle
-
+from django.views.generic.edit import FormView
+from .forms import FileFieldForm
 # Create your views here.
 
 
@@ -650,13 +652,22 @@ def signAddScore(request):
 listA = [{"name": 'good', 'password': 'python'}, {'name': 'learning', 'password': 'django'}]
 
 
+def single_upload(f):
+    file_path = os.path.join(".", ".", os.getcwd(), "template", "Lectures", f.name)  # 拼装目录名称+文件名称
+    with open(file_path, 'wb+') as destination:  # 写文件word
+        for chunk in f.chunks():
+            destination.write(chunk)
+    destination.close()
+
 def LectureUpdate(request):
-    # 先定义一个数据列表，当然后面熟了可以从数据库里取出来
-    # 获取前端post过来的用户名和密码
-    name = request.POST.get('name', None)
-    password = request.POST.get('password', None)
-    # 把用户和密码组装成字典
-    data = {'name': name, 'password': password}
-    listA.append(data)
-    return render(request, 'lectureUpdate.html', {'form': listA})
-    # 通过render模块把index.html这个文件返回到前端，并且返回给了前端一个变量form，在写html时可以调用这个form来展示list里的内容
+    if request.method == 'POST':
+        form = FileFieldForm(request.POST, request.FILES)
+        files = request.FILES.getlist('file_field')  # 获得多个文件上传进来的文件列表。
+        if form.is_valid():  # 表单数据如果合法
+            for f in files:
+                single_upload(f)  # 处理上传来的文件
+            return HttpResponse('成功')
+        return HttpResponse('文件上传失败！')
+    else:
+        form = FileFieldForm()
+    return render(request, 'lectureUpdate.html', locals())
