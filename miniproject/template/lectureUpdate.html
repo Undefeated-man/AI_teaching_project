@@ -6,6 +6,18 @@
 </head>
 <body>
     <table border="1">
+        <form action="/index/" method="post">
+            {% csrf_token %}
+            <P>
+                <label >用户名:</label>
+                <input type="text" name ='name'/>
+            </P>
+            <P>
+                <label>密码：</label>
+                <input type="text" name='password'/>
+            </P>
+            <p><input type="submit" value="提交"/></p>
+        </form>
         <thead>
         <tr>
             <td>用户名</td>
@@ -19,5 +31,5 @@
             </tr>
         {% endfor %}
     </table>
-
+    </body>
 </html>
