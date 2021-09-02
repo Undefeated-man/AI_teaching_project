@@ -647,14 +647,16 @@ def signAddScore(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
+listA = [{"name": 'good', 'password': 'python'}, {'name': 'learning', 'password': 'django'}]
+
+
 def LectureUpdate(request):
     # 先定义一个数据列表，当然后面熟了可以从数据库里取出来
-    listA = [{"name": 'good', 'password': 'python'}, {'name': 'learning', 'password': 'django'}]
     # 获取前端post过来的用户名和密码
     name = request.POST.get('name', None)
     password = request.POST.get('password', None)
     # 把用户和密码组装成字典
     data = {'name': name, 'password': password}
     listA.append(data)
-    return render(request, 'lectureUpdate.html',{'form': listA})
+    return render(request, 'lectureUpdate.html', {'form': listA})
     # 通过render模块把index.html这个文件返回到前端，并且返回给了前端一个变量form，在写html时可以调用这个form来展示list里的内容
