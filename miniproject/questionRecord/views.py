@@ -649,9 +649,6 @@ def signAddScore(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
-listA = [{"name": 'good', 'password': 'python'}, {'name': 'learning', 'password': 'django'}]
-
-
 def single_upload(f):
     file_path = os.path.join(".", ".", os.getcwd(), "template", "Lectures", f.name)  # 拼装目录名称+文件名称
     with open(file_path, 'wb+') as destination:  # 写文件word
