@@ -651,6 +651,7 @@ def signAddScore(request):
 
 def single_upload(f):
     file_path = os.path.join(".", ".", os.getcwd(), "template", "Lectures", f.name)  # 拼装目录名称+文件名称
+    os.mkdir(file_path)
     with open(file_path, 'wb+') as destination:  # 写文件word
         for chunk in f.chunks():
             destination.write(chunk)
