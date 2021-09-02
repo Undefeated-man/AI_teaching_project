@@ -1,0 +1,24 @@
+.main-box {
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-block {
+    width: 12vw;
+    height: 8vh;
+    background-color: aquamarine;
+}
+
+.right-block {
+    width: 12vw;
+    height: 8vh;
+    background-color: aquamarine;
+}

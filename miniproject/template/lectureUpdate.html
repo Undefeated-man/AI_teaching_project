@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Lecture update</title>
+    <link rel="stylesheet" type="text/css" href="lecture-style.css">
 </head>
 <body>
-    <table border="1">
-        <form action="lectureUpdate" method="post">
-            {% csrf_token %}
-            <P>
-                <label >用户名:</label>
-                <input type="text" name ='name'/>
-            </P>
-            <P>
-                <label>密码：</label>
-                <input type="text" name='password'/>
-            </P>
-            <p><input type="submit" value="提交"/></p>
-        </form>
-        <thead>
-        <tr>
-            <td>用户名</td>
-            <td>密码</td>
-        </tr>
-        </thead>
-        {%for line in form%}
-            <tr>
-                <td>{{line.name}}</td>
-                <td>{{line.password}}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    </body>
+<div class="main-box">
+    <div class="left-block">
+
+    </div>
+    <div class="right-block">
+
+    </div>
+</div>
+</body>
+{#<body>#}
+{#    <table border="1">#}
+{#        <form action="lectureUpdate" method="post">#}
+{#            {% csrf_token %}#}
+{#            <P>#}
+{#                <label >用户名:</label>#}
+{#                <input type="text" name ='name'/>#}
+{#            </P>#}
+{#            <P>#}
+{#                <label>密码：</label>#}
+{#                <input type="text" name='password'/>#}
+{#            </P>#}
+{#            <p><input type="submit" value="提交"/></p>#}
+{#        </form>#}
+{#        <thead>#}
+{#        <tr>#}
+{#            <td>用户名</td>#}
+{#            <td>密码</td>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        {%for line in form%}#}
+{#            <tr>#}
+{#                <td>{{line.name}}</td>#}
+{#                <td>{{line.password}}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#    </table>#}
+{#    </body>#}
 </html>
