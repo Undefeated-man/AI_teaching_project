@@ -9,7 +9,7 @@ urlpatterns = [
     # 微信小程序登录
     # 微信登录页面userinfo
     path('userinfo', views.userinfo),
-    path(r'^lectureUpdate/', views.LectureUpdate),
+    path('lectureUpdate', views.LectureUpdate),
     url(r"^$", views.upload),
     url(r"^refreshDatabase/$", audioRecognize.refreshDatabase),
     url(r"^addNewQuestion/$", audioRecognize.addNewQuestion),
