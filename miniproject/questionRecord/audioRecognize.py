@@ -326,9 +326,9 @@ def addNewQuestion(request):
     # addDataBase(lectureExcel_10, "Lecture  10")
     # addDataBase(lectureExcel_11, "Lecture  11")
     except FileNotFoundError as e:
-        return 'success'
+        return JsonResponse({'state': 'success', "processed": processed, "error": e.__str__()})
     except Exception as e:
-        return e.__str__()
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 @csrf_exempt
