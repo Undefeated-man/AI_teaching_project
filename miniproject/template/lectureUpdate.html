@@ -78,7 +78,7 @@
                 <div class="btn file-box">{{ form }}</div>
             {% endif %}
             <input type="submit" class="btn btn-upload" id="upload" name="upload" value="Step 2 Upload Lectures"
-                   disabled="disabled"/>
+                   disabled="disabled" onclick="Loading()"/>
         </form>
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% if uploadState == 'success' %}
@@ -90,7 +90,7 @@
         </form>
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% if updateState == 'success' %}
-                <input type="submit" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"/>
+                <input type="submit" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database" onclick="Loading()"/>
             {% else %}
                <input type="submit" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"
                    disabled="disabled"/>
