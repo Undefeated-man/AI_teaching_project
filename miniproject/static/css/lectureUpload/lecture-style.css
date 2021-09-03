@@ -42,7 +42,7 @@
     height: 25rem;
     background-color: white;
     border-radius: 1rem;
-    overflow-y:auto
+    overflow-y: auto
 }
 
 .fName-box {
@@ -147,4 +147,23 @@
 .alert {
     color: #2b2b2b;
     margin-bottom: 2rem;
+}
+
+.gif {
+    position: absolute; /*声明绝对定位*/
+    left: 0; /*在页面最左侧对齐*/
+    top: 0; /*在页面最上方对齐*/
+    height: 100vh; /*高度是相对屏幕高度的100%*/
+    width: 100vw; /*宽度是相对屏幕宽度的100%*/
+    z-index: 1; /*设置元素优先级为1级*/
+    display: none; /*设置元素隐藏*/
+    align-items: center; /*让子元素横向居中(声明flex后有效)*/
+    justify-content: center; /*让子元素垂直居中(声明flex后有效)*/
+    background-color: rgba(0, 0, 0, 0.5); /*设置背景颜色为黑色，并给0.5透明度*/
+}
+
+.gif > img /*设置gif下的img元素样式*/
+{
+    height: 5rem;
+    width: 5rem;
 }

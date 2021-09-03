@@ -43,8 +43,15 @@
     setTimeout(function () {// set the last time of prompt div
         document.getElementById("prompt").style.display = 'none';
     }, 1500);
+
+    function Loading() {
+        document.getElementById("gif").style.display = 'flex'
+    }
 </script>
 <body>
+<div class = "gif" id="gif">
+    <img src = "../static/images/loading.gif"/>
+</div>
 <div class="main-box">
     {% if uploadState == 'success' %}
         <div class='prompt' id='prompt'>Lectures was uploaded successfully!</div>
@@ -65,10 +72,8 @@
     <div class="left-block">
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% csrf_token %}
-            {% if uploadState == 'success'%}
+            {% if uploadState == 'success' or updateState == 'success'%}
                 <button class="btn file-box" disabled="disabled">{{ form }}</button>
-            {% elif updateState == 'success' %}
-                <div class="btn file-box">{{ form }}</div>
             {% else %}
                 <div class="btn file-box">{{ form }}</div>
             {% endif %}
@@ -77,7 +82,7 @@
         </form>
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% if uploadState == 'success' %}
-                <input type="submit" class="btn btn-update" name="update" value="Step 3 Update Questions"/>
+                <input type="submit" class="btn btn-update" name="update" value="Step 3 Update Questions" onclick="Loading()"/>
             {% else %}
                 <input type="submit" class="btn btn-update" name="update" value="Step 3 Update Questions"
                        disabled="disabled" />
