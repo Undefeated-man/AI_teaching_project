@@ -1,5 +1,5 @@
 .main-box {
-    top:0;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -12,6 +12,9 @@
 }
 
 .left-block {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 20rem;
     height: 25rem;
     background-color: white;
@@ -20,6 +23,9 @@
 }
 
 .right-block {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 20rem;
     height: 25rem;
     background-color: white;
@@ -35,55 +41,30 @@
     opacity: 0;
 }
 
-label{
-    position: relative;
-}
-
-#fileinp{
-    position: absolute;
-    left: 0;
-    top: 0;
-    visibility: hidden;
-}
-#btn{
-    margin-right: 5px;
-}
-#text{
-    color: red;
-}
-
 .file-box {
-    width: 6.5rem;
-    /*height: 1rem;*/
     position: relative;
-    display: inline-block;
-    background: #c23333;
-    border: 0;
-    border-radius: 1rem;
-    padding: 4px 12px;
-    overflow: hidden;
-    color: #ffffff;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 17px;
-    font-size: 13px;
-    text-align: center;
-    align-items: center;
+    width: 340px
+}
+
+.txt {
+    height: 22px;
+    border: 1px solid #cdcdcd;
+    width: 180px;
+}
+
+.btn {
+    background-color: #FFF;
+    border: 1px solid #CDCDCD;
+    height: 24px;
+    width: 70px;
 }
 
 .file {
     position: absolute;
-    font-size: 100px;
-    right: 0;
     top: 0;
-    visibility: hidden;
+    right: 80px;
+    height: 24px;
+    filter: alpha(opacity:0);
     opacity: 0;
-}
-
-.file-box:active {
-    color: #bbb9b9;
-}
-
-.file-box:focus {
-    outline: 0;
+    width: 260px
 }

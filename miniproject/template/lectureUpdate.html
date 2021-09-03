@@ -24,21 +24,53 @@
     <div class="left-block">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {#            <label for="fileinp">#}
-            {#                <input type="button" id="btn" value="选择文件"><span id="text"></span>#}
-            {#                <label>{{ form }}</label>#}
-            {#            </label>#}
             <label>{{ form }}</label>
-            <label for="fileinp">
-                <input type="button" id="btn" value="点我上传"><span id="text"></span>
-                <label>{{ form }}</label>
-            </label>
             <input type="submit" class="btn btn-primary" value="批量上传"/>
         </form>
     </div>
     <div class="right-block">
         <label id="fileList"></label>
     </div>
+    <div class="row" style="margin-top: 50px;">
+    <form class="form-inline" id="excelForm" action="/index" method="post" enctype="multipart/form-data">
+        <div class="form-group" style="margin-left: 30px">
+            <label for="fileupload">浏览:</label>
+            <label>{{ form }}</label>
+{#            <input id="fileupload" type="file" name="fileupload" accept=".xls,.xlsx" multiple="multiple" style="display:none;" />#}
+            <input type='text' class="form-control" name='textfield' id='textfield' autocomplete="off" readonly="readonly" />
+            <input id="excelImport" type="button" value="浏览" class="btn btn-primary" />
+        </div>
+        <div class="form-group" style="margin-left: 20px">
+            <label for="input_second">用户名：</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="" autocomplete="off">
+        </div>
+        <div class="form-group" style="margin-left: 20px">
+            <label for="input_third">密码：</label>
+            <input type="text" class="form-control" name="secret" id="secret" placeholder="" autocomplete="off">
+        </div>
+        <button type="button" id="uploadSubmit" class="btn btn-danger" style="color: #FFFFFF;background-color: #10B47D;font-size:15px; padding: 0px 16px 0px !important;height:30px;">提交</button>
+
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $("#excelImport").click(function() {
+            $('#fileupload').click();
+        });
+
+        $("#uploadSubmit").click(function() {
+
+            $('#excelForm').submit();
+        });
+
+
+        $('#fileupload').change(function(){
+            document.getElementById("textfield").value =
+            document.getElementById("fileupload").files[0].name;
+        })
+    });
+</script>
 </div>
 </body>
 {#<body>#}
