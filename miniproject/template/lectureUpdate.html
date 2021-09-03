@@ -56,6 +56,11 @@
     {% elif updateState == 'failed' %}
         <div class='prompt prompt-failed' id='prompt'>Questions failed to be updated!</div>
     {% endif %}
+    {% if refreshState == 'success' %}
+        <div class='prompt' id='prompt'>Data is all refreshed successfully!</div>
+    {% elif refreshState == 'failed' %}
+        <div class='prompt prompt-failed' id='prompt'>Data failed to be refreshed!</div>
+    {% endif %}
     <prompt></prompt>
     <div class="left-block">
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
@@ -78,9 +83,9 @@
         </form>
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% if updateState == 'success' %}
-                <input type="button" class="btn btn-refresh" name="upload" value="Step 4 Refresh Database"/>
+                <input type="button" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"/>
             {% else %}
-               <input type="button" class="btn btn-refresh" name="upload" value="Step 4 Refresh Database"
+               <input type="button" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"
                    disabled="disabled"/>
             {% endif %}
 
@@ -91,7 +96,6 @@
             <li class="alert">Only if all file names are valid (like Lecture 1.xlsx), can you upload lectures to the server.</li>
             <li class="alert">We will help you to double check the file names after selecting.</li>
         </ul>
-        {{ updateState }}
         {#        <div class="fName-box">#}
         {#            <img class="icon-valid" src="../static/images/correct.png">#}
         {#            <label class="fName">Lecture 1</label>#}
