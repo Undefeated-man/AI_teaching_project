@@ -25,8 +25,8 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="fileinp">
-                <input type="button" id="btn" value="点我上传">
-                <label>{{ form }}</label>
+                <input type="button" id="btn" value="点我上传"><span id="text"></span>
+                {{ form }}
             </label>
             <input type="submit" class="btn btn-primary" value="批量上传" accept=".xlsx"/>
         </form>
