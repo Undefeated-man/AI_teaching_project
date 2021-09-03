@@ -193,7 +193,7 @@ def cosDistance(vec1, vec2):
 
 
 @csrf_exempt
-def refreshDatabase(request):
+def refreshDatabase():
     global processed
     try:
         i = 1
@@ -227,10 +227,11 @@ def refreshDatabase(request):
     # toDataBase(lectureExcel_10, "Lecture  10")
     # toDataBase(lectureExcel_11, "Lecture  11")
     except FileNotFoundError as e:
-        return {'state': 'success', "processed": processed, "error": e.__str__()}
+        return 'success'
     except Exception as e:
-        return {'state': 'fail', "error": e.__str__()}
-    # Groups.objects.create(groupName="Default")
+        print(e.__str__())
+        return 'failed'
+    Groups.objects.create(groupName="Default")
 
 
 @csrf_exempt
@@ -292,7 +293,7 @@ def toDataBase(dataframe, dataFrameName):
     #     continue
 
 
-def addNewQuestion(request):
+def addNewQuestion():
     global processed
     try:
         processed = []
@@ -326,9 +327,9 @@ def addNewQuestion(request):
     # addDataBase(lectureExcel_10, "Lecture  10")
     # addDataBase(lectureExcel_11, "Lecture  11")
     except FileNotFoundError as e:
-        return {'state': 'success', "processed": processed, "error": e.__str__()}
+        return 'success'
     except Exception as e:
-        return {'state': 'fail', "error": e.__str__()}
+        return 'failed'
 
 
 @csrf_exempt

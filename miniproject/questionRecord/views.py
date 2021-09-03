@@ -670,12 +670,14 @@ def LectureUpdate(request):
             uploadState = 'failed'
             return render(request, 'lectureUpdate.html', locals())
         elif 'update' in request.POST:
+            print('update')
             form = FileFieldForm()
-            updateState = audioRecognize.addNewQuestion(request)['state']
+            updateState = audioRecognize.addNewQuestion()
+            print(updateState)
             return render(request, 'lectureUpdate.html', locals())
         elif 'refresh' in request.POST:
             form = FileFieldForm()
-            refreshState = audioRecognize.refreshDatabase(request)['state']
+            refreshState = audioRecognize.refreshDatabase()
             return render(request, 'lectureUpdate.html', locals())
 
     else:
