@@ -65,9 +65,11 @@
     <div class="left-block">
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% csrf_token %}
-            {% if uploadState == 'success' %}
+            {% if uploadState == 'success'%}
                 <button class="btn file-box" disabled="disabled">{{ form }}</button>
-            {% else %}
+            {% elif updateState == 'success' %}
+                <div class="btn file-box">{{ form }}</div>
+            {% else updateState == 'success' %}
                 <div class="btn file-box">{{ form }}</div>
             {% endif %}
             <input type="submit" class="btn btn-upload" id="upload" name="upload" value="Step 2 Upload Lectures"
