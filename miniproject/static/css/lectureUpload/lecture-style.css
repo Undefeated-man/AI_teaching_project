@@ -72,6 +72,7 @@ label{
     right: 0;
     top: 0;
     visibility: hidden;
+    opacity: 0;
 }
 
 .file-box:active {
