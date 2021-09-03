@@ -27,7 +27,12 @@
 }
 
 .bg-info {
-
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+    opacity: 0;
 }
 
 label{
