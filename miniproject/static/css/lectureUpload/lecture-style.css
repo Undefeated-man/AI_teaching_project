@@ -4,23 +4,44 @@
     left: 0;
     right: 0;
     position: fixed;
-    background-color: antiquewhite;
+    background-color: #F4F4F4;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
 .left-block {
-    width: 12rem;
-    height: 8rem;
-    background-color: aquamarine;
+    width: 20rem;
+    height: 25rem;
+    background-color: white;
+    margin-right: 5rem;
+    border-radius: 1rem;
 }
 
 .right-block {
-    width: 12rem;
-    height: 8rem;
-    background-color: aquamarine;
+    width: 20rem;
+    height: 25rem;
+    background-color: white;
+    border-radius: 1rem;
 }
 
-.bg-info {}
+.bg-info {
+
+}
+
+label{
+    position: relative;
+}
+#fileinp{
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+#btn{
+    margin-right: 5px;
+}
+#text{
+    color: red;
+}

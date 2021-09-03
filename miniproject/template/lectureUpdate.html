@@ -7,17 +7,32 @@
     <link rel="stylesheet" type="text/css" href="../static/css/lectureUpload/lecture-style.css">
 
 </head>
+<script>
+    if (document.getElementById("fileinp") !== '') {
+        var FileList = document.getElementById("fileinp")
+            var List = "";
+            for (var i = 0; i < fileMes.files.length; i++) {
+                var file = fileMes.files[i];
+                List.innerHTML += '<p>文件名：' + file.name + '</p>';
+                List.style.display = 'block';
+            }
+        document.getElementById("fileList").innerHTML = List
+    }
+</script>
 <body>
 <div class="main-box">
     <div class="left-block">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <label>{{ form }}</label>
+            <label for="fileinp">
+                <input type="button" id="btn" value="点我上传">
+                <label>{{ form }}</label>
+            </label>
             <input type="submit" class="btn btn-primary" value="批量上传" accept=".xlsx"/>
         </form>
     </div>
     <div class="right-block">
-        fhjgdbhfd
+        <label id="fileList"></label>
     </div>
 </div>
 </body>
