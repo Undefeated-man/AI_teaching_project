@@ -193,7 +193,7 @@ def cosDistance(vec1, vec2):
 
 
 @csrf_exempt
-def refreshDatabase():
+def refreshDatabase(request):
     global processed
     try:
         i = 1
@@ -205,7 +205,7 @@ def refreshDatabase():
             processed.append("Lecture  " + str(i))
             i += 1
     # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
-    # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
+    #     lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
     # lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
     # lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
@@ -216,7 +216,7 @@ def refreshDatabase():
     # lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
     # lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
     # toDataBase(lectureExcel_1, "Lecture  1")
-    # toDataBase(lectureExcel_2, "Lecture  2")
+    #     toDataBase(lectureExcel_2, "Lecture  2")
     # toDataBase(lectureExcel_3, "Lecture  3")
     # toDataBase(lectureExcel_4, "Lecture  4")
     # toDataBase(lectureExcel_5, "Lecture  5")
@@ -227,11 +227,11 @@ def refreshDatabase():
     # toDataBase(lectureExcel_10, "Lecture  10")
     # toDataBase(lectureExcel_11, "Lecture  11")
     except FileNotFoundError as e:
+        # return JsonResponse({'state': 'success', 'processed': processed})
         return 'success'
     except Exception as e:
-        print(e.__str__())
+    #     return JsonResponse({'state': 'failed', 'error': e.__str__()})
         return 'failed'
-    Groups.objects.create(groupName="Default")
 
 
 @csrf_exempt
@@ -293,7 +293,7 @@ def toDataBase(dataframe, dataFrameName):
     #     continue
 
 
-def addNewQuestion():
+def addNewQuestion(request):
     global processed
     try:
         processed = []
@@ -305,7 +305,7 @@ def addNewQuestion():
             processed.append("Lecture  " + str(i))
             i += 1
     # lectureExcel_1 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 1.xlsx"))
-    # lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
+    #     lectureExcel_2 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 2.xlsx"))
     # lectureExcel_3 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 3.xlsx"))
     # lectureExcel_4 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 4.xlsx"))
     # lectureExcel_5 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 5.xlsx"))
@@ -316,7 +316,7 @@ def addNewQuestion():
     # lectureExcel_10 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 10.xlsx"))
     # lectureExcel_11 = pd.read_excel(os.path.join(".", ".", os.getcwd(), "template", "Lectures", "Lecture 11.xlsx"))
     # addDataBase(lectureExcel_1, "Lecture  1")
-    # addDataBase(lectureExcel_2, "Lecture  2")
+    #     addDataBase(lectureExcel_2, "Lecture  2")
     # addDataBase(lectureExcel_3, "Lecture  3")
     # addDataBase(lectureExcel_4, "Lecture  4")
     # addDataBase(lectureExcel_5, "Lecture  5")
@@ -327,8 +327,11 @@ def addNewQuestion():
     # addDataBase(lectureExcel_10, "Lecture  10")
     # addDataBase(lectureExcel_11, "Lecture  11")
     except FileNotFoundError as e:
+        # return JsonResponse({'state': 'success', 'processed': processed})
         return 'success'
     except Exception as e:
+        print(e.__str__())
+        # return JsonResponse({'state': 'failed', 'error': e.__str__()})
         return 'failed'
 
 
