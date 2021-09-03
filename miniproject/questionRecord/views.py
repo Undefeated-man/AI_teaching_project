@@ -658,13 +658,21 @@ def single_upload(f):
 
 def LectureUpdate(request):
     if request.method == 'POST':
-        form = FileFieldForm(request.POST, request.FILES)
-        files = request.FILES.getlist('file_field')  # 获得多个文件上传进来的文件列表。
-        if form.is_valid():  # 表单数据如果合法
-            for f in files:
-                single_upload(f)  # 处理上传来的文件
-            return HttpResponse('成功')
-        return HttpResponse('文件上传失败！')
+        if 'upload' in request.POST:
+            form = FileFieldForm(request.POST, request.FILES)
+            files = request.FILES.getlist('file_field')  # 获得多个文件上传进来的文件列表。
+            if form.is_valid():  # 表单数据如果合法
+                for f in files:
+                    single_upload(f)  # 处理上传来的文件
+                form = FileFieldForm()
+                uploadState = 'success'
+                return render(request, 'lectureUpdate.html', locals())
+            uploadState = 'failed'
+            return render(request, 'lectureUpdate.html', locals())
+        elif 'update' in request.POST:
+            form = FileFieldForm()
+            updateState = audioRecognize.addNewQuestion(request)
+            return render(request, 'lectureUpdate.html', locals())
     else:
         form = FileFieldForm()
     return render(request, 'lectureUpdate.html', locals())

@@ -12,59 +12,139 @@
 }
 
 .left-block {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     width: 20rem;
     height: 25rem;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-right: 5rem;
     border-radius: 1rem;
+    padding: 1rem;
+}
+
+.left-form {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .right-block {
-    flex-direction: row;
-    justify-content: center;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     width: 20rem;
     height: 25rem;
     background-color: white;
     border-radius: 1rem;
+    overflow-y:auto
 }
 
-.bg-info {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    visibility: hidden;
-    opacity: 0;
-}
-
-.file-box {
-    position: relative;
-    width: 340px
-}
-
-.txt {
-    height: 22px;
-    border: 1px solid #cdcdcd;
-    width: 180px;
+.fName-box {
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 1rem;
+    /*border-bottom: #3e3e3e 1px solid;*/
+    /*background-color: aqua;*/
 }
 
 .btn {
-    background-color: #FFF;
-    border: 1px solid #CDCDCD;
-    height: 24px;
-    width: 70px;
+    position: relative;
+    width: 90%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    color: #383838;
+    font-size: 18px;
+    font-family: "Times New Roman", serif;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    margin-bottom: 2.6rem;
 }
 
-.file {
-    position: absolute;
+
+.btn:disabled {
+    background-color: #a8a8a8;
+    color: #8b8b8b;
+}
+
+.btn-upload {
+    background-color: #9EA2FF;
+}
+
+.btn-update {
+    background-color: #D19EFF;
+}
+
+.btn-refresh {
+    background-color: #FF9E9E;
+    margin-bottom: 0;
+}
+
+.file-box {
+    background-color: #8AE091;
+    outline: none;
+    border: none;
+    border-style: none;
+}
+
+.icon-valid {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+}
+
+
+.fName {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    /*background-color: #b61818;*/
+}
+
+.prompt {
+    z-index: 1;
+    width: 350px;
+    height: 50px;
+    background-color: rgba(103, 234, 109, 0.85);
+    position: fixed;
+    left: 0;
+    right: 0;
     top: 0;
-    right: 80px;
-    height: 24px;
-    filter: alpha(opacity:0);
-    opacity: 0;
-    width: 260px
+    bottom: 0;
+    margin: 2.5rem auto;
+    box-sizing: border-box;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #1d1d1d;
+    /*padding: 1em;*/
+}
+
+.prompt-failed {
+    background-color: rgba(245, 64, 64, 0.85);
+}
+
+.alert {
+    color: #2b2b2b;
+    margin-bottom: 2rem;
 }
