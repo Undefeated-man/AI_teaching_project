@@ -83,9 +83,9 @@
         </form>
         <form class="left-form" action="lectureUpdate" method="POST" enctype="multipart/form-data" id="file_form">
             {% if updateState == 'success' %}
-                <input type="button" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"/>
+                <input type="submit" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"/>
             {% else %}
-               <input type="button" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"
+               <input type="submit" class="btn btn-refresh" name="refresh" value="Step 4 Refresh Database"
                    disabled="disabled"/>
             {% endif %}
 
