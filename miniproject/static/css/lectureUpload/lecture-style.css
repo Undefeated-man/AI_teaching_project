@@ -46,3 +46,38 @@ label{
 #text{
     color: red;
 }
+
+.file-box {
+    width: 6.5rem;
+    /*height: 1rem;*/
+    position: relative;
+    display: inline-block;
+    background: #c23333;
+    border: 0;
+    border-radius: 1rem;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #ffffff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 17px;
+    font-size: 13px;
+    text-align: center;
+    align-items: center;
+}
+
+.file {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+.file-box:active {
+    color: #bbb9b9;
+}
+
+.file-box:focus {
+    outline: 0;
+}
