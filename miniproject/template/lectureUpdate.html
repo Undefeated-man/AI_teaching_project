@@ -10,12 +10,12 @@
 <script>
     if (document.getElementById("fileinp") !== '') {
         var FileList = document.getElementById("fileinp")
-            var List = "";
-            for (var i = 0; i < fileMes.files.length; i++) {
-                var file = fileMes.files[i];
-                List.innerHTML += '<p>文件名：' + file.name + '</p>';
-                List.style.display = 'block';
-            }
+        var List = "";
+        for (var i = 0; i < fileMes.files.length; i++) {
+            var file = fileMes.files[i];
+            List.innerHTML += '<p>文件名：' + file.name + '</p>';
+            List.style.display = 'block';
+        }
         document.getElementById("fileList").innerHTML = List
     }
 </script>
@@ -24,10 +24,9 @@
     <div class="left-block">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="fileinp">
-                <input type="button" id="btn" value="选择文件"><span id="text"></span>
+            <a href="javascript:" class="file-box">Step 1 Select Lecture Files
                 <label>{{ form }}</label>
-            </label>
+            </a>
             <input type="submit" class="btn btn-primary" value="批量上传" accept=".xlsx"/>
         </form>
     </div>
