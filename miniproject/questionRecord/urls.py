@@ -31,5 +31,6 @@ urlpatterns = [
     url(r"^signAddScore/$", views.signAddScore),
     url(r"^textToSpeechEN_CN/$", views.textToSpeechEN_CN),
     url(r"^textToSpeechEN/$", views.textToSpeechEN),
+    url(r"^SetDailyRank/$", views.SetDailyRank()),
     url(r"^recognize$", audioRecognize.recognize, name="recognize"),
 ]
