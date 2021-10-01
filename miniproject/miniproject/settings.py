@@ -134,5 +134,5 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 
 CRONJOBS = [
     # 表示每天2：01执行
-    ('53 13 * * *', 'questionRecord.views.SetDailyRank', '>>/home/test.log')
+    ('*/1 * * * *', 'questionRecord.views.SetDailyRank', '>>/home/test.log')
 ]
