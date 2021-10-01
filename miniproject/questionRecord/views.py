@@ -297,7 +297,7 @@ def getHistoryNum(request):
 
         allNum = 0
         for i in ["Level1", "Level2", "Level3", "Level4"]:
-            if historyQuestion[i]["doneNum"] == historyQuestion[i]["allLevelNum"]:
+            if historyQuestion[i]["doneNum"] >= historyQuestion[i]["allLevelNum"]:
                 historyQuestion[i]["whetherDone"] = True
             else:
                 historyQuestion[i]["whetherDone"] = False
