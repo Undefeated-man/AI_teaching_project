@@ -134,5 +134,5 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 
 CRONJOBS = [
     # 表示每天2：01执行
-    ('48 13 * * *', 'questionRecord.views.SetDailyRank', '>>/home/Ubuntu-UIC/AI_teaching/AI_teaching_project/miniproject/test.log')
+    ('53 13 * * *', 'questionRecord.views.SetDailyRank', '>>/home/test.log')
 ]
