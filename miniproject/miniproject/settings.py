@@ -34,6 +34,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 INSTALLED_APPS = [
+    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "questionRecord",
-    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +122,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join(BASE_DIR,'static'), )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # 图片储存根路径
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -133,6 +133,6 @@ MEDIA_URL = '/media/'
 DATE_INPUT_FORMATS = ['%Y-%m-%d']
 
 CRONJOBS = [
-     # 表示每天2：01执行
-     ('38 13 * * *', 'questionRecord.views.SetDailyRank')
- ]
+    # 表示每天2：01执行
+    ('48 13 * * *', 'questionRecord.views.SetDailyRank', '>>/home/Ubuntu-UIC/AI_teaching/AI_teaching_project/miniproject/test.log')
+]
