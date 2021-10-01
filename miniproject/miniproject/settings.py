@@ -134,7 +134,7 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 
 CRONJOBS = [
     # 表示每天2：01执行
-    ('12 16 * * *', 'questionRecord.views.SetDailyRank', '>/home/test.log')
+    ('18 16 * * *', 'questionRecord.views.SetDailyRank', '>/home/test.log')
 ]
 
 CRONTAB_COMMAND_SUFFIX = '2>&1'
