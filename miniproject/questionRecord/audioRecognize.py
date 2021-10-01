@@ -54,33 +54,37 @@ def recognize(request):
 
 @csrf_exempt
 def recognizeAudio(audiofile, answer):
-    change = os.path.join("Audio", audiofile.name)
-    if not os.path.exists("Audio"):
-        os.mkdir("Audio")
-        os.chmod(os.path.join("Audio", audiofile.name), 0o777)
-    with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
-        os.chmod(os.path.join(os.getcwd(), "Audio", audiofile.name), 0o777)
-        for chunck in audiofile.chunks():
-            fw.write(chunck)
-    if (audiofile.name.split('.')[-1] != "wav"):
-        output = os.path.join("Audio", "".join(audiofile.name.split('.')[:-1]) + ".wav")
-        ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192k -f wav'})
-        ff.cmd
-        ff.run()
-    else:
-        output = os.path.join("Audio", audiofile.name)
-    r = sr.Recognizer()
-    test = sr.AudioFile(output)
-    with test as source:
-        audio = r.record(source)
-    os.remove(output)
-    if (audiofile.name.split('.')[-1] != "wav"):
-        os.remove(change)
-    # language="cmn-Hans-CN"
-    result = r.recognize_google(audio, language="en-US", show_all=True)
-    judgeResult = judge(result['alternative'][0]['transcript'], answer)
-    return {"result": judgeResult, "yourAnswer": result['alternative'][0]['transcript']}
-
+    try:
+        change = os.path.join("Audio", audiofile.name)
+        if not os.path.exists("Audio"):
+            os.mkdir("Audio")
+            os.chmod(os.path.join("Audio", audiofile.name), 0o777)
+        with open(os.path.join(os.getcwd(), 'Audio', audiofile.name), 'wb') as fw:
+            os.chmod(os.path.join(os.getcwd(), "Audio", audiofile.name), 0o777)
+            for chunck in audiofile.chunks():
+                fw.write(chunck)
+        if (audiofile.name.split('.')[-1] != "wav"):
+            output = os.path.join("Audio", "".join(audiofile.name.split('.')[:-1]) + ".wav")
+            ff = FFmpeg(inputs={change: None}, outputs={output: '-vn -ar 44100 -ac 2 -ab 192k -f wav'})
+            ff.cmd
+            ff.run()
+        else:
+            output = os.path.join("Audio", audiofile.name)
+        r = sr.Recognizer()
+        test = sr.AudioFile(output)
+        with test as source:
+            audio = r.record(source)
+        os.remove(output)
+        if (audiofile.name.split('.')[-1] != "wav"):
+            os.remove(change)
+        # language="cmn-Hans-CN"
+        result = r.recognize_google(audio, language="en-US", show_all=True)
+        print("INFO__: ", result)
+        judgeResult = judge(result['alternative'][0]['transcript'], answer)
+        return {'state': 'success', "result": judgeResult, "yourAnswer": result['alternative'][0]['transcript']}
+    except Exception as e:
+        print(e)
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 # import logging, os
 #

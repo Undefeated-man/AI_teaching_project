@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from random import shuffle
 from django.views.generic.edit import FormView
 from .forms import FileFieldForm
+
 # Create your views here.
 
 
@@ -97,14 +98,31 @@ def getRankWithLevel(request):
 
 def getRankWithoutLevel(request):
     try:
-        allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
-        result = []
-        for i in allCommonUser:
-            result.append({"commonUserID": i.commonUserID, "commonUserName": i.commonUserName,
-                           "score": i.Progress.cumScore, "level": i.level, "imageURL": i.imageLocation})
-        return JsonResponse({"state": "success", "result": result})
+        if DailyRank.rank is not None:
+            return JsonResponse(json.loads(DailyRank.rank))
+        else:
+            return JsonResponse({'state': 'fail', "error": "No rank stored"})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
+
+
+def SetDailyRank():
+    try:
+        allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
+        result = []
+        top = 0
+        for i in allCommonUser:
+            top += 1
+            result.append({"commonUserID": i.commonUserID, "commonUserName": i.commonUserName,
+                           "score": i.Progress.cumScore, "level": i.level, "imageURL": i.imageLocation})
+            if top == 50:
+                break
+
+        DailyRank.rank = json.dumps({"state": "success", "result": result})
+        DailyRank.save()
+        return
+    except Exception as e:
+        return e.__str__()
 
 
 def getNewQuestion(request):
@@ -175,7 +193,7 @@ def getWrongQuestion(request):
             example = eval(i.level).objects.get(questionID=i.questionID).example
             # if example.unit.unitName == lecture:
             wrongQuestion.append(serializationQuestion(example, level, commonUser))
-        return JsonResponse({"state": "success", "wrongQuestion": wrongQuestion})
+        return JsonResponse({"state": "success", "question": wrongQuestion})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
@@ -655,6 +673,7 @@ def single_upload(f):
         for chunk in f.chunks():
             destination.write(chunk)
     destination.close()
+
 
 def LectureUpdate(request):
     if request.method == 'POST':

@@ -12,6 +12,7 @@ from django.contrib.auth.models import AbstractUser
 class Unit(models.Model):
     unitID = models.AutoField(primary_key=True)
     unitName = models.TextField()
+    lock = models.BooleanField(default=1)
 
     # 一个unit有多个concept,一个concept只在一个unit
 
@@ -85,6 +86,7 @@ class Level2(models.Model):
     questionID = models.CharField(max_length=20, primary_key=True)  # L2....
     example = models.OneToOneField(Example, related_name="Level2", null=False, blank=False, on_delete=models.CASCADE)
     question = models.TextField(null=False, blank=False)
+
     # three misleading choices(similar concepts in the same unit?)
     def __str__(self):
         return "Level2Question:" + str(self.questionID)
@@ -149,13 +151,14 @@ class CommonUser(models.Model):
     commonUserID = models.CharField(max_length=225, primary_key=True)
     commonUserName = models.CharField(max_length=25)
     group = models.ForeignKey(Groups, to_field='groupID', on_delete=models.CASCADE, null=True)
-    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
-    imageLocation=models.TextField()
+    imageLocation = models.TextField()
     continueCheckDays = models.IntegerField(null=False, blank=False, default=0)
     lastCheckDate = models.DateField(null=False, default=datetime.strptime('1980-01-01', "%Y-%m-%d"))
     meta = {'strict': False}
+
     def __str__(self):
         return "User:" + str(self.commonUserID)
 
@@ -169,13 +172,13 @@ class CommonUser(models.Model):
 ###收藏夹
 class NotesCollection(models.Model):
     commonUser = models.ForeignKey(CommonUser, on_delete=models.CASCADE)
-    level = models.CharField(max_length=20, null=False, blank=False,choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     questionID = models.CharField(max_length=25, blank=False, null=False)
 
     def __str__(self):
-        return "NotesCollection:" + str(self.commonUser.commonUserID) +" Question:"+str(self.questionID)
+        return "NotesCollection:" + str(self.commonUser.commonUserID) + " Question:" + str(self.questionID)
 
     class Meta:
         db_table = "NotesCollection"
@@ -186,11 +189,11 @@ class NotesCollection(models.Model):
 ##每日任务
 class DailyTask(models.Model):
     commonUserID = models.OneToOneField(CommonUser, related_name='DailyTask', null=False, blank=False,
-                                     on_delete=models.CASCADE)
+                                        on_delete=models.CASCADE)
     dailyGoalNum = models.IntegerField()
 
     def __str__(self):
-        return "DailyTask:" + str(self.commonUserID) +" DailyTask:"+str(self.dailyGoalNum)
+        return "DailyTask:" + str(self.commonUserID) + " DailyTask:" + str(self.dailyGoalNum)
 
     class Meta:
         db_table = "DailyTask"
@@ -201,8 +204,8 @@ class DailyTask(models.Model):
 ##做题历史记录
 class History(models.Model):
     commonUser = models.ForeignKey(CommonUser, related_name='History', on_delete=models.CASCADE)
-    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     questionID = models.CharField(max_length=25, blank=False, null=False)
 
@@ -233,13 +236,13 @@ class Progress(models.Model):
 # 错题
 class Wrong(models.Model):
     commonUser = models.ForeignKey(CommonUser, on_delete=models.CASCADE)  # user id must be unique
-    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1,"Level1"),(2, "Level2")
-        , (3,"Level3"),(4,"Level4")],
+    level = models.CharField(max_length=20, null=False, blank=False, choices=[(1, "Level1"), (2, "Level2")
+        , (3, "Level3"), (4, "Level4")],
                              default="Level1")
     questionID = models.CharField(max_length=25, blank=False, null=False)
     createTime = models.DateTimeField(default=timezone.now)  # 首次错误时间
     updateTime = models.DateTimeField(auto_now=True)  # keep updated 以最新错误时间为准
-    count = models.IntegerField(null=False,default=1)  # error times can be null
+    count = models.IntegerField(null=False, default=1)  # error times can be null
 
     def __str__(self):
         return "User:" + str(self.commonUser.commonUserID) + " Question:" + str(
@@ -247,6 +250,16 @@ class Wrong(models.Model):
 
     class Meta:
         db_table = "Wrong"
+
+
+class DailyRank(models.Model):
+    rank = models.TextField()
+
+    def __str__(self):
+        return "DailyRank:" + str(self.rank)
+
+    class Meta:
+        db_table = "DailyRank"
 
 # ALTER TABLE Example MODIFY COLUMN translation longtext
 #     CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;

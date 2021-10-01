@@ -26,7 +26,7 @@ SECRET_KEY = 'cp7o6_wb&adob$sertr*3mo-r&t^a30yl6p4w)$bduirv=my-('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.92.251.246', 'uicaitutor.info']
+ALLOWED_HOSTS = ['34.92.251.246', '127.0.0.1']
 
 # Application definition
 STATIC_URL = '/static/'
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "questionRecord"
+    "questionRecord",
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,9 @@ MEDIA_URL = '/media/'
 
 # 日期格式
 DATE_INPUT_FORMATS = ['%Y-%m-%d']
+
+CRONJOBS = [
+     # 表示每天2：01执行
+     ('00 24 * * *', 'questionRecord.views.SetDailyRank')
+ ]
+
