@@ -123,7 +123,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # 图片储存根路径
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 图片访问url
