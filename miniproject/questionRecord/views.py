@@ -108,7 +108,7 @@ def getRankWithoutLevel(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
-def SetDailyRank():
+def SetDailyRank(request):
     try:
         allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
         result = []
