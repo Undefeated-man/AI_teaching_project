@@ -98,9 +98,11 @@ def getRankWithLevel(request):
 
 def getRankWithoutLevel(request):
     try:
-        if DailyRank.rank is not None:
-            return JsonResponse(json.loads(DailyRank.rank))
+        rank = DailyRank.objects.get(id=1)
+        if rank is not None:
+            return JsonResponse(json.loads(rank))
         else:
+            print(rank)
             return JsonResponse({'state': 'fail', "error": "No rank stored"})
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
@@ -117,9 +119,7 @@ def SetDailyRank():
                            "score": i.Progress.cumScore, "level": i.level, "imageURL": i.imageLocation})
             if top == 50:
                 break
-
-        DailyRank.rank = json.dumps({"state": "success", "result": result})
-        DailyRank.save()
+        DailyRank.object.update_or_create(id=1, rank=json.dumps({"state": "success", "result": result}))
         return
     except Exception as e:
         return e.__str__()
