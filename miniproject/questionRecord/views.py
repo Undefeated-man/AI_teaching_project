@@ -120,7 +120,9 @@ def SetDailyRank():
                            "score": i.Progress.cumScore, "level": i.level, "imageURL": i.imageLocation})
             if top == 50:
                 break
-        DailyRank.objects.update_or_create(id=1, rank=json.dumps({"state": "success", "result": result}))
+        rankList = DailyRank.objects.get(id=1)
+        rankList.rank = json.dumps({"state": "success", "result": result})
+        rankList.save()
         print({'state': 'success'})
         return
     except Exception as e:
