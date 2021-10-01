@@ -98,6 +98,7 @@ def getRankWithLevel(request):
 
 def getRankWithoutLevel(request):
     try:
+        SetDailyRank()
         rank = DailyRank.objects.get(id=1)
         if rank is not None:
             return JsonResponse(json.loads(rank))
@@ -108,7 +109,7 @@ def getRankWithoutLevel(request):
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
-def SetDailyRank(request):
+def SetDailyRank():
     try:
         allCommonUser = CommonUser.objects.order_by("-Progress__cumScore")
         result = []
@@ -120,9 +121,9 @@ def SetDailyRank(request):
             if top == 50:
                 break
         DailyRank.object.update_or_create(rank=json.dumps({"state": "success", "result": result}))
-        return
+        return JsonResponse({'state': 'success'})
     except Exception as e:
-        return e.__str__()
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 
 def getNewQuestion(request):
