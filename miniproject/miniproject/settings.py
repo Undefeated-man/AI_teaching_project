@@ -136,3 +136,5 @@ CRONJOBS = [
     # 表示每天2：01执行
     ('*/1 * * * *', 'questionRecord.views.SetDailyRank', '>/home/test.log')
 ]
+
+CRONTAB_COMMAND_SUFFIX = '2>&1'
