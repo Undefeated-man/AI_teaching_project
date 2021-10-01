@@ -101,7 +101,7 @@ def getRankWithoutLevel(request):
         SetDailyRank()
         rank = DailyRank.objects.get(id=1)
         if rank is not None:
-            return JsonResponse(json.loads(rank))
+            return JsonResponse(json.loads(rank.rank))
         else:
             print(rank)
             return JsonResponse({'state': 'fail', "error": "No rank stored"})
