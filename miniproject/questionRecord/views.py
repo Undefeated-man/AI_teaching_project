@@ -671,7 +671,7 @@ def signAddScore(request):
 
 def GetLectures(request):
     try:
-        allUnits = Unit.objects.order_by("unitName")
+        allUnits = Unit.objects.all()
         units = []
         for u in allUnits:
             units.append({"name": u.unitName, "lock": True if u.lock == 1 else False})
