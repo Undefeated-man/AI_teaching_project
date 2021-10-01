@@ -231,11 +231,11 @@ def refreshDatabase(request):
     # toDataBase(lectureExcel_10, "Lecture  10")
     # toDataBase(lectureExcel_11, "Lecture  11")
     except FileNotFoundError as e:
-        return JsonResponse({'state': 'success', 'processed': processed})
-        # return 'success'
-    # except Exception as e:
+        # return JsonResponse({'state': 'success', 'processed': processed})
+        return 'success'
+    except Exception as e:
     #     return JsonResponse({'state': 'failed', 'error': e.__str__()})
-        # return 'failed'
+        return 'failed'
 
 
 @csrf_exempt
