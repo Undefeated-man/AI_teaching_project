@@ -98,7 +98,6 @@ def getRankWithLevel(request):
 
 def getRankWithoutLevel(request):
     try:
-        SetDailyRank()
         rank = DailyRank.objects.get(id=1)
         if rank is not None:
             return JsonResponse(json.loads(rank.rank))
