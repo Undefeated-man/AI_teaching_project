@@ -233,8 +233,8 @@ def refreshDatabase(request):
     except FileNotFoundError as e:
         return JsonResponse({'state': 'success', 'processed': processed})
         # return 'success'
-    except Exception as e:
-        return JsonResponse({'state': 'failed', 'error': e.__str__()})
+    # except Exception as e:
+    #     return JsonResponse({'state': 'failed', 'error': e.__str__()})
         # return 'failed'
 
 
