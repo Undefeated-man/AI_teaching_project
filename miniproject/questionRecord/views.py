@@ -121,9 +121,11 @@ def SetDailyRank():
             if top == 50:
                 break
         DailyRank.object.update_or_create(rank=json.dumps({"state": "success", "result": result}))
-        return JsonResponse({'state': 'success'})
+        print({'state': 'success'})
+        return
     except Exception as e:
-        return JsonResponse({'state': 'fail', "error": e.__str__()})
+        print({'state': 'fail', "error": e.__str__()})
+        return
 
 
 def getNewQuestion(request):
