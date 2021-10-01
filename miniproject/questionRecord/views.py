@@ -264,7 +264,7 @@ def getHistoryNum(request):
                 example = eval(i.level).objects.get(questionID=i.questionID).example
             else:
                 example = Example.objects.get(exampleID=i.questionID)
-                print(example.unit.unitName)
+                # print(example.unit.unitName)
             if example.unit.unitName == lecture:
                 if historyQuestion[i.level].get("doneNum", None) is None:
                     historyQuestion[i.level]["doneNum"] = 1
@@ -669,6 +669,15 @@ def signAddScore(request):
     except Exception as e:
         return JsonResponse({'state': 'fail', "error": e.__str__()})
 
+def GetLectures(request):
+    try:
+        allUnits = Unit.objects.get()
+        units = []
+        for u in allUnits:
+            units.append({"name": u.unitName, "lock": True if u.lock == 1 else False})
+        return JsonResponse({'state': 'success', "lectures": units})
+    except Exception as e:
+        return JsonResponse({'state': 'fail', "error": e.__str__()})
 
 def single_upload(f):
     file_path = os.path.join(".", ".", os.getcwd(), "template", "Lectures", f.name)  # 拼装目录名称+文件名称
@@ -707,3 +716,4 @@ def LectureUpdate(request):
     else:
         form = FileFieldForm()
     return render(request, 'lectureUpdate.html', locals())
+
