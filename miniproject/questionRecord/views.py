@@ -49,7 +49,7 @@ def userinfo(request):
         photo = request.POST.get("photo", "")  # get the photo
         try:
             commonUser = CommonUser.objects.get(commonUserID=user_info['openId'])
-            commonUser.commonUserName = name
+            commonUser.commonUserName = str(name)[0:6]
             commonUser.imageLocation = photo
             commonUser.save()
         except:
