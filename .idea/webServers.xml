@@ -2,17 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="35ac9d00-5440-437b-830e-459dc40c6166" name="AI_Teaching_Project (project level)">
+      <webServer id="f0d59258-5e2a-4f3f-bfee-6b46916f0bd4" name="AI_Teaching_Project">
         <fileTransfer rootFolder="/home/Ubuntu-UIC/AI_teaching/AI_teaching_project" accessType="SFTP" host="34.92.251.246" port="22" sshConfigId="bc03587f-117c-44c2-a82f-c5f677e8269a" sshConfig="Ubuntu-UIC@34.92.251.246:22 key" keyPair="true">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-        </fileTransfer>
-      </webServer>
-      <webServer id="6c0ae9f7-a4c1-425c-9dcf-22110c6eaede" name="jump.uic.edu.cn">
-        <fileTransfer accessType="SFTP" host="jump.uic.edu.cn" port="22" sshConfigId="40d74ec1-b2e7-467a-802a-fdada2a746cc" sshConfig="DSTAAS@jump.uic.edu.cn:22 password">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>

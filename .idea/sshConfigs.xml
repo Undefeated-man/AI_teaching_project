@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="jump.uic.edu.cn" id="40d74ec1-b2e7-467a-802a-fdada2a746cc" port="22" nameFormat="DESCRIPTIVE" username="DSTAAS" />
+      <sshConfig host="34.92.251.246" id="bc03587f-117c-44c2-a82f-c5f677e8269a" keyPath="$USER_HOME$/Desktop/Project/uic.ppk" port="22" nameFormat="DESCRIPTIVE" username="Ubuntu-UIC" />
     </configs>
   </component>
 </project>
